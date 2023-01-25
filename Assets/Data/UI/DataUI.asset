@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d0888a9de50144c9176b8b9a5f14d3, type: 3}
   m_Name: DataUI
   m_EditorClassIdentifier: 
-  imageEquipSlot: {fileID: 0}
+  slotEquip: {fileID: 1010813146280149320, guid: 02bfc3578d2f0fc44b953b00e45ce6e6, type: 3}

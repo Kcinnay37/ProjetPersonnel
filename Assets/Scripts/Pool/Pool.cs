@@ -19,16 +19,29 @@ public class Pool : MonoBehaviour
         public ScriptableObject data;
     }
 
-    [SerializeField] private List<ObjectPool> m_ObjectsPoolList;
-    [SerializeField] private List<DataPool> m_DataPoolList;
+    [System.Serializable]
+    public struct ListObjectPool
+    {
+        public string type;
+        public List<ObjectPool> objectList;
+    }
+
+    [System.Serializable]
+    public struct ListDataPool
+    {
+        public string type;
+        public List<DataPool> dataList;
+    }
+
+    [SerializeField] List<ListObjectPool> m_ObjectPoolList;
+    [SerializeField] List<ListDataPool> m_DataPoolList;
+
     [SerializeField] string m_ParentGameObjectName;
 
     private GameObject m_ParentGameObject;
 
-    private Dictionary<EnumObject, GameObject> m_ObjectsPool;
-
+    private Dictionary<EnumObject, GameObject> m_ObjectPool;
     private Dictionary<EnumData, ScriptableObject> m_DataPool;
-
     private Dictionary<EnumObject, List<GameObject>> m_AvailablePool;
 
     private static Pool m_Pool;
@@ -61,23 +74,29 @@ public class Pool : MonoBehaviour
         }
         m_AvailablePool.Clear();
 
-        foreach (ObjectPool currObject in m_ObjectsPoolList)
+        foreach (ListObjectPool currListObject in m_ObjectPoolList)
         {
-            m_AvailablePool.Add(currObject.type, new List<GameObject>());
+            foreach(ObjectPool currObject in currListObject.objectList)
+            {
+                m_AvailablePool.Add(currObject.type, new List<GameObject>());
+            }
         }
     }
 
     private void InitObjectsPool()
     {
-        if(m_ObjectsPool == null)
+        if(m_ObjectPool == null)
         {
-            m_ObjectsPool = new Dictionary<EnumObject, GameObject>();
+            m_ObjectPool = new Dictionary<EnumObject, GameObject>();
         }
-        m_ObjectsPool.Clear();
+        m_ObjectPool.Clear();
 
-        foreach (ObjectPool currObject in m_ObjectsPoolList)
+        foreach (ListObjectPool currListObject in m_ObjectPoolList)
         {
-            m_ObjectsPool.Add(currObject.type, currObject.gameObject);
+            foreach (ObjectPool currObject in currListObject.objectList)
+            {
+                m_ObjectPool.Add(currObject.type, currObject.gameObject);
+            }
         }
     }
 
@@ -90,14 +109,17 @@ public class Pool : MonoBehaviour
         m_DataPool.Clear();
 
 
-        foreach (DataPool currObject in m_DataPoolList)
+        foreach (ListDataPool currListData in m_DataPoolList)
         {
-            m_DataPool.Add(currObject.type, currObject.data);
+            foreach (DataPool currData in currListData.dataList)
+            {
+                m_DataPool.Add(currData.type, currData.data);
+            }
         }
     }
 
     // retourn un game object disponible si il na pas n'initialise un nouveau
-    public GameObject GetGameObject(EnumObject type)
+    public GameObject GetObject(EnumObject type)
     {
         GameObject currObject = null;
         List<GameObject> currListObject;
@@ -111,14 +133,14 @@ public class Pool : MonoBehaviour
         }
         else
         {
-            currObject = InitGameObject(type);
+            currObject = InitObject(type);
         }
 
         return currObject;
     }
 
     // Enleve d'actif un game object et le met disponible
-    public void RemoveGameObject(GameObject currObject, EnumObject type)
+    public void RemoveObject(GameObject currObject, EnumObject type)
     {
         currObject.SetActive(false);
 
@@ -133,15 +155,15 @@ public class Pool : MonoBehaviour
     }
 
     // initialise un gameObject et le retourn
-    private GameObject InitGameObject(EnumObject type)
+    private GameObject InitObject(EnumObject type)
     {
-        GameObject newObject = Instantiate(m_ObjectsPool[type]);
+        GameObject newObject = Instantiate(m_ObjectPool[type]);
         newObject.SetActive(false);
 
         return newObject;
     }
 
-    public ScriptableObject GetDataResource(EnumData type)
+    public ScriptableObject GetData(EnumData type)
     {
         return m_DataPool[type];
     }

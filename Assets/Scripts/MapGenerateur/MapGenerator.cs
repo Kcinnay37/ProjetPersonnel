@@ -118,7 +118,7 @@ public class MapGenerator : MonoBehaviour
             m_Instance = this;
         }
 
-        m_Data = (DataCave)Pool.m_Instance.GetDataResource(caveResource);
+        m_Data = (DataCave)Pool.m_Instance.GetData(caveResource);
 
         if (m_Blocks == null)
         {

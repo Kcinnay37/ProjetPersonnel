@@ -7,9 +7,10 @@ public enum EnumObject
     pickaxe,
 
     //block
-    rock,
-    iron,
-    background,
+    block,
+    //rock,
+    //iron,
+    //background,
 
     //UI
     slotEquip

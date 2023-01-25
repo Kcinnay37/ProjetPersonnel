@@ -95,7 +95,7 @@ public class StatePlayerEquip : State
     {
         m_StateMachine.PopCurrState(EnumState.pickaxe);
 
-        DataResource data = (DataResource)Pool.m_Instance.GetDataResource(m_Inventory[m_CaseSelected]);
+        DataResource data = (DataResource)Pool.m_Instance.GetData(m_Inventory[m_CaseSelected]);
 
         m_StateMachine.AddCurrState(data.state);
     }
