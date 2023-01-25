@@ -1,0 +1,452 @@
+fileFormatVersion: 2
+guid: 196380a6827f7844fb7e41a9c16781f5
+ModelImporter:
+  serializedVersion: 21202
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Body
+  - first:
+      1: 100002
+    second: Cloth
+  - first:
+      1: 100004
+    second: Expression
+  - first:
+      1: 100006
+    second: Eye
+  - first:
+      1: 100008
+    second: Eye Base
+  - first:
+      1: 100010
+    second: //RootNode
+  - first:
+      1: 100012
+    second: Hair
+  - first:
+      1: 100014
+    second: Hair Clipped
+  - first:
+      1: 100016
+    second: Hat
+  - first:
+      1: 100018
+    second: Pants
+  - first:
+      1: 100020
+    second: 'Rig '
+  - first:
+      1: 100022
+    second: Rig BSkirt
+  - first:
+      1: 100024
+    second: Rig FSkirt
+  - first:
+      1: 100026
+    second: Rig Head
+  - first:
+      1: 100028
+    second: Rig LCalf
+  - first:
+      1: 100030
+    second: Rig LFoot
+  - first:
+      1: 100032
+    second: Rig LForearm
+  - first:
+      1: 100034
+    second: Rig LPlatform
+  - first:
+      1: 100036
+    second: Rig LThigh
+  - first:
+      1: 100038
+    second: Rig LUpperarm
+  - first:
+      1: 100040
+    second: Rig Neck
+  - first:
+      1: 100042
+    second: Rig Pelvis
+  - first:
+      1: 100044
+    second: Rig RCalf
+  - first:
+      1: 100046
+    second: Rig RFoot
+  - first:
+      1: 100048
+    second: Rig RForearm
+  - first:
+      1: 100050
+    second: Rig Ribcage
+  - first:
+      1: 100052
+    second: Rig RPlatform
+  - first:
+      1: 100054
+    second: Rig RThigh
+  - first:
+      1: 100056
+    second: Rig RUpperarm
+  - first:
+      1: 100058
+    second: Rig Spine1
+  - first:
+      1: 100060
+    second: Rig Spine2
+  - first:
+      1: 100062
+    second: Rig Weapon
+  - first:
+      1: 100064
+    second: Shoes
+  - first:
+      1: 100066
+    second: Skirt
+  - first:
+      1: 100068
+    second: Socks
+  - first:
+      4: 400000
+    second: Body
+  - first:
+      4: 400002
+    second: Cloth
+  - first:
+      4: 400004
+    second: Expression
+  - first:
+      4: 400006
+    second: Eye
+  - first:
+      4: 400008
+    second: Eye Base
+  - first:
+      4: 400010
+    second: //RootNode
+  - first:
+      4: 400012
+    second: Hair
+  - first:
+      4: 400014
+    second: Hair Clipped
+  - first:
+      4: 400016
+    second: Hat
+  - first:
+      4: 400018
+    second: Pants
+  - first:
+      4: 400020
+    second: 'Rig '
+  - first:
+      4: 400022
+    second: Rig BSkirt
+  - first:
+      4: 400024
+    second: Rig FSkirt
+  - first:
+      4: 400026
+    second: Rig Head
+  - first:
+      4: 400028
+    second: Rig LCalf
+  - first:
+      4: 400030
+    second: Rig LFoot
+  - first:
+      4: 400032
+    second: Rig LForearm
+  - first:
+      4: 400034
+    second: Rig LPlatform
+  - first:
+      4: 400036
+    second: Rig LThigh
+  - first:
+      4: 400038
+    second: Rig LUpperarm
+  - first:
+      4: 400040
+    second: Rig Neck
+  - first:
+      4: 400042
+    second: Rig Pelvis
+  - first:
+      4: 400044
+    second: Rig RCalf
+  - first:
+      4: 400046
+    second: Rig RFoot
+  - first:
+      4: 400048
+    second: Rig RForearm
+  - first:
+      4: 400050
+    second: Rig Ribcage
+  - first:
+      4: 400052
+    second: Rig RPlatform
+  - first:
+      4: 400054
+    second: Rig RThigh
+  - first:
+      4: 400056
+    second: Rig RUpperarm
+  - first:
+      4: 400058
+    second: Rig Spine1
+  - first:
+      4: 400060
+    second: Rig Spine2
+  - first:
+      4: 400062
+    second: Rig Weapon
+  - first:
+      4: 400064
+    second: Shoes
+  - first:
+      4: 400066
+    second: Skirt
+  - first:
+      4: 400068
+    second: Socks
+  - first:
+      21: 2100000
+    second: Body
+  - first:
+      21: 2100002
+    second: Hat
+  - first:
+      21: 2100004
+    second: Eye Base
+  - first:
+      21: 2100006
+    second: Eye
+  - first:
+      21: 2100008
+    second: Hair
+  - first:
+      21: 2100010
+    second: Cloth
+  - first:
+      21: 2100012
+    second: Pants
+  - first:
+      21: 2100014
+    second: Shoes
+  - first:
+      21: 2100016
+    second: Socks
+  - first:
+      21: 2100018
+    second: Expression
+  - first:
+      43: 4300000
+    second: Body
+  - first:
+      43: 4300002
+    second: Hat
+  - first:
+      43: 4300004
+    second: Eye Base
+  - first:
+      43: 4300006
+    second: Eye
+  - first:
+      43: 4300008
+    second: Hair
+  - first:
+      43: 4300010
+    second: Hair Clipped
+  - first:
+      43: 4300012
+    second: Cloth
+  - first:
+      43: 4300014
+    second: Pants
+  - first:
+      43: 4300016
+    second: Shoes
+  - first:
+      43: 4300018
+    second: Socks
+  - first:
+      43: 4300020
+    second: Skirt
+  - first:
+      43: 4300022
+    second: Expression
+  - first:
+      74: 7400000
+    second: Pixel Character - Attack Swipe
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: Body
+  - first:
+      137: 13700002
+    second: Cloth
+  - first:
+      137: 13700004
+    second: Expression
+  - first:
+      137: 13700006
+    second: Eye
+  - first:
+      137: 13700008
+    second: Eye Base
+  - first:
+      137: 13700010
+    second: Hair
+  - first:
+      137: 13700012
+    second: Hair Clipped
+  - first:
+      137: 13700014
+    second: Hat
+  - first:
+      137: 13700016
+    second: Pants
+  - first:
+      137: 13700018
+    second: Shoes
+  - first:
+      137: 13700020
+    second: Skirt
+  - first:
+      137: 13700022
+    second: Socks
+  externalObjects: {}
+  materials:
+    materialImportMode: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 0
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Pixel Character - Attack Swipe
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

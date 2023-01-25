@@ -1,0 +1,27 @@
+Customizable Pixel Character
+
+1.2.5
+	-Fix issue with 2D lit shaders in build.
+
+1.2.4
+	-Add 2D lighting support through additional shaders.
+	-Update physics settings for smoother movement.
+
+1.2.3
+	-Update included "Pixel Art Platformer - Village Props" asset pack to 2.1.0
+
+1.2.2
+	-Updated document to add tutorial for making animation
+
+1.2.1
+	-Character control adjustment
+	-Possible rendering issues fixed
+
+1.2.0
+	-Several bugs fixed
+
+1.1.0
+	-Update included "Pixel Art Platformer - Village Props" to 2.0.0
+
+1.0.0
+	-First Release

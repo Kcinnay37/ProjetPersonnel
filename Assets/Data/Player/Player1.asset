@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e557753a4e25ccb47986cdb6778b2f3b, type: 3}
+  m_Name: Player1
+  m_EditorClassIdentifier: 
+  walkSpeed: 5
+  runSpeed: 10
+  leftKey: 97
+  rightKey: 100
+  runKey: 304
+  jumpForce: 325
+  jumpKeyCode: 32
+  primarySlotKey: 323
+  sizeInventoryEquip: 4
+  sizeInventoryNotEquip: 8
