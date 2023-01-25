@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Cave1
   m_EditorClassIdentifier: 
   blocksList:
-  - {fileID: 11400000, guid: 6e2a95cc99bf64247b00c61c0c2f6ed6, type: 2}
-  - {fileID: 11400000, guid: 38e8b2b90b7c5bf479b6f15ff85ff120, type: 2}
-  - {fileID: 11400000, guid: 2b70029ad45eb224e8772acd7aac9f11, type: 2}
+  - block: 4
+    minValue: 0
+    maxValue: 1
+  - block: 2
+    minValue: 0.42
+    maxValue: 1
+  - block: 3
+    minValue: 0.7
+    maxValue: 0.72
   gridWidth: 500
   gridHeight: 500
   scale: 15

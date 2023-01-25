@@ -8,9 +8,6 @@ public enum EnumObject
 
     //block
     block,
-    //rock,
-    //iron,
-    //background,
 
     //UI
     slotEquip
@@ -36,9 +33,14 @@ public enum EnumData
 public enum EnumState
 {
     none,
-    spawn,
-    move,
-    jump,
-    inventory,
-    pickaxe
+
+    //player
+    playerSpawn,
+    playerMove,
+    playerJump,
+    playerEquipInventory,
+    playerPickaxe,
+
+    //UI
+    UIEquipInventory
 }

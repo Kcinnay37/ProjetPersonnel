@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0586d786bd1ac244b8d85465416c0e3, type: 3}
   m_Name: Rock
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: 764939ca5d341c24d8ff4d41a43e2540, type: 3}
   state: 5
+  gameObject: 0
   maxStack: 999
   mapName: Environement
   tile: {fileID: 11400000, guid: 9dd5a5ffc1f502b44a164447cb9b3bb9, type: 2}
-  sprite: {fileID: 21300000, guid: 764939ca5d341c24d8ff4d41a43e2540, type: 3}
-  minValue: 0.42
-  maxValue: 1

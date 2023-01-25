@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0586d786bd1ac244b8d85465416c0e3, type: 3}
   m_Name: BackGround
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: 63cd8787738a4a445bf4b7c78a1bb734, type: 3}
   state: 5
-  maxStack: 999
+  gameObject: 0
+  maxStack: 0
   mapName: BG
   tile: {fileID: 11400000, guid: deefd4e5eb1d29645b612552ba9dbfce, type: 2}
-  sprite: {fileID: 21300000, guid: 63cd8787738a4a445bf4b7c78a1bb734, type: 3}
-  minValue: 0
-  maxValue: 1

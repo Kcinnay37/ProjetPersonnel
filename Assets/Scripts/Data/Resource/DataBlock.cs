@@ -20,7 +20,4 @@ public class DataBlock : DataResource
     }
     public string mapName;
     public TileBase tile;
-    public Sprite sprite;
-    public float minValue;
-    public float maxValue;
 }

@@ -7,7 +7,7 @@ public class MapGenerator : MonoBehaviour
 {
     [SerializeField] EnumData caveResource;
 
-    private Dictionary<int, DataBlock> m_Blocks;
+    private Dictionary<int, EnumData> m_Blocks;
 
     private float scale = 1;
 
@@ -19,18 +19,18 @@ public class MapGenerator : MonoBehaviour
 
     private int seed = 0;
 
-    int[,] grid;
+    EnumData[,] grid;
 
     static MapGenerator m_Instance;
 
-    DataCave m_Data;
+    DataCaveChunk m_Data;
 
     private void Awake()
     {
         GenerateMap();
     }
 
-    const int offSetSpawnPlayer = 20;
+    const int offSetSpawnPlayer = 50;
     public static Vector2 FindPlayerSpawnPoint()
     {
         int width = m_Instance.grid.GetLength(0);
@@ -42,7 +42,7 @@ public class MapGenerator : MonoBehaviour
             for (int x = width / 2 - offSetSpawnPlayer; x < width / 2 + offSetSpawnPlayer; x++)
             {
                 // Vérification de la hauteur du point de spawn et de la présence de sol en dessous
-                if (m_Instance.grid[x, y] == 0 && m_Instance.grid[x, y + 1] == 0 && m_Instance.grid[x, y - 1] == 1)
+                if (m_Instance.grid[x, y] == EnumData.background && m_Instance.grid[x, y + 1] == EnumData.background && m_Instance.grid[x, y - 1] == EnumData.rock)
                 {
                     return new Vector2(x, y);
                 }
@@ -55,16 +55,18 @@ public class MapGenerator : MonoBehaviour
 
     void DrawGrid()
     {
-        foreach (DataBlock block in m_Data.blocksList)
+        foreach (DataCaveChunk.Block block in m_Data.blocksList)
         {
-            block.map.ClearAllTiles();
+            DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(block.block);
+            dataBlock.map.ClearAllTiles();
         }
 
         for (int i = 0; i < grid.GetLength(0); i++)
         {
             for (int j = 0; j < grid.GetLength(1); j++)
             {
-                m_Data.blocksList[grid[i, j]].map.SetTile(new Vector3Int(i, j, 0), m_Data.blocksList[grid[i, j]].tile);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(grid[i, j]);
+                dataBlock.map.SetTile(new Vector3Int(i, j, 0), dataBlock.tile);
             }
         }
     }
@@ -118,16 +120,16 @@ public class MapGenerator : MonoBehaviour
             m_Instance = this;
         }
 
-        m_Data = (DataCave)Pool.m_Instance.GetData(caveResource);
+        m_Data = (DataCaveChunk)Pool.m_Instance.GetData(caveResource);
 
         if (m_Blocks == null)
         {
-            m_Blocks = new Dictionary<int, DataBlock>();
+            m_Blocks = new Dictionary<int, EnumData>();
         }
         m_Blocks.Clear();
         for(int i = 0; i < m_Data.blocksList.Count; i++)
         {
-            m_Blocks.Add(i, m_Data.blocksList[i]);
+            m_Blocks.Add(i, m_Data.blocksList[i].block);
         }
 
         scale = m_Data.scale;
@@ -140,7 +142,7 @@ public class MapGenerator : MonoBehaviour
 
         seed = m_Data.seed;
 
-        grid = new int[m_Data.gridWidth, m_Data.gridHeight];
+        grid = new EnumData[m_Data.gridWidth, m_Data.gridHeight];
     }
 
     public void GenerateCave()
@@ -156,11 +158,11 @@ public class MapGenerator : MonoBehaviour
             for (int y = 0; y < grid.GetLength(1); y++)
             {
                 int count = 0;
-                foreach(DataBlock block in m_Data.blocksList)
+                foreach(DataCaveChunk.Block block in m_Data.blocksList)
                 {
                     if (noiseMap[x, y] >= block.minValue && noiseMap[x, y] <= block.maxValue)
                     {
-                        grid[x, y] = count;
+                        grid[x, y] = block.block;
                     }
                     count++;
                 }
@@ -168,23 +170,23 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public void FillBorders()
-    {
-        int width = grid.GetLength(0);
-        int height = grid.GetLength(1);
+    //public void FillBorders()
+    //{
+    //    int width = grid.GetLength(0);
+    //    int height = grid.GetLength(1);
 
-        // Remplissage de la première et de la dernière colonne
-        for (int y = 0; y < height; y++)
-        {
-            grid[0, y] = 1;
-            grid[width - 1, y] = 1;
-        }
+    //    // Remplissage de la première et de la dernière colonne
+    //    for (int y = 0; y < height; y++)
+    //    {
+    //        grid[0, y] = 1;
+    //        grid[width - 1, y] = 1;
+    //    }
 
-        // Remplissage de la première et de la dernière ligne
-        for (int x = 0; x < width; x++)
-        {
-            grid[x, 0] = 1;
-            grid[x, height - 1] = 1;
-        }
-    }
+    //    // Remplissage de la première et de la dernière ligne
+    //    for (int x = 0; x < width; x++)
+    //    {
+    //        grid[x, 0] = 1;
+    //        grid[x, height - 1] = 1;
+    //    }
+    //}
 }

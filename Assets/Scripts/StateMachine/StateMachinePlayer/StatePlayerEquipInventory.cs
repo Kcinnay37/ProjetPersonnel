@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StatePlayerEquip : State
+public class StatePlayerEquipInventory : State
 {
     DataPlayer m_Data;
 
@@ -12,7 +12,7 @@ public class StatePlayerEquip : State
 
     int m_CaseSelected;
 
-    public StatePlayerEquip(StateMachine stateMachine) : base(stateMachine)
+    public StatePlayerEquipInventory(StateMachine stateMachine) : base(stateMachine)
     {
         m_Data = (DataPlayer)m_StateMachine.GetData();
 
@@ -26,7 +26,7 @@ public class StatePlayerEquip : State
     {
         InitInventory();
         AddInInventory(EnumData.pickaxe);
-        //DrawInventory();
+        EventManager.TriggerEvent("DrawEquipInventory", new Dictionary<string, object> { { "inventoryEquip", m_Inventory } });
     }
 
     public override void Update()
@@ -93,7 +93,7 @@ public class StatePlayerEquip : State
 
     private void SelectCase()
     {
-        m_StateMachine.PopCurrState(EnumState.pickaxe);
+        m_StateMachine.PopCurrState(EnumState.playerPickaxe);
 
         DataResource data = (DataResource)Pool.m_Instance.GetData(m_Inventory[m_CaseSelected]);
 

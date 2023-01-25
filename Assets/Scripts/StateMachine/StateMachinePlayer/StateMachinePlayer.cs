@@ -6,22 +6,22 @@ public class StateMachinePlayer : StateMachine
 {
     public override void AddInitialsStates()
     {
-        AddCurrState(EnumState.spawn);
+        AddCurrState(EnumState.playerSpawn);
     }
 
     public override void InitAllStates()
     {
         // movement
-        m_States.Add(EnumState.move, new StatePlayerMove(this));
-        m_States.Add(EnumState.jump, new StatePlayerJump(this));
+        m_States.Add(EnumState.playerMove, new StatePlayerMove(this));
+        m_States.Add(EnumState.playerJump, new StatePlayerJump(this));
 
         //spawn
-        m_States.Add(EnumState.spawn, new StatePlayerSpawn(this));
+        m_States.Add(EnumState.playerSpawn, new StatePlayerSpawn(this));
 
         //inventory
-        m_States.Add(EnumState.inventory, new StatePlayerEquip(this));
+        m_States.Add(EnumState.playerEquipInventory, new StatePlayerEquipInventory(this));
 
         //recource
-        m_States.Add(EnumState.pickaxe, new StatePlayerPickaxe(this));
+        m_States.Add(EnumState.playerPickaxe, new StatePlayerPickaxe(this));
     }
 }

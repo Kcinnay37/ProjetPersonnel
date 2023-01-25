@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class DataCave : ScriptableObject
+public class DataCaveChunk : ScriptableObject
 {
-    public List<DataBlock> blocksList = new List<DataBlock>();
+    [System.Serializable]
+    public struct Block
+    {
+        public EnumData block;
+        public float minValue;
+        public float maxValue;
+    }
+
+    public List<Block> blocksList = new List<Block>();
 
     [Header("")]
     public int gridWidth;

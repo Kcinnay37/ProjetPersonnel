@@ -14,7 +14,7 @@ public class StatePlayerPickaxe : State
 
     public override void OnInit()
     {
-        StatePlayerEquip inventoryState = (StatePlayerEquip)m_StateMachine.GetState(EnumState.inventory);
+        StatePlayerEquipInventory inventoryState = (StatePlayerEquipInventory)m_StateMachine.GetState(EnumState.playerEquipInventory);
         EnumData dataName = inventoryState.GetCurrCase();
 
         m_Data = (DataOutil)Pool.m_Instance.GetData(dataName);

@@ -12,7 +12,7 @@ public abstract class StateMachine : MonoBehaviour
     private List<EnumState> m_StatesToAdd;
     private List<EnumState> m_StatesToDelete;
 
-    private void Start()
+    private void Awake()
     {
         // initialise tout ---------------------------
         m_CurrStates = new List<EnumState>();
@@ -22,7 +22,10 @@ public abstract class StateMachine : MonoBehaviour
 
         InitAllStates();
         // -------------------------------------------
+    }
 
+    private void Start()
+    {
         // ajoute les states initial
         AddInitialsStates();
     }
