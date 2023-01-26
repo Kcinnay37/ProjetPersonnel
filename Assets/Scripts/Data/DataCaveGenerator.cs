@@ -9,11 +9,17 @@ public class DataCaveGenerator : ScriptableObject
     public struct CaveChunk
     {
         public EnumData dataChunk;
-        public int chunkDepth;
+        public int chunkMinDepth;
+        public int chunkMaxDepth;
+        [Range(0, 100)]
+        public int rarity;
     }
+
+    public List<CaveChunk> cave;
 
     public int chunkWidth;
     public int chunkHeight;
 
-    public int nbChunk;
+    public int nbChunkRight;
+    public int nbChunkDown;
 }

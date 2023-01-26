@@ -5,9 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
-    [SerializeField] EnumData caveResource;
-
-    private Dictionary<int, EnumData> m_Blocks;
+    [SerializeField] EnumData caveGeneratorData;
 
     private float scale = 1;
 
@@ -23,10 +21,21 @@ public class MapGenerator : MonoBehaviour
 
     static MapGenerator m_Instance;
 
-    DataCaveChunk m_Data;
+    DataCaveGenerator m_DataCaveGenerator;
+    DataCaveChunk m_DataCurrChunk;
+
+    private int currGridX = 0;
+    private int currGridY = 0;
+
+    private Dictionary<int, List<DataCaveGenerator.CaveChunk>> m_DictDepthChunk;
 
     private void Awake()
     {
+        if (m_Instance == null)
+        {
+            m_Instance = this;
+        }
+
         GenerateMap();
     }
 
@@ -42,7 +51,7 @@ public class MapGenerator : MonoBehaviour
             for (int x = width / 2 - offSetSpawnPlayer; x < width / 2 + offSetSpawnPlayer; x++)
             {
                 // Vérification de la hauteur du point de spawn et de la présence de sol en dessous
-                if (m_Instance.grid[x, y] == EnumData.background && m_Instance.grid[x, y + 1] == EnumData.background && m_Instance.grid[x, y - 1] == EnumData.rock)
+                if (m_Instance.grid[x, y] == EnumData.backGroundRock && m_Instance.grid[x, y + 1] == EnumData.backGroundRock && m_Instance.grid[x, y - 1] == EnumData.rockNormal)
                 {
                     return new Vector2(x, y);
                 }
@@ -55,10 +64,20 @@ public class MapGenerator : MonoBehaviour
 
     void DrawGrid()
     {
-        foreach (DataCaveChunk.Block block in m_Data.blocksList)
+        //pour tout les chunk de la cave
+        foreach (DataCaveGenerator.CaveChunk chunk in m_DataCaveGenerator.cave)
         {
-            DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(block.block);
-            dataBlock.map.ClearAllTiles();
+            //va chercher le data du chunk actuel
+            DataCaveChunk currDataChunk = (DataCaveChunk)Pool.m_Instance.GetData(chunk.dataChunk);
+
+            //pour tout les block du chunk
+            foreach (DataCaveChunk.Block block in currDataChunk.blocksList)
+            {
+                //va chercher le data du block
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(block.block);
+                //clear ca tilemap
+                dataBlock.map.ClearAllTiles();
+            }
         }
 
         for (int i = 0; i < grid.GetLength(0); i++)
@@ -72,101 +91,135 @@ public class MapGenerator : MonoBehaviour
     }
 
 
-    public void GenerateRandomValues(float minScale, float maxScale, int minOctaves, int maxOctaves, float minPersistence, float maxPersistence, float minLacunarity, float maxLacunarity, int minSeed, int maxSeed)
+    public void GenerateRandomValues()
     {
         // Génération aléatoire de la valeur de scale entre minScale et maxScale
-        if(m_Data.useRandomScale)
+        if (m_DataCurrChunk.useRandomScale)
         {
-            scale = Random.Range(minScale, maxScale + 1);
+            scale = Random.Range(m_DataCurrChunk.minScale, m_DataCurrChunk.maxScale + 1);
         }
 
         // Génération aléatoire de la valeur de octaves entre minOctaves et maxOctaves
-        if(m_Data.useRandomOctave)
+        if (m_DataCurrChunk.useRandomOctave)
         {
-            octaves = Random.Range(minOctaves, maxOctaves + 1);
+            octaves = Random.Range(m_DataCurrChunk.minOctave, m_DataCurrChunk.maxOctave + 1);
         }
 
         // Génération aléatoire de la valeur de persistence entre minPersistence et maxPersistence
-        if(m_Data.useRandomPersistence)
+        if (m_DataCurrChunk.useRandomPersistence)
         {
-            persistence = Random.Range(minPersistence, maxPersistence + 1);
+            persistence = Random.Range(m_DataCurrChunk.minPersistence, m_DataCurrChunk.maxPersistence + 1);
         }
 
         // Génération aléatoire de la valeur de lacunarity entre minLacunarity et maxLacunarity
-        if(m_Data.useRandomLacunarity)
+        if (m_DataCurrChunk.useRandomLacunarity)
         {
-            lacunarity = Random.Range(minLacunarity, maxLacunarity + 1);
+            lacunarity = Random.Range(m_DataCurrChunk.minLacunarity, m_DataCurrChunk.maxLacunarity + 1);
         }
 
         // Génération aléatoire de la valeur de seed entre minSeed et maxSeed
-        if(m_Data.useRandomSeed)
+        if (m_DataCurrChunk.useRandomSeed)
         {
-            seed = Random.Range(minSeed, maxSeed + 1);
+            seed = Random.Range(m_DataCurrChunk.minSeed, m_DataCurrChunk.maxSeed + 1);
         }
     }
 
     public void GenerateMap()
     {
-        InitValue();
-        GenerateRandomValues(m_Data.minScale, m_Data.maxScale, m_Data.minOctave, m_Data.maxOctave, m_Data.minPersistence, m_Data.maxPersistence, m_Data.minLacunarity, m_Data.maxLacunarity, m_Data.minSeed, m_Data.maxSeed);
-        GenerateCave();
+        m_DataCaveGenerator = (DataCaveGenerator)Pool.m_Instance.GetData(caveGeneratorData);
+        grid = new EnumData[m_DataCaveGenerator.nbChunkRight * m_DataCaveGenerator.chunkWidth, m_DataCaveGenerator.nbChunkDown * m_DataCaveGenerator.chunkHeight];
+
+        if(m_DictDepthChunk == null)
+        {
+            m_DictDepthChunk = new Dictionary<int, List<DataCaveGenerator.CaveChunk>>();
+        }
+        else
+        {
+            m_DictDepthChunk.Clear();
+        }
+
+        for(int i = 0; i < m_DataCaveGenerator.nbChunkDown; i++)
+        {
+            m_DictDepthChunk.Add(i, new List<DataCaveGenerator.CaveChunk>());
+        }
+
+        foreach(DataCaveGenerator.CaveChunk chunk in m_DataCaveGenerator.cave)
+        {
+            for(int i = chunk.chunkMinDepth; i <= chunk.chunkMaxDepth; i++)
+            {
+                List<DataCaveGenerator.CaveChunk> currList;
+                if(m_DictDepthChunk.TryGetValue(i, out currList))
+                {
+                    currList.Add(chunk);
+                }
+            }
+        }
+
+        for (int y = 0; y < m_DataCaveGenerator.nbChunkDown; y++)
+        {
+            currGridY = y;
+
+            for (int x = 0; x < m_DataCaveGenerator.nbChunkRight; x++)
+            {
+                currGridX = x;
+
+                SetCurrChunk();
+                InitValue();
+                GenerateCave();
+            }
+        }
+
         DrawGrid();
     }
 
     private void InitValue()
     {
-        if (m_Instance == null)
-        {
-            m_Instance = this;
-        }
+        scale = m_DataCurrChunk.scale;
 
-        m_Data = (DataCaveChunk)Pool.m_Instance.GetData(caveResource);
+        octaves = m_DataCurrChunk.octaves;
 
-        if (m_Blocks == null)
-        {
-            m_Blocks = new Dictionary<int, EnumData>();
-        }
-        m_Blocks.Clear();
-        for(int i = 0; i < m_Data.blocksList.Count; i++)
-        {
-            m_Blocks.Add(i, m_Data.blocksList[i].block);
-        }
+        persistence = m_DataCurrChunk.persistence;
 
-        scale = m_Data.scale;
+        lacunarity = m_DataCurrChunk.lacunarity;
 
-        octaves = m_Data.octaves;
+        seed = m_DataCurrChunk.seed;
 
-        persistence = m_Data.persistence;
-
-        lacunarity = m_Data.lacunarity;
-
-        seed = m_Data.seed;
-
-        grid = new EnumData[m_Data.gridWidth, m_Data.gridHeight];
+        GenerateRandomValues();
     }
 
     public void GenerateCave()
     {
-        // On utilise un germe aléatoire pour initialiser la graine du générateur de nombres aléatoires
         System.Random rand = new System.Random(seed);
-        // On utilise l'algorithme de bruit de Perlin pour générer un bruit de Perlin 2D
-        float[,] noiseMap = Noise.GenerateNoiseMap(grid.GetLength(0), grid.GetLength(1), scale, octaves, persistence, lacunarity, rand.Next());
 
-        // On parcourt tous les éléments de la grille
-        for (int x = 0; x < grid.GetLength(0); x++)
+        // algorithme de bruit de Perlin pour générer un bruit de Perlin 2D
+        float[,] noiseMap = Noise.GenerateNoiseMap(m_DataCaveGenerator.chunkWidth, m_DataCaveGenerator.chunkHeight, scale, octaves, persistence, lacunarity, rand.Next());
+
+        // Parcour tout les element de la grid et defini il est de quelle type selon le bruit de perlin et les valeur de la cave
+        for (int x = 0; x < m_DataCaveGenerator.chunkWidth; x++)
         {
-            for (int y = 0; y < grid.GetLength(1); y++)
+            for (int y = 0; y < m_DataCaveGenerator.chunkHeight; y++)
             {
-                int count = 0;
-                foreach(DataCaveChunk.Block block in m_Data.blocksList)
+                foreach (DataCaveChunk.Block block in m_DataCurrChunk.blocksList)
                 {
                     if (noiseMap[x, y] >= block.minValue && noiseMap[x, y] <= block.maxValue)
                     {
-                        grid[x, y] = block.block;
+                        grid[x + (m_DataCaveGenerator.chunkWidth * currGridX), y + (m_DataCaveGenerator.chunkHeight * currGridY)] = block.block;
                     }
-                    count++;
                 }
             }
+        }
+    }
+
+    private void SetCurrChunk()
+    {
+        int index = Random.Range(0, m_DictDepthChunk[currGridY].Count);
+        DataCaveGenerator.CaveChunk caveChunk = m_DictDepthChunk[currGridY][index];
+        m_DataCurrChunk = (DataCaveChunk)Pool.m_Instance.GetData(caveChunk.dataChunk);
+
+        int checkRarity = Random.Range(1, 101);
+        if(checkRarity > caveChunk.rarity)
+        {
+            SetCurrChunk();
         }
     }
 

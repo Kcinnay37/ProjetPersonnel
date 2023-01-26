@@ -22,12 +22,32 @@ public enum EnumData
     pickaxe,
 
     //block
-    rock,
+    amethyst,
+    emerald,
     iron,
-    background,
+    coal,
 
-    //cave
-    cave1
+    backGroundFire,
+    backGroundIce,
+    backGroundRock,
+    backGroundEarth,
+
+    rockNormal,
+    rockFire,
+    rockIce,
+    earth,
+
+    //caveChunk
+    caveChunkRock,
+    caveChunkIce,
+    caveChunkFire,
+    caveChunkRockIce,
+    caveChunkRockFire,
+    caveChunkEarth,
+    caveChunkEarthRock,
+
+    //caveGenerator
+    caveGeneratorBase
 }
 
 public enum EnumState
