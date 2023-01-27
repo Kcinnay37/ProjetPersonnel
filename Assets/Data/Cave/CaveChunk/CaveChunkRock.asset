@@ -13,28 +13,31 @@ MonoBehaviour:
   m_Name: CaveChunkRock
   m_EditorClassIdentifier: 
   blocksList:
-  - block: 7
-    minValue: 0
-    maxValue: 1
-  - block: 8
-    minValue: 0.42
-    maxValue: 1
   - block: 4
     minValue: 0.7
     maxValue: 0.72
-  scale: 14
+    rarity: 50
+  - block: 10
+    minValue: 0.41
+    maxValue: 1
+    rarity: 100
+  - block: 8
+    minValue: 0
+    maxValue: 1
+    rarity: 100
+  scale: 10
   useRandomScale: 0
   minScale: 0
   maxScale: 0
-  octaves: 6
+  octaves: 3
   useRandomOctave: 0
   minOctave: 0
   maxOctave: 0
-  persistence: 0.5
+  persistence: 0.61
   useRandomPersistence: 0
   minPersistence: 0
   maxPersistence: 0
-  lacunarity: 0.7
+  lacunarity: 1.33
   useRandomLacunarity: 0
   minLacunarity: 0
   maxLacunarity: 0

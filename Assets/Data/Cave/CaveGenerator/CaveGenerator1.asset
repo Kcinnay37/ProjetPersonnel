@@ -14,10 +14,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cave:
   - dataChunk: 19
+    chunkMinDepth: 4
+    chunkMaxDepth: 4
+    rarity: 100
+  - dataChunk: 20
+    chunkMinDepth: 5
+    chunkMaxDepth: 5
+    rarity: 100
+  - dataChunk: 20
+    chunkMinDepth: 3
+    chunkMaxDepth: 3
+    rarity: 100
+  - dataChunk: 14
+    chunkMinDepth: 6
+    chunkMaxDepth: 6
+    rarity: 100
+  - dataChunk: 14
+    chunkMinDepth: 2
+    chunkMaxDepth: 2
+    rarity: 100
+  - dataChunk: 17
+    chunkMinDepth: 7
+    chunkMaxDepth: 7
+    rarity: 100
+  - dataChunk: 18
+    chunkMinDepth: 1
+    chunkMaxDepth: 1
+    rarity: 100
+  - dataChunk: 15
+    chunkMinDepth: 8
+    chunkMaxDepth: 8
+    rarity: 100
+  - dataChunk: 16
     chunkMinDepth: 0
     chunkMaxDepth: 0
     rarity: 100
   chunkWidth: 1000
   chunkHeight: 200
   nbChunkRight: 1
-  nbChunkDown: 1
+  nbChunkDown: 9

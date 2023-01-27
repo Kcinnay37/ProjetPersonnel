@@ -19,13 +19,13 @@ public class MapGenerator : MonoBehaviour
 
     EnumData[,] grid;
 
-    static MapGenerator m_Instance;
+    public static MapGenerator m_Instance;
 
-    DataCaveGenerator m_DataCaveGenerator;
-    DataCaveChunk m_DataCurrChunk;
+    private DataCaveGenerator m_DataCaveGenerator;
+    private DataCaveChunk m_DataCurrChunk;
 
-    private int currGridX = 0;
-    private int currGridY = 0;
+    private int currGridChunkX = 0;
+    private int currGridChunkY = 0;
 
     private Dictionary<int, List<DataCaveGenerator.CaveChunk>> m_DictDepthChunk;
 
@@ -126,6 +126,7 @@ public class MapGenerator : MonoBehaviour
 
     public void GenerateMap()
     {
+        // init les value ----------------------------
         m_DataCaveGenerator = (DataCaveGenerator)Pool.m_Instance.GetData(caveGeneratorData);
         grid = new EnumData[m_DataCaveGenerator.nbChunkRight * m_DataCaveGenerator.chunkWidth, m_DataCaveGenerator.nbChunkDown * m_DataCaveGenerator.chunkHeight];
 
@@ -154,14 +155,15 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
+        // ----------------------------------------------
 
         for (int y = 0; y < m_DataCaveGenerator.nbChunkDown; y++)
         {
-            currGridY = y;
+            currGridChunkY = y;
 
             for (int x = 0; x < m_DataCaveGenerator.nbChunkRight; x++)
             {
-                currGridX = x;
+                currGridChunkX = x;
 
                 SetCurrChunk();
                 InitValue();
@@ -203,7 +205,12 @@ public class MapGenerator : MonoBehaviour
                 {
                     if (noiseMap[x, y] >= block.minValue && noiseMap[x, y] <= block.maxValue)
                     {
-                        grid[x + (m_DataCaveGenerator.chunkWidth * currGridX), y + (m_DataCaveGenerator.chunkHeight * currGridY)] = block.block;
+                        grid[x + (m_DataCaveGenerator.chunkWidth * currGridChunkX), y + (m_DataCaveGenerator.chunkHeight * currGridChunkY)] = block.block;
+                        int checkRarity = Random.Range(1, 101);
+                        if (checkRarity <= block.rarity)
+                        {
+                            break;
+                        }
                     }
                 }
             }
@@ -212,8 +219,8 @@ public class MapGenerator : MonoBehaviour
 
     private void SetCurrChunk()
     {
-        int index = Random.Range(0, m_DictDepthChunk[currGridY].Count);
-        DataCaveGenerator.CaveChunk caveChunk = m_DictDepthChunk[currGridY][index];
+        int index = Random.Range(0, m_DictDepthChunk[currGridChunkY].Count);
+        DataCaveGenerator.CaveChunk caveChunk = m_DictDepthChunk[currGridChunkY][index];
         m_DataCurrChunk = (DataCaveChunk)Pool.m_Instance.GetData(caveChunk.dataChunk);
 
         int checkRarity = Random.Range(1, 101);
@@ -222,24 +229,4 @@ public class MapGenerator : MonoBehaviour
             SetCurrChunk();
         }
     }
-
-    //public void FillBorders()
-    //{
-    //    int width = grid.GetLength(0);
-    //    int height = grid.GetLength(1);
-
-    //    // Remplissage de la première et de la dernière colonne
-    //    for (int y = 0; y < height; y++)
-    //    {
-    //        grid[0, y] = 1;
-    //        grid[width - 1, y] = 1;
-    //    }
-
-    //    // Remplissage de la première et de la dernière ligne
-    //    for (int x = 0; x < width; x++)
-    //    {
-    //        grid[x, 0] = 1;
-    //        grid[x, height - 1] = 1;
-    //    }
-    //}
 }
