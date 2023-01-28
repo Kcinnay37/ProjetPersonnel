@@ -8,7 +8,7 @@ public class TestMap : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-            MapGenerator.m_Instance.GenerateMap();
+            Map.m_Instance.GenerateMap();
         }
     }
 }

@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 449410097}
   - component: {fileID: 449410096}
   m_Layer: 0
-  m_Name: MapGenerator
+  m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc48d919d029014982bb6934d5a5d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  caveGeneratorData: 21
+  m_CaveGeneratorData: 21
+  m_ViewCaseSize: 100
+  m_ViewCaseDrawRange: 1
 --- !u!4 &449410097
 Transform:
   m_ObjectHideFlags: 0
@@ -665,7 +667,7 @@ MonoBehaviour:
   - type: CaveGenerator
     dataList:
     - type: 21
-      data: {fileID: 11400000, guid: ac35517a4750f704e9368ac8a0b3f375, type: 2}
+      data: {fileID: 11400000, guid: 6d291d474b49354438f7693dde27e556, type: 2}
   m_ParentGameObjectName: Pool
 --- !u!4 &1689296142
 Transform:

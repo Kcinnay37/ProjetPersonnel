@@ -49,7 +49,7 @@ MonoBehaviour:
     chunkMinDepth: 0
     chunkMaxDepth: 0
     rarity: 100
-  chunkWidth: 1000
+  chunkWidth: 200
   chunkHeight: 200
   nbChunkRight: 1
   nbChunkDown: 9
