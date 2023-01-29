@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class DataCaveGenerator : ScriptableObject
+public class DataMap : ScriptableObject
 {
     [System.Serializable]
-    public struct CaveChunk
+    public struct Biome
     {
-        public EnumData dataChunk;
+        public EnumBiomes dataBiome;
         public int chunkMinDepth;
         public int chunkMaxDepth;
         [Range(0, 100)]
         public int rarity;
     }
 
-    public List<CaveChunk> cave;
+    public List<Biome> mapBiomes;
 
     public int chunkWidth;
     public int chunkHeight;

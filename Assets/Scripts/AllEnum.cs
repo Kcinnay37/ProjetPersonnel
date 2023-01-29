@@ -1,53 +1,54 @@
-public enum EnumObject
+public enum EnumBlocks
 {
-    //rien
-    none,
-
-    // outil
-    pickaxe,
-
-    //block
     block,
 
-    //UI
+    earth,
+    backGroundEarth,
+    coal,
+
+    rock,
+    backGroundRock,
+    iron,
+
+    rockFire,
+    backGroundFire,
+    emerald,
+
+    rockIce,
+    backGroundIce,
+    amethyst
+}
+
+public enum EnumTools
+{
+    pickaxe,
+    sword,
+    axe
+}
+
+public enum EnumUI
+{
     slotEquip
 }
 
-public enum EnumData
+public enum EnumBiomes
 {
-    //rien
-    none,
-
-    // outil
-    pickaxe,
-
-    //block
-    amethyst,
-    emerald,
-    iron,
-    coal,
-
-    backGroundFire,
-    backGroundIce,
-    backGroundRock,
-    backGroundEarth,
-
-    rockNormal,
-    rockFire,
-    rockIce,
     earth,
+    earthRock,
 
-    //caveChunk
-    caveChunkRock,
-    caveChunkIce,
-    caveChunkFire,
-    caveChunkRockIce,
-    caveChunkRockFire,
-    caveChunkEarth,
-    caveChunkEarthRock,
+    rock,
+    rockIce,
+    rockFire,
 
-    //caveGenerator
-    caveGeneratorBase
+    ice,
+
+    fire,
+}
+
+public enum EnumMaps
+{
+    caveGeneratorGame,
+    caveGeneratorTest
 }
 
 public enum EnumState

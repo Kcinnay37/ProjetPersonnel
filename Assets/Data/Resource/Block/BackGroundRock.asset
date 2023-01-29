@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0586d786bd1ac244b8d85465416c0e3, type: 3}
-  m_Name: RockNormal
+  m_Name: BackGroundRock
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 3caf2c637f5a0ec4ba865b97b896e3f0, type: 3}
+  image: {fileID: 21300000, guid: 04af1a2213b168d499e012cb23f2fbdb, type: 3}
   state: 0
   gameObject: 2
-  maxStack: 999
-  mapName: Environement
-  tile: {fileID: 11400000, guid: 20d6c1eb886434c4e8de8652b7e4f359, type: 2}
+  maxStack: 0
+  mapName: BG
+  tile: {fileID: 11400000, guid: 38b335940dd97f94f890caad6c417eee, type: 2}

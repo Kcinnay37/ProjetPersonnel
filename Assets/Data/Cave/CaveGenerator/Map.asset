@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 629947b6afe774f41bfd5a50f97fa2ba, type: 3}
-  m_Name: CaveGeneratorTest
+  m_Script: {fileID: 11500000, guid: d1a1ee27bdc255b41985e9d281cbd58f, type: 3}
+  m_Name: Map
   m_EditorClassIdentifier: 
-  cave:
-  - dataChunk: 19
+  mapBiomes:
+  - dataBiome: 0
     chunkMinDepth: 0
-    chunkMaxDepth: 100
+    chunkMaxDepth: 10
     rarity: 100
-  chunkWidth: 100
+  chunkWidth: 200
   chunkHeight: 100
   nbChunkRight: 1
   nbChunkDown: 1

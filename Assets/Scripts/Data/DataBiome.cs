@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class DataCaveChunk : ScriptableObject
+public class DataBiome : ScriptableObject
 {
     [System.Serializable]
     public struct Block
     {
-        public EnumData block;
+        public EnumBlocks block;
         public float minValue;
         public float maxValue;
         [Range(0, 100)]
         public int rarity;
     }
 
-    public List<Block> blocksList = new List<Block>();
+    public List<Block> biomeBlocks = new List<Block>();
 
     [Header("")]
     [Tooltip("une valeur comprise entre 0,1 et 10 est généralement raisonnable")]
@@ -62,4 +62,10 @@ public class DataCaveChunk : ScriptableObject
     public bool useRandomSeed = false;
     public int minSeed;
     public int maxSeed;
+
+    [Header("")]
+    public AnimationCurve heightCurve;
+
+    [Header("")]
+    public Vector2 offset;
 }

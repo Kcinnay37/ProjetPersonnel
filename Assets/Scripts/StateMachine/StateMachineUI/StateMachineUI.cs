@@ -11,6 +11,6 @@ public class StateMachineUI : StateMachine
 
     public override void InitAllStates()
     {
-        m_States.Add(EnumState.UIEquipInventory, new StateUIEquipInventory(this));
+        //m_States.Add(EnumState.UIEquipInventory, new StateUIEquipInventory(this));
     }
 }

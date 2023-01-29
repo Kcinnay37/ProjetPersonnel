@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb5814d0e0f901d46aa230d9767ad8f3, type: 3}
-  m_Name: CaveChunkEarthRock
+  m_Name: RockIce
   m_EditorClassIdentifier: 
   blocksList:
+  - block: 2
+    minValue: 0.6
+    maxValue: 0.7
+    rarity: 5
   - block: 4
-    minValue: 0.74
-    maxValue: 0.78
-    rarity: 20
-  - block: 5
-    minValue: 0.85
-    maxValue: 0.95
-    rarity: 80
-  - block: 10
-    minValue: 0.44
+    minValue: 0.7
+    maxValue: 0.72
+    rarity: 46
+  - block: 12
+    minValue: 0.41
     maxValue: 1
     rarity: 30
-  - block: 13
-    minValue: 0.44
+  - block: 10
+    minValue: 0.41
     maxValue: 1
     rarity: 100
-  - block: 9
+  - block: 8
     minValue: 0
     maxValue: 1
     rarity: 100
-  scale: 9
+  scale: 8.2
   useRandomScale: 0
   minScale: 0
   maxScale: 0
@@ -41,15 +41,15 @@ MonoBehaviour:
   useRandomOctave: 0
   minOctave: 0
   maxOctave: 0
-  persistence: 0.53
+  persistence: 0.5
   useRandomPersistence: 0
   minPersistence: 0
   maxPersistence: 0
-  lacunarity: 1.41
+  lacunarity: 0.7
   useRandomLacunarity: 0
   minLacunarity: 0
   maxLacunarity: 0
   seed: 0
   useRandomSeed: 1
   minSeed: 0
-  maxSeed: 0
+  maxSeed: 2147483647

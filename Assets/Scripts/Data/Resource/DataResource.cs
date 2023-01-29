@@ -6,6 +6,5 @@ public class DataResource : ScriptableObject
 {
     public Sprite image;
     public EnumState state;
-    public EnumObject gameObject;
     public int maxStack;
 }

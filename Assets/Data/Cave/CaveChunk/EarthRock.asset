@@ -10,22 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb5814d0e0f901d46aa230d9767ad8f3, type: 3}
-  m_Name: CaveChunkIce
+  m_Name: EarthRock
   m_EditorClassIdentifier: 
-  blocksList:
-  - block: 2
-    minValue: 0.43
-    maxValue: 1
-    rarity: 3
-  - block: 12
-    minValue: 0.42
-    maxValue: 1
-    rarity: 100
-  - block: 7
+  biomeBlocks:
+  - block: 6
     minValue: 0
-    maxValue: 1
+    maxValue: 0
+    rarity: 0
+  - block: 3
+    minValue: 0
+    maxValue: 0
+    rarity: 0
+  - block: 4
+    minValue: 0
+    maxValue: 0
     rarity: 100
-  scale: 9.5
+  - block: 1
+    minValue: 0
+    maxValue: 0
+    rarity: 100
+  - block: 2
+    minValue: 0
+    maxValue: 0
+    rarity: 100
+  scale: 9
   useRandomScale: 0
   minScale: 0
   maxScale: 0
@@ -33,15 +41,15 @@ MonoBehaviour:
   useRandomOctave: 0
   minOctave: 0
   maxOctave: 0
-  persistence: 0.5
+  persistence: 0.53
   useRandomPersistence: 0
   minPersistence: 0
   maxPersistence: 0
-  lacunarity: 0.7
+  lacunarity: 1.41
   useRandomLacunarity: 0
   minLacunarity: 0
   maxLacunarity: 0
   seed: 0
   useRandomSeed: 1
   minSeed: 0
-  maxSeed: 2147483647
+  maxSeed: 0

@@ -6,43 +6,68 @@ using UnityEngine;
 public class Pool : MonoBehaviour
 {
     [System.Serializable]
-    public struct ObjectPool
+    public struct Block
     {
-        public EnumObject type;
-        public GameObject gameObject;
+        public EnumBlocks type;
+        public UnityEngine.Object value;
     }
 
     [System.Serializable]
-    public struct DataPool
+    public struct Tool
     {
-        public EnumData type;
-        public ScriptableObject data;
+        public EnumTools type;
+        public UnityEngine.Object value;
     }
 
     [System.Serializable]
-    public struct ListObjectPool
+    public struct UI
     {
-        public string type;
-        public List<ObjectPool> objectList;
+        public EnumUI type;
+        public UnityEngine.Object value;
     }
 
     [System.Serializable]
-    public struct ListDataPool
+    public struct Biome
     {
-        public string type;
-        public List<DataPool> dataList;
+        public EnumBiomes type;
+        public UnityEngine.Object value;
     }
 
-    [SerializeField] List<ListObjectPool> m_ObjectPoolList;
-    [SerializeField] List<ListDataPool> m_DataPoolList;
+    [System.Serializable]
+    public struct Map
+    {
+        public EnumMaps type;
+        public UnityEngine.Object value;
+    }
+    
+    [Header("Blocks")]
+    [SerializeField] List<Block> m_InstanceBlocks;
+    [SerializeField] List<Block> m_DataBlocks;
 
+    [Header("Outils")]
+    [SerializeField] List<Tool> m_InstanceTools;
+    [SerializeField] List<Tool> m_DataTools;
+
+    [Header("UI")]
+    [SerializeField] List<UI> m_InstanceUI;
+    [SerializeField] List<UI> m_DataUI;
+
+    [Header("Biomes")]
+    [SerializeField] List<Biome> m_InstanceBiomes;
+    [SerializeField] List<Biome> m_DataBiomes;
+
+    [Header("Maps")]
+    [SerializeField] List<Map> m_InstanceMaps;
+    [SerializeField] List<Map> m_DataMaps;
+
+    [Header("ParentObjectInHierarchy")]
     [SerializeField] string m_ParentGameObjectName;
 
     private GameObject m_ParentGameObject;
 
-    private Dictionary<EnumObject, GameObject> m_ObjectPool;
-    private Dictionary<EnumData, ScriptableObject> m_DataPool;
-    private Dictionary<EnumObject, List<GameObject>> m_AvailablePool;
+    private Dictionary<object, GameObject> m_InstancePool;
+    private Dictionary<object, ScriptableObject> m_DataPool;
+    private Dictionary<object, List<GameObject>> m_AvailableInstancePool;
 
     private static Pool m_Pool;
 
@@ -61,70 +86,127 @@ public class Pool : MonoBehaviour
 
     private void Init()
     {
-        InitObjectsPool();
+        InitInstancePool();
         InitDataPool();
-        InitAvailablePool();
+        InitAvailableInstancePool();
     }
 
-    private void InitAvailablePool()
+    private void InitAvailableInstancePool()
     {
-        if (m_AvailablePool == null)
+        // init dictionary ---------------------------
+        if (m_AvailableInstancePool == null)
         {
-            m_AvailablePool = new Dictionary<EnumObject, List<GameObject>>();
+            m_AvailableInstancePool = new Dictionary<object, List<GameObject>>();
         }
-        m_AvailablePool.Clear();
+        m_AvailableInstancePool.Clear();
+        // -------------------------------------------
 
-        foreach (ListObjectPool currListObject in m_ObjectPoolList)
+        // init list in dictonary -------------------------------------
+        foreach (Block value in m_InstanceBlocks)
         {
-            foreach(ObjectPool currObject in currListObject.objectList)
-            {
-                m_AvailablePool.Add(currObject.type, new List<GameObject>());
-            }
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
+
+        foreach (Tool value in m_InstanceTools)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (UI value in m_InstanceUI)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (Biome value in m_InstanceBiomes)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (Map value in m_InstanceMaps)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+        // ------------------------------------------------------------
     }
 
-    private void InitObjectsPool()
+    private void InitInstancePool()
     {
-        if(m_ObjectPool == null)
+        if(m_InstancePool == null)
         {
-            m_ObjectPool = new Dictionary<EnumObject, GameObject>();
+            m_InstancePool = new Dictionary<object, GameObject>();
         }
-        m_ObjectPool.Clear();
+        m_InstancePool.Clear();
 
-        foreach (ListObjectPool currListObject in m_ObjectPoolList)
+        // init les object -------------------------------------
+        foreach (Block value in m_InstanceBlocks)
         {
-            foreach (ObjectPool currObject in currListObject.objectList)
-            {
-                m_ObjectPool.Add(currObject.type, currObject.gameObject);
-            }
+            m_InstancePool.Add(value.type, (GameObject)value.value);
         }
+
+        foreach (Tool value in m_InstanceTools)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (UI value in m_InstanceUI)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (Biome value in m_InstanceBiomes)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (Map value in m_InstanceMaps)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+        // ------------------------------------------------------------
     }
 
     private void InitDataPool()
     {
         if (m_DataPool == null)
         {
-            m_DataPool = new Dictionary<EnumData, ScriptableObject>();
+            m_DataPool = new Dictionary<object, ScriptableObject>();
         }
         m_DataPool.Clear();
 
 
-        foreach (ListDataPool currListData in m_DataPoolList)
+        foreach (Block value in m_DataBlocks)
         {
-            foreach (DataPool currData in currListData.dataList)
-            {
-                m_DataPool.Add(currData.type, currData.data);
-            }
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Tool value in m_DataTools)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (UI value in m_DataUI)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Biome value in m_DataBiomes)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Map value in m_DataMaps)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }
     }
 
-    // retourn un game object disponible si il na pas n'initialise un nouveau
-    public GameObject GetObject(EnumObject type)
+    // retourn un object disponible si il na pas n'initialise un nouveau
+    public GameObject GetObject(object type)
     {
         GameObject currObject = null;
         List<GameObject> currListObject;
 
-        m_AvailablePool.TryGetValue(type, out currListObject);
+        m_AvailableInstancePool.TryGetValue(type, out currListObject);
         
         if(currListObject.Count > 0)
         {
@@ -140,7 +222,7 @@ public class Pool : MonoBehaviour
     }
 
     // Enleve d'actif un game object et le met disponible
-    public void RemoveObject(GameObject currObject, EnumObject type)
+    public void RemoveObject(GameObject currObject, object type)
     {
         currObject.SetActive(false);
 
@@ -151,19 +233,19 @@ public class Pool : MonoBehaviour
 
         currObject.transform.parent = m_ParentGameObject.transform;
 
-        m_AvailablePool[type].Add(currObject);
+        m_AvailableInstancePool[type].Add(currObject);
     }
 
     // initialise un gameObject et le retourn
-    private GameObject InitObject(EnumObject type)
+    private GameObject InitObject(object type)
     {
-        GameObject newObject = Instantiate(m_ObjectPool[type]);
+        GameObject newObject = Instantiate(m_InstancePool[type]);
         newObject.SetActive(false);
 
         return newObject;
     }
 
-    public ScriptableObject GetData(EnumData type)
+    public ScriptableObject GetData(object type)
     {
         return m_DataPool[type];
     }
