@@ -18,28 +18,28 @@ MonoBehaviour:
     maxValue: 0
     rarity: 0
   - block: 1
-    minValue: 0.25
+    minValue: 0.44
     maxValue: 1
     rarity: 100
   - block: 2
     minValue: 0
     maxValue: 1
     rarity: 100
-  scale: 9.3
+  scale: 6.9
   useRandomScale: 0
   minScale: 0.05
   maxScale: 0.1
-  octaves: 5
+  octaves: 4
   useRandomOctave: 0
   minOctave: 6
   maxOctave: 8
-  persistence: 0.35
+  persistence: 0.53
   useRandomPersistence: 0
   minPersistence: 0.5
   maxPersistence: 0.6
-  lacunarity: 1.86
+  lacunarity: 1.39
   useRandomLacunarity: 0
-  minLacunarity: 2
+  minLacunarity: 1.78
   maxLacunarity: 3
   seed: 0
   useRandomSeed: 0
@@ -60,8 +60,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -69,4 +69,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  offset: {x: 100, y: 100}
+  offset: {x: 0, y: 0}

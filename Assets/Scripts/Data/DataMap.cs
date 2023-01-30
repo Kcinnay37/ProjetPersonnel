@@ -22,4 +22,9 @@ public class DataMap : ScriptableObject
 
     public int nbChunkRight;
     public int nbChunkDown;
+
+    [Header("")]
+    public int chunkViewSize;
+
+    public int nbChunkView;
 }

@@ -4,21 +4,25 @@ using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
-    [SerializeField] ScriptableObject m_Data;
+    [SerializeField] EnumStateMachines m_Data;
 
-    private List<EnumState> m_CurrStates;
-    protected Dictionary<EnumState, State> m_States;
+    private List<object> m_CurrStates;
 
-    private List<EnumState> m_StatesToAdd;
-    private List<EnumState> m_StatesToDelete;
+    protected Dictionary<object, State> m_States;
+
+    private List<object> m_StatesToAdd;
+    private List<object> m_StatesToDelete;
+
+    private Dictionary<object, StateData> m_StatesDatas;
 
     private void Awake()
     {
         // initialise tout ---------------------------
-        m_CurrStates = new List<EnumState>();
-        m_States = new Dictionary<EnumState, State>();
-        m_StatesToAdd = new List<EnumState>();
-        m_StatesToDelete = new List<EnumState>();
+        m_CurrStates = new List<object>();
+        m_States = new Dictionary<object, State>();
+        m_StatesToAdd = new List<object>();
+        m_StatesToDelete = new List<object>();
+        m_StatesDatas = new Dictionary<object, StateData>();
 
         InitAllStates();
         // -------------------------------------------
@@ -53,7 +57,7 @@ public abstract class StateMachine : MonoBehaviour
     private void CallStart()
     {
         // ajoute les state a ajouter et appel leur Awake 
-        foreach (EnumState state in m_StatesToAdd)
+        foreach (object state in m_StatesToAdd)
         {
             if (!m_CurrStates.Contains(state))
             {
@@ -66,7 +70,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void CallFixedUpdate()
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].FixedUpdate();
         }
@@ -74,7 +78,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void CallUpdate()
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].Update();
         }
@@ -82,7 +86,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void CallLateUpdate()
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].LateUpdate();
         }
@@ -90,7 +94,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void CallEnd()
     {
-        foreach (EnumState state in m_StatesToDelete)
+        foreach (object state in m_StatesToDelete)
         {
             if (m_CurrStates.Contains(state))
             {
@@ -110,27 +114,40 @@ public abstract class StateMachine : MonoBehaviour
     // ajoute les state initial
     public abstract void AddInitialsStates();
 
-    // ajoute une state dans la state courrant
-    public void AddCurrState(EnumState state)
+    //ajoute une nouvelle state a la state machine
+    public void AddNewState(object key, State value)
     {
-        if(state != EnumState.none)
+        m_States.Add(key, value);
+    }
+
+    public void AddNewStateData(object key, StateData value)
+    {
+        m_StatesDatas.Add(key, value);
+    }
+
+    public void PopStateData(object state)
+    {
+        if (m_StatesDatas.ContainsKey(state))
         {
-            if (m_States.ContainsKey(state))
-            {
-                m_StatesToAdd.Add(state);
-            }
+            m_StatesDatas.Remove(state);
+        }
+    }
+
+    // ajoute une state dans la state courrant
+    public void AddCurrState(object state)
+    {
+        if (m_States.ContainsKey(state))
+        {
+            m_StatesToAdd.Add(state);
         }
     }
 
     // pop une state des states courrant
-    public void PopCurrState(EnumState state)
+    public void PopCurrState(object state)
     {
-        if (state != EnumState.none)
+        if (m_States.ContainsKey(state))
         {
-            if (m_States.ContainsKey(state))
-            {
-                m_StatesToDelete.Add(state);
-            }
+            m_StatesToDelete.Add(state);
         }
     }
     // -------------------------------------------------------------------------------------------------
@@ -138,7 +155,7 @@ public abstract class StateMachine : MonoBehaviour
     // appel les collision sur les state active ---------------------------------------------------------------------------------------
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].OnCollisionEnter2D(collision);
         }
@@ -146,7 +163,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].OnCollisionStay2D(collision);
         }
@@ -154,7 +171,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].OnCollisionExit2D(collision);
         }
@@ -162,7 +179,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].OnTriggerEnter2D(collision);
         }
@@ -170,7 +187,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].OnTriggerStay2D(collision);
         }
@@ -178,7 +195,7 @@ public abstract class StateMachine : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        foreach (EnumState state in m_CurrStates)
+        foreach (object state in m_CurrStates)
         {
             m_States[state].OnTriggerExit2D(collision);
         }
@@ -188,12 +205,17 @@ public abstract class StateMachine : MonoBehaviour
     // retourn le data de la stateMachine
     public ScriptableObject GetData()
     {
-        return m_Data;
+        return Pool.m_Instance.GetData(m_Data);
     }
 
     // retourn une state de la statemachine
-    public State GetState(EnumState state)
+    public State GetState(object state)
     {
         return m_States[state];
+    }
+
+    public StateData GetStateData(object state)
+    {
+        return m_StatesDatas[state];
     }
 }

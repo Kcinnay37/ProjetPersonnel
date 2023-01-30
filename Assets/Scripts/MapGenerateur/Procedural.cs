@@ -70,7 +70,7 @@ public static class Procedural
         return noiseMap;
     }
 
-    public static float[,] GenerateNoiseMap2(int mapWidth, int mapHeight, float scale, int octaves, float persistence, float lacunarity, int seed, Vector2 offset, AnimationCurve heightCurve)
+    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, float scale, int octaves, float persistence, float lacunarity, int seed, Vector2 offset, AnimationCurve heightCurve)
     {
         float[,] noiseMap = new float[mapWidth, mapHeight];
 

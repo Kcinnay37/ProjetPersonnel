@@ -6,6 +6,20 @@ using UnityEngine;
 public class Pool : MonoBehaviour
 {
     [System.Serializable]
+    public struct StateMachine
+    {
+        public EnumStateMachines type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
+    public struct Biome
+    {
+        public EnumBiomes type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
     public struct Block
     {
         public EnumBlocks type;
@@ -26,20 +40,14 @@ public class Pool : MonoBehaviour
         public UnityEngine.Object value;
     }
 
-    [System.Serializable]
-    public struct Biome
-    {
-        public EnumBiomes type;
-        public UnityEngine.Object value;
-    }
+    [Header("StateMachine")]
+    [SerializeField] List<StateMachine> m_InstanceStateMachines;
+    [SerializeField] List<StateMachine> m_DataStateMachines;
 
-    [System.Serializable]
-    public struct Map
-    {
-        public EnumMaps type;
-        public UnityEngine.Object value;
-    }
-    
+    [Header("Biomes")]
+    [SerializeField] List<Biome> m_InstanceBiomes;
+    [SerializeField] List<Biome> m_DataBiomes;
+
     [Header("Blocks")]
     [SerializeField] List<Block> m_InstanceBlocks;
     [SerializeField] List<Block> m_DataBlocks;
@@ -51,14 +59,6 @@ public class Pool : MonoBehaviour
     [Header("UI")]
     [SerializeField] List<UI> m_InstanceUI;
     [SerializeField] List<UI> m_DataUI;
-
-    [Header("Biomes")]
-    [SerializeField] List<Biome> m_InstanceBiomes;
-    [SerializeField] List<Biome> m_DataBiomes;
-
-    [Header("Maps")]
-    [SerializeField] List<Map> m_InstanceMaps;
-    [SerializeField] List<Map> m_DataMaps;
 
     [Header("ParentObjectInHierarchy")]
     [SerializeField] string m_ParentGameObjectName;
@@ -102,6 +102,16 @@ public class Pool : MonoBehaviour
         // -------------------------------------------
 
         // init list in dictonary -------------------------------------
+        foreach (StateMachine value in m_InstanceStateMachines)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (Biome value in m_InstanceBiomes)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
         foreach (Block value in m_InstanceBlocks)
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
@@ -113,16 +123,6 @@ public class Pool : MonoBehaviour
         }
 
         foreach (UI value in m_InstanceUI)
-        {
-            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
-        }
-
-        foreach (Biome value in m_InstanceBiomes)
-        {
-            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
-        }
-
-        foreach (Map value in m_InstanceMaps)
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
@@ -138,6 +138,16 @@ public class Pool : MonoBehaviour
         m_InstancePool.Clear();
 
         // init les object -------------------------------------
+        foreach (StateMachine value in m_InstanceStateMachines)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (Biome value in m_InstanceBiomes)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
         foreach (Block value in m_InstanceBlocks)
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
@@ -152,16 +162,6 @@ public class Pool : MonoBehaviour
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
         }
-
-        foreach (Biome value in m_InstanceBiomes)
-        {
-            m_InstancePool.Add(value.type, (GameObject)value.value);
-        }
-
-        foreach (Map value in m_InstanceMaps)
-        {
-            m_InstancePool.Add(value.type, (GameObject)value.value);
-        }
         // ------------------------------------------------------------
     }
 
@@ -173,6 +173,15 @@ public class Pool : MonoBehaviour
         }
         m_DataPool.Clear();
 
+        foreach (StateMachine value in m_DataStateMachines)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Biome value in m_DataBiomes)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
 
         foreach (Block value in m_DataBlocks)
         {
@@ -185,16 +194,6 @@ public class Pool : MonoBehaviour
         }
 
         foreach (UI value in m_DataUI)
-        {
-            m_DataPool.Add(value.type, (ScriptableObject)value.value);
-        }
-
-        foreach (Biome value in m_DataBiomes)
-        {
-            m_DataPool.Add(value.type, (ScriptableObject)value.value);
-        }
-
-        foreach (Map value in m_DataMaps)
         {
             m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }

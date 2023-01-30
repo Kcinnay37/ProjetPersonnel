@@ -15,18 +15,18 @@ public class StatePlayerSpawn : State
 
     public override void OnInit()
     {
-        Vector2 position = Map.GetInitialPoint();
+        Vector2 position = MapGenerator.GetInitialPoint();
         Vector3 worldPos = new Vector3(position.x + offset, position.y, -1);
 
         m_Transfrom.position = worldPos;
 
-        m_StateMachine.PopCurrState(EnumState.playerSpawn);
+        m_StateMachine.PopCurrState(EnumStates.playerSpawn);
     }
 
     public override void End()
     {
-        m_StateMachine.AddCurrState(EnumState.playerMove);
-        m_StateMachine.AddCurrState(EnumState.playerJump);
-        m_StateMachine.AddCurrState(EnumState.playerEquipInventory);
+        m_StateMachine.AddCurrState(EnumStates.playerMove);
+        m_StateMachine.AddCurrState(EnumStates.playerJump);
+        m_StateMachine.AddCurrState(EnumStates.playerEquipInventory);
     }
 }

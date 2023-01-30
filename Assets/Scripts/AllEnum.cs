@@ -51,7 +51,15 @@ public enum EnumMaps
     caveGeneratorTest
 }
 
-public enum EnumState
+public enum EnumStatesMap
+{
+    generate,
+    manager,
+    view,
+    data
+}
+
+public enum EnumStates
 {
     none,
 
@@ -64,4 +72,9 @@ public enum EnumState
 
     //UI
     UIEquipInventory
+}
+
+public enum EnumStateMachines
+{
+    stateMachineMap
 }

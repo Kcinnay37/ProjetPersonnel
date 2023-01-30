@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Map : MonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
     [SerializeField] EnumMaps m_EnumDataMap;
     [SerializeField] int m_InitialViewSize;
@@ -22,7 +22,7 @@ public class Map : MonoBehaviour
     private DataMap m_DataMap;
     private DataBiome m_DataCurrBiome;
 
-    public static Map m_Instance;
+    public static MapGenerator m_Instance;
 
     private int m_CurrGridChunkX = 0;
     private int m_CurrGridChunkY = 0;
@@ -240,7 +240,7 @@ public class Map : MonoBehaviour
 
         // algorithme de bruit de Perlin pour générer un bruit de Perlin 2D
         //float[,] noiseMap = Procedural.GenerateNoiseMap(m_DataMap.chunkWidth, m_DataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next());
-        float[,] noiseMap = Procedural.GenerateNoiseMap2(m_DataMap.chunkWidth, m_DataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next(), m_Offset, m_HeightCurve);
+        float[,] noiseMap = Procedural.GenerateNoiseMap(m_DataMap.chunkWidth, m_DataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next(), m_Offset, m_HeightCurve);
 
         // Parcour tout les element de la grid et defini il est de quelle type selon le bruit de perlin et les valeur de la cave
         for (int x = 0; x < m_DataMap.chunkWidth; x++)

@@ -5,6 +5,6 @@ using UnityEngine;
 public class DataResource : ScriptableObject
 {
     public Sprite image;
-    public EnumState state;
+    public EnumStates state;
     public int maxStack;
 }

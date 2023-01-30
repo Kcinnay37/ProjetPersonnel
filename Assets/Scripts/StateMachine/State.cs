@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State
+public abstract class State : StateData
 {
-    protected StateMachine m_StateMachine;
-
-    public State(StateMachine stateMachine)
+    protected State(StateMachine stateMachine) : base(stateMachine)
     {
-        m_StateMachine = stateMachine;
+
     }
 
     // ordre dexecution -----------------------------------------------------------
