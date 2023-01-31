@@ -5,12 +5,12 @@ using UnityEngine;
 public class StatePlayerJump : State
 {
     Rigidbody2D m_RigidBody;
-    DataPlayer m_Data;
+    DataStateMachinePlayer m_Data;
 
     public StatePlayerJump(StateMachine stateMachine) : base(stateMachine)
     {
         m_RigidBody = m_StateMachine.GetComponent<Rigidbody2D>();
-        m_Data = (DataPlayer)m_StateMachine.GetData();
+        m_Data = (DataStateMachinePlayer)m_StateMachine.GetData();
     }
 
     public override void Update()

@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class StateMapView : StateData
 {
     private StateMapData m_DataStateMachine;
-    private DataMap m_DataMap;
+    private DataStateMachineMap m_DataMap;
 
     private Coroutine m_CoroutineUpdateValue;
     private Coroutine m_CoroutineDraw;
@@ -18,7 +18,9 @@ public class StateMapView : StateData
     private Dictionary<Vector2Int, Vector2Int> m_CaseToDraw;
     private Dictionary<Vector2Int, Vector2Int> m_CaseToClear;
     private Dictionary<Vector2Int, Vector2Int> m_DrawCase;
-    
+
+    private bool[,] m_DrawGrid;
+
     public StateMapView(StateMachine stateMachine) : base(stateMachine)
     {
 
@@ -27,13 +29,15 @@ public class StateMapView : StateData
     public void ResetValue()
     {
         m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
-        m_DataMap = (DataMap)m_StateMachine.GetData();
+        m_DataMap = (DataStateMachineMap)m_StateMachine.GetData();
         ResetMapView();
 
         m_CaseToDraw = new Dictionary<Vector2Int, Vector2Int>();
         m_CaseToClear = new Dictionary<Vector2Int, Vector2Int>();
         m_DrawCase = new Dictionary<Vector2Int, Vector2Int>();
-}
+
+        m_DrawGrid = new bool[m_DataStateMachine.m_Grid.GetLength(0), m_DataStateMachine.m_Grid.GetLength(1)];
+    }
 
     public void SetPosition(Vector3Int worldPos)
     {
@@ -45,7 +49,7 @@ public class StateMapView : StateData
     public void ResetMapView()
     {
         //pour tout les chunk de la cave
-        foreach (DataMap.Biome chunk in m_DataMap.mapBiomes)
+        foreach (DataStateMachineMap.Biome chunk in m_DataMap.mapBiomes)
         {
             //va chercher le data du chunk actuel
             DataBiome currDataChunk = (DataBiome)Pool.m_Instance.GetData(chunk.dataBiome);
@@ -65,7 +69,7 @@ public class StateMapView : StateData
     {
         if (m_CoroutineUpdateValue == null)
         {
-            m_CoroutineUpdateValue = m_StateMachine.StartCoroutine(CoroutineUpdateValue());
+            m_CoroutineUpdateValue = m_StateMachine.StartCoroutine(CoroutineUpdateValue2());
         }
     }
 
@@ -73,7 +77,7 @@ public class StateMapView : StateData
     {
         if(m_CoroutineDraw == null)
         {
-            m_CoroutineDraw = m_StateMachine.StartCoroutine(CoroutineDraw());
+            m_CoroutineDraw = m_StateMachine.StartCoroutine(CoroutineDraw2());
         }
     }
 
@@ -81,30 +85,29 @@ public class StateMapView : StateData
     {
         if (m_CoroutineClear == null)
         {
-            m_CoroutineClear = m_StateMachine.StartCoroutine(CoroutineClear());
+            m_CoroutineClear = m_StateMachine.StartCoroutine(CoroutineClear2());
         }
     }
 
-    // regarde au tour du point et defini les case a effacer et dessiner 
-    public IEnumerator CoroutineUpdateValue()
+    public IEnumerator CoroutineUpdateValue2()
     {
-        while(true)
+        while (true)
         {
-            for (int i = m_Position.x - m_DataMap.nbChunkView; i <= m_Position.x + m_DataMap.nbChunkView ; i++)
+            for (int i = m_Position.x - m_DataMap.distanceView; i <= m_Position.x + m_DataMap.distanceView; i++)
             {
-                if (i < 0 || i >= m_DataStateMachine.m_DrawGrid.GetLength(0))
+                if (i < 0 || i >= m_DrawGrid.GetLength(0))
                 {
                     continue;
                 }
-                for (int j = m_Position.y - m_DataMap.nbChunkView; j <= m_Position.y + m_DataMap.nbChunkView; j++)
+                for (int j = m_Position.y - m_DataMap.distanceView; j <= m_Position.y + m_DataMap.distanceView; j++)
                 {
-                    if (j < 0 || j >= m_DataStateMachine.m_DrawGrid.GetLength(1))
+                    if (j < 0 || j >= m_DrawGrid.GetLength(1))
                     {
                         continue;
                     }
-                    if (!m_DataStateMachine.m_DrawGrid[i, j])
+                    if (!m_DrawGrid[i, j])
                     {
-                        if(!m_CaseToDraw.ContainsKey(new Vector2Int(i, j)))
+                        if (!m_CaseToDraw.ContainsKey(new Vector2Int(i, j)))
                         {
                             m_CaseToDraw.Add(new Vector2Int(i, j), new Vector2Int(i, j));
                         }
@@ -112,9 +115,9 @@ public class StateMapView : StateData
 
                 }
             }
-            foreach(KeyValuePair<Vector2Int, Vector2Int> pos in m_DrawCase)
+            foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_DrawCase)
             {
-                if(pos.Value.x < m_Position.x - m_DataMap.nbChunkView || pos.Value.x > m_Position.x + m_DataMap.nbChunkView || pos.Value.y < m_Position.y - m_DataMap.nbChunkView || pos.Value.y > m_Position.y + m_DataMap.nbChunkView)
+                if (pos.Value.x < m_Position.x - m_DataMap.distanceView || pos.Value.x > m_Position.x + m_DataMap.distanceView || pos.Value.y < m_Position.y - m_DataMap.distanceView || pos.Value.y > m_Position.y + m_DataMap.distanceView)
                 {
                     if (!m_CaseToClear.ContainsKey(pos.Value))
                     {
@@ -127,90 +130,51 @@ public class StateMapView : StateData
         }
     }
 
-    public IEnumerator CoroutineDraw()
+    public IEnumerator CoroutineDraw2()
     {
         while (true)
         {
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_CaseToDraw)
             {
-                m_StateMachine.StartCoroutine(DrawCase(pos.Value.x, pos.Value.y));
-                m_DataStateMachine.m_DrawGrid[pos.Value.x, pos.Value.y] = true;
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[pos.Value.x, pos.Value.y]);
+                dataBlock.map.SetTile(new Vector3Int(pos.Value.x, pos.Value.y, 0), dataBlock.tile);
+
+                m_DrawGrid[pos.Value.x, pos.Value.y] = true;
+                m_DrawCase.Add(pos.Key, pos.Value);
             }
             m_CaseToDraw.Clear();
             yield return null;
         }
     }
 
-    public IEnumerator CoroutineClear()
+    public IEnumerator CoroutineClear2()
     {
         while (true)
         {
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_CaseToClear)
             {
-                m_StateMachine.StartCoroutine(ClearCase(pos.Value.x, pos.Value.y));
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[pos.Value.x, pos.Value.y]);
+                dataBlock.map.SetTile(new Vector3Int(pos.Value.x, pos.Value.y, 0), null);
+
+                m_DrawGrid[pos.Value.x, pos.Value.y] = false;
+                m_DrawCase.Remove(pos.Key);
             }
             m_CaseToClear.Clear();
             yield return null;
         }
     }
 
-    private IEnumerator ClearCase(int x, int y)
+    public void DrawAllGrid()
     {
-        for (int i = x * m_DataMap.chunkViewSize; i < (x * m_DataMap.chunkViewSize) + m_DataMap.chunkViewSize; i++)
+        m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
+        m_DataMap = (DataStateMachineMap)m_StateMachine.GetData();
+        for (int x = 0; x < m_DataStateMachine.m_Grid.GetLength(0); x++)
         {
-            if (i < 0 || i >= m_DataStateMachine.m_Grid.GetLength(0))
+            for (int y = 0; y < m_DataStateMachine.m_Grid.GetLength(1); y++)
             {
-                continue;
-            }
-            for (int j = y * m_DataMap.chunkViewSize; j < (y * m_DataMap.chunkViewSize) + m_DataMap.chunkViewSize; j++)
-            {
-                if (j < 0 || j >= m_DataStateMachine.m_Grid.GetLength(1))
-                {
-                    continue;
-                }
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[i, j]);
-                dataBlock.map.SetTile(new Vector3Int(i, j, 0), null);
-                yield return null;
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[x, y]);
+                dataBlock.map.SetTile(new Vector3Int(x, y, 0), dataBlock.tile);
             }
         }
-        m_DataStateMachine.m_DrawGrid[x, y] = false;
-        m_DrawCase.Remove(new Vector2Int(x, y));
     }
-
-    private IEnumerator DrawCase(int x, int y)
-    {
-        for(int i = x * m_DataMap.chunkViewSize; i < (x * m_DataMap.chunkViewSize) + m_DataMap.chunkViewSize; i++)
-        {
-            if (i < 0 || i >= m_DataStateMachine.m_Grid.GetLength(0))
-            {
-                continue;
-            }
-            for (int j = y * m_DataMap.chunkViewSize; j < (y * m_DataMap.chunkViewSize) + m_DataMap.chunkViewSize; j++)
-            {
-                if (j < 0 || j >= m_DataStateMachine.m_Grid.GetLength(1))
-                {
-                    continue;
-                }
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[i, j]);
-                dataBlock.map.SetTile(new Vector3Int(i, j, 0), dataBlock.tile);
-
-                yield return null;
-            }
-        }
-        m_DrawCase.Add(new Vector2Int(x, y), new Vector2Int(x, y));
-    }
-
-    //public void DrawAllGrid()
-    //{
-    //    m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
-    //    m_DataMap = (DataMap)m_StateMachine.GetData();
-    //    for (int x = 0; x < m_DataStateMachine.m_Grid.GetLength(0); x++)
-    //    {
-    //        for (int y = 0; y < m_DataStateMachine.m_Grid.GetLength(1); y++)
-    //        {
-    //            DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[x, y]);
-    //            dataBlock.map.SetTile(new Vector3Int(x, y, 0), dataBlock.tile);
-    //        }
-    //    }
-    //}
 }

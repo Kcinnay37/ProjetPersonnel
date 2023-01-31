@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class StatePlayerMove : State
 {
-    DataPlayer m_Data;
+    DataStateMachinePlayer m_Data;
     Rigidbody2D m_RigidBody;
     Animator m_Animator;
 
     public StatePlayerMove(StateMachine stateMachine) : base(stateMachine)
     {
-        m_Data = (DataPlayer)m_StateMachine.GetData();
+        m_Data = (DataStateMachinePlayer)m_StateMachine.GetData();
         m_RigidBody = m_StateMachine.GetComponent<Rigidbody2D>();
         m_Animator = m_StateMachine.GetComponent<Animator>();
     }

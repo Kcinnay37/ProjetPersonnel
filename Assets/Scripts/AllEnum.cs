@@ -76,5 +76,7 @@ public enum EnumStates
 
 public enum EnumStateMachines
 {
-    stateMachineMap
+    stateMachineMap,
+    stateMachinePlayer,
+    stateMachineManager
 }

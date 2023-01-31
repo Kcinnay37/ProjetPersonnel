@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class DataMap : ScriptableObject
+public class DataStateMachineMap : ScriptableObject
 {
     [System.Serializable]
     public struct Biome
@@ -24,9 +24,6 @@ public class DataMap : ScriptableObject
     public int nbChunkDown;
 
     [Header("")]
-    public int chunkViewSize;
-
-    public int nbChunkView;
-
+    public int distanceView;
     public float timeUpdateView;
 }

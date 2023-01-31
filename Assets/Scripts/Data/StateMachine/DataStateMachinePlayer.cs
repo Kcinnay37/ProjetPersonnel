@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class DataPlayer : ScriptableObject
+public class DataStateMachinePlayer : ScriptableObject
 {
     public float walkSpeed;
     public float runSpeed;

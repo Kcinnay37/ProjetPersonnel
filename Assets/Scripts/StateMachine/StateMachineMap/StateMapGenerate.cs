@@ -16,13 +16,13 @@ public class StateMapGenerate : StateData
 
     private Vector2 m_Offset;
 
-    private DataMap m_DataMap;
+    private DataStateMachineMap m_DataMap;
     private DataBiome m_DataCurrBiome;
 
     private int m_CurrGridChunkX = 0;
     private int m_CurrGridChunkY = 0;
 
-    private Dictionary<int, List<DataMap.Biome>> m_DictDepthChunk;
+    private Dictionary<int, List<DataStateMachineMap.Biome>> m_DictDepthChunk;
 
     public StateMapGenerate(StateMachine stateMachine) : base(stateMachine)
     {
@@ -51,11 +51,11 @@ public class StateMapGenerate : StateData
     private void InitValueMap()
     {
         m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
-        m_DataMap = (DataMap)m_StateMachine.GetData();
+        m_DataMap = (DataStateMachineMap)m_StateMachine.GetData();
 
         if (m_DictDepthChunk == null)
         {
-            m_DictDepthChunk = new Dictionary<int, List<DataMap.Biome>>();
+            m_DictDepthChunk = new Dictionary<int, List<DataStateMachineMap.Biome>>();
         }
         else
         {
@@ -64,14 +64,14 @@ public class StateMapGenerate : StateData
 
         for (int i = 0; i < m_DataMap.nbChunkDown; i++)
         {
-            m_DictDepthChunk.Add(i, new List<DataMap.Biome>());
+            m_DictDepthChunk.Add(i, new List<DataStateMachineMap.Biome>());
         }
 
-        foreach (DataMap.Biome biome in m_DataMap.mapBiomes)
+        foreach (DataStateMachineMap.Biome biome in m_DataMap.mapBiomes)
         {
             for (int i = biome.chunkMinDepth; i <= biome.chunkMaxDepth; i++)
             {
-                List<DataMap.Biome> currList;
+                List<DataStateMachineMap.Biome> currList;
                 if (m_DictDepthChunk.TryGetValue(i, out currList))
                 {
                     currList.Add(biome);
@@ -113,7 +113,7 @@ public class StateMapGenerate : StateData
     private void SetCurrChunk()
     {
         int index = Random.Range(0, m_DictDepthChunk[m_CurrGridChunkY].Count);
-        DataMap.Biome biome = m_DictDepthChunk[m_CurrGridChunkY][index];
+        DataStateMachineMap.Biome biome = m_DictDepthChunk[m_CurrGridChunkY][index];
         m_DataCurrBiome = (DataBiome)Pool.m_Instance.GetData(biome.dataBiome);
 
         int checkRarity = Random.Range(1, 101);

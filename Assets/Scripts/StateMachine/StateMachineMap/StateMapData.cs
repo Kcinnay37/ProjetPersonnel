@@ -6,7 +6,6 @@ public class StateMapData : StateData
 {
     public EnumBlocks[,] m_Grid;
     public Vector2Int m_InitialPoint;
-    public bool[,] m_DrawGrid;
 
     public StateMapData(StateMachine stateMachine) : base(stateMachine)
     {
@@ -17,22 +16,8 @@ public class StateMapData : StateData
     {
         m_InitialPoint = Vector2Int.zero;
 
-        DataMap dataMap = (DataMap)m_StateMachine.GetData();
+        DataStateMachineMap dataMap = (DataStateMachineMap)m_StateMachine.GetData();
         m_Grid = new EnumBlocks[dataMap.nbChunkRight * dataMap.chunkWidth, dataMap.nbChunkDown * dataMap.chunkHeight];
-
-        int drawGridX = m_Grid.GetLength(0) / dataMap.chunkViewSize;
-        if(m_Grid.GetLength(0) % dataMap.chunkViewSize != 0)
-        {
-            drawGridX += 1;
-        }
-
-        int drawGridY = m_Grid.GetLength(1) / dataMap.chunkViewSize;
-        if (m_Grid.GetLength(1) % dataMap.chunkViewSize != 0)
-        {
-            drawGridY += 1;
-        }
-
-        m_DrawGrid = new bool[drawGridX, drawGridY];
     }
 
     //Set le point initial de depart pour rendre la grid et le spawn du player

@@ -15,7 +15,7 @@ public class StatePlayerSpawn : State
 
     public override void OnInit()
     {
-        Vector2 position = MapGenerator.GetInitialPoint();
+        Vector2 position = Vector2.zero;//MapGenerator.GetInitialPoint();
         Vector3 worldPos = new Vector3(position.x + offset, position.y, -1);
 
         m_Transfrom.position = worldPos;
