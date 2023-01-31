@@ -27,4 +27,6 @@ public class DataMap : ScriptableObject
     public int chunkViewSize;
 
     public int nbChunkView;
+
+    public float timeUpdateView;
 }
