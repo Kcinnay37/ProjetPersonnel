@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
-    [SerializeField] EnumStateMachines m_Data;
-
     private List<object> m_CurrStates;
 
     protected Dictionary<object, State> m_States;
@@ -23,15 +21,9 @@ public abstract class StateMachine : MonoBehaviour
         m_StatesToAdd = new List<object>();
         m_StatesToDelete = new List<object>();
         m_StatesDatas = new Dictionary<object, StateData>();
+        // -------------------------------------------
 
         InitAllStates();
-        // -------------------------------------------
-    }
-
-    private void Start()
-    {
-        // ajoute les states initial
-        AddInitialsStates();
     }
 
     // appelle l'ordre d'execution ---------------
@@ -106,6 +98,33 @@ public abstract class StateMachine : MonoBehaviour
     }
     //-----------------------------------------------------------------------------------------------------
 
+    private void OnEnable()
+    {        
+        // ajoute les states initial
+        AddInitialsStates();
+
+        foreach(KeyValuePair<object, StateData> state in m_StatesDatas)
+        {
+            state.Value.OnInit();
+        }
+    }
+
+    private void OnDisable()
+    {
+        foreach (KeyValuePair<object, StateData> state in m_StatesDatas)
+        {
+            state.Value.End();
+        }
+
+        foreach (object state in m_CurrStates)
+        {
+            m_States[state].End();
+        }
+        m_CurrStates.Clear();
+        m_StatesToAdd.Clear();
+        m_StatesToDelete.Clear();
+    }
+
     // gestion des states ---------------------------------------------------------------------------------
 
     // initialise tout les states possible
@@ -117,12 +136,18 @@ public abstract class StateMachine : MonoBehaviour
     //ajoute une nouvelle state a la state machine
     public void AddNewState(object key, State value)
     {
-        m_States.Add(key, value);
+        if (!m_States.ContainsKey(key))
+        {
+            m_States.Add(key, value);
+        }       
     }
 
     public void AddNewStateData(object key, StateData value)
     {
-        m_StatesDatas.Add(key, value);
+        if (!m_StatesDatas.ContainsKey(key))
+        {
+            m_StatesDatas.Add(key, value);
+        }
     }
 
     public void PopStateData(object state)
@@ -201,11 +226,10 @@ public abstract class StateMachine : MonoBehaviour
         }
     }
     // -------------------------------------------------------------------------------------------------------
-    
-    // retourn le data de la stateMachine
-    public ScriptableObject GetData()
+
+    public virtual ScriptableObject GetData()
     {
-        return Pool.m_Instance.GetData(m_Data);
+        return null;
     }
 
     // retourn une state de la statemachine

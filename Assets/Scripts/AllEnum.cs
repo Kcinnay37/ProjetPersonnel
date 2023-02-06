@@ -1,3 +1,28 @@
+public enum EnumManagers
+{
+    gameManagerCave
+}
+
+public enum EnumMaps
+{
+    mapCave,
+    mapColonie
+}
+
+public enum EnumBiomes
+{
+    earth,
+    earthRock,
+
+    rock,
+    rockIce,
+    rockFire,
+
+    ice,
+
+    fire,
+}
+
 public enum EnumBlocks
 {
     block,
@@ -19,11 +44,19 @@ public enum EnumBlocks
     amethyst
 }
 
-public enum EnumTools
+public enum EnumPlayers
 {
-    pickaxe,
-    sword,
-    axe
+    player
+}
+
+public enum EnumNPCs
+{
+
+}
+
+public enum EnumMonster
+{
+
 }
 
 public enum EnumUI
@@ -31,24 +64,41 @@ public enum EnumUI
     slotEquip
 }
 
-public enum EnumBiomes
+public enum EnumTools
 {
-    earth,
-    earthRock,
-
-    rock,
-    rockIce,
-    rockFire,
-
-    ice,
-
-    fire,
+    pickaxe,
+    sword,
+    axe
 }
 
-public enum EnumMaps
+public enum EnumConsumables
 {
-    caveGeneratorGame,
-    caveGeneratorTest
+
+}
+
+public enum EnumEquipements
+{
+
+}
+
+public enum EnumSpecialResources
+{
+
+}
+
+public enum EnumVFXs
+{
+
+}
+
+public enum EnumAudios
+{
+
+}
+
+public enum EnumStatesManager
+{
+    initGame
 }
 
 public enum EnumStatesMap
@@ -59,7 +109,7 @@ public enum EnumStatesMap
     data
 }
 
-public enum EnumStates
+public enum EnumStatesPlayer
 {
     none,
 
@@ -74,9 +124,3 @@ public enum EnumStates
     UIEquipInventory
 }
 
-public enum EnumStateMachines
-{
-    stateMachineMap,
-    stateMachinePlayer,
-    stateMachineManager
-}

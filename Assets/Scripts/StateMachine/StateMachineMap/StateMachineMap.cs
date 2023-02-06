@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StateMachineMap : StateMachine
 {
+    [SerializeField] EnumMaps m_Data;
+
     public override void AddInitialsStates()
     {
         AddCurrState(EnumStatesMap.manager);
@@ -16,5 +18,10 @@ public class StateMachineMap : StateMachine
         AddNewStateData(EnumStatesMap.view, new StateMapView(this));
 
         AddNewState(EnumStatesMap.manager, new StateMapManager(this));
+    }
+
+    public override ScriptableObject GetData()
+    {
+        return (DataMap)Pool.m_Instance.GetData(m_Data);
     }
 }

@@ -12,12 +12,18 @@ public class StateMapData : StateData
     }
 
     // initialise les valeur des data de la stateMachine
-    public void InitData()
+    public override void OnInit()
     {
         m_InitialPoint = Vector2Int.zero;
 
-        DataStateMachineMap dataMap = (DataStateMachineMap)m_StateMachine.GetData();
+        DataMap dataMap = (DataMap)m_StateMachine.GetData();
         m_Grid = new EnumBlocks[dataMap.nbChunkRight * dataMap.chunkWidth, dataMap.nbChunkDown * dataMap.chunkHeight];
+    }
+
+    public override void End()
+    {
+        m_Grid = null;
+        m_InitialPoint = Vector2Int.zero;
     }
 
     //Set le point initial de depart pour rendre la grid et le spawn du player

@@ -10,4 +10,8 @@ public abstract class StateData
     {
         m_StateMachine = stateMachine;
     }
+
+    public virtual void OnInit() { }
+
+    public virtual void End() { }
 }

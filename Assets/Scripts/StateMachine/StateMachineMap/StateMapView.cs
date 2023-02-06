@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class StateMapView : StateData
 {
     private StateMapData m_DataStateMachine;
-    private DataStateMachineMap m_DataMap;
+    private DataMap m_DataMap;
 
     private Coroutine m_CoroutineUpdateValue;
     private Coroutine m_CoroutineDraw;
@@ -26,10 +26,34 @@ public class StateMapView : StateData
 
     }
 
+    public override void OnInit()
+    {
+
+    }
+
+    public override void End()
+    {
+        if(m_CoroutineUpdateValue != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineUpdateValue);
+            m_CoroutineUpdateValue = null;
+        }
+        if(m_CoroutineDraw != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineDraw);
+            m_CoroutineDraw = null;
+        }
+        if(m_CoroutineClear != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineClear);
+            m_CoroutineClear = null;
+        }
+    }
+
     public void ResetValue()
     {
         m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
-        m_DataMap = (DataStateMachineMap)m_StateMachine.GetData();
+        m_DataMap = (DataMap)m_StateMachine.GetData();
         ResetMapView();
 
         m_CaseToDraw = new Dictionary<Vector2Int, Vector2Int>();
@@ -49,7 +73,7 @@ public class StateMapView : StateData
     public void ResetMapView()
     {
         //pour tout les chunk de la cave
-        foreach (DataStateMachineMap.Biome chunk in m_DataMap.mapBiomes)
+        foreach (DataMap.Biome chunk in m_DataMap.mapBiomes)
         {
             //va chercher le data du chunk actuel
             DataBiome currDataChunk = (DataBiome)Pool.m_Instance.GetData(chunk.dataBiome);
@@ -167,7 +191,7 @@ public class StateMapView : StateData
     public void DrawAllGrid()
     {
         m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
-        m_DataMap = (DataStateMachineMap)m_StateMachine.GetData();
+        m_DataMap = (DataMap)m_StateMachine.GetData();
         for (int x = 0; x < m_DataStateMachine.m_Grid.GetLength(0); x++)
         {
             for (int y = 0; y < m_DataStateMachine.m_Grid.GetLength(1); y++)

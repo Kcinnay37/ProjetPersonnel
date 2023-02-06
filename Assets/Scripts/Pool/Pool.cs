@@ -6,9 +6,16 @@ using UnityEngine;
 public class Pool : MonoBehaviour
 {
     [System.Serializable]
-    public struct StateMachine
+    public struct Manager
     {
-        public EnumStateMachines type;
+        public EnumManagers type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
+    public struct Map
+    {
+        public EnumMaps type;
         public UnityEngine.Object value;
     }
 
@@ -27,9 +34,23 @@ public class Pool : MonoBehaviour
     }
 
     [System.Serializable]
-    public struct Tool
+    public struct Player
     {
-        public EnumTools type;
+        public EnumPlayers type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
+    public struct NPC
+    {
+        public EnumNPCs type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
+    public struct Monster
+    {
+        public EnumMonster type;
         public UnityEngine.Object value;
     }
 
@@ -40,25 +61,103 @@ public class Pool : MonoBehaviour
         public UnityEngine.Object value;
     }
 
-    [Header("StateMachine")]
-    [SerializeField] List<StateMachine> m_InstanceStateMachines;
-    [SerializeField] List<StateMachine> m_DataStateMachines;
+    [System.Serializable]
+    public struct Tool
+    {
+        public EnumTools type;
+        public UnityEngine.Object value;
+    }
 
-    [Header("Biomes")]
-    [SerializeField] List<Biome> m_InstanceBiomes;
-    [SerializeField] List<Biome> m_DataBiomes;
+    [System.Serializable]
+    public struct Consumable
+    {
+        public EnumConsumables type;
+        public UnityEngine.Object value;
+    }
 
-    [Header("Blocks")]
-    [SerializeField] List<Block> m_InstanceBlocks;
-    [SerializeField] List<Block> m_DataBlocks;
+    [System.Serializable]
+    public struct Equipement
+    {
+        public EnumEquipements type;
+        public UnityEngine.Object value;
+    }
 
-    [Header("Outils")]
-    [SerializeField] List<Tool> m_InstanceTools;
-    [SerializeField] List<Tool> m_DataTools;
+    [System.Serializable]
+    public struct SpecialResource
+    {
+        public EnumSpecialResources type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
+    public struct VFX
+    {
+        public EnumVFXs type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
+    public struct Audio
+    {
+        public EnumAudios type;
+        public UnityEngine.Object value;
+    }
+
+    [Header("Manager")]
+    [SerializeField] List<Manager> m_InstanceManager;
+    [SerializeField] List<Manager> m_DataManager;
+
+    [Header("Map")]
+    [SerializeField] List<Map> m_InstanceMap;
+    [SerializeField] List<Map> m_DataMap;
+
+    [Header("Biome")]
+    [SerializeField] List<Biome> m_InstanceBiome;
+    [SerializeField] List<Biome> m_DataBiome;
+
+    [Header("Block")]
+    [SerializeField] List<Block> m_InstanceBlock;
+    [SerializeField] List<Block> m_DataBlock;
+
+    [Header("Player")]
+    [SerializeField] List<Player> m_InstancePlayer;
+    [SerializeField] List<Player> m_DataPlayer;
+
+    [Header("NPC")]
+    [SerializeField] List<NPC> m_InstanceNPC;
+    [SerializeField] List<NPC> m_DataNPC;
+
+    [Header("Monster")]
+    [SerializeField] List<Monster> m_InstanceMonster;
+    [SerializeField] List<Monster> m_DataMonster;
 
     [Header("UI")]
     [SerializeField] List<UI> m_InstanceUI;
     [SerializeField] List<UI> m_DataUI;
+
+    [Header("Tool")]
+    [SerializeField] List<Tool> m_InstanceTool;
+    [SerializeField] List<Tool> m_DataTool;
+
+    [Header("Consumable")]
+    [SerializeField] List<Consumable> m_InstanceConsumable;
+    [SerializeField] List<Consumable> m_DataConsumable;
+
+    [Header("Equipement")]
+    [SerializeField] List<Equipement> m_InstanceEquipement;
+    [SerializeField] List<Equipement> m_DataEquipement;
+
+    [Header("SpecialResource")]
+    [SerializeField] List<SpecialResource> m_InstanceSpecialResource;
+    [SerializeField] List<SpecialResource> m_DataSpecialResource;
+
+    [Header("VFX")]
+    [SerializeField] List<VFX> m_InstanceVFX;
+    [SerializeField] List<VFX> m_DataVFX;
+
+    [Header("Audio")]
+    [SerializeField] List<Audio> m_InstanceAudio;
+    [SerializeField] List<Audio> m_DataAudio;
 
     [Header("ParentObjectInHierarchy")]
     [SerializeField] string m_ParentGameObjectName;
@@ -101,23 +200,37 @@ public class Pool : MonoBehaviour
         m_AvailableInstancePool.Clear();
         // -------------------------------------------
 
-        // init list in dictonary -------------------------------------
-        foreach (StateMachine value in m_InstanceStateMachines)
+        foreach (Manager value in m_InstanceManager)
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
 
-        foreach (Biome value in m_InstanceBiomes)
+        foreach (Map value in m_InstanceMap)
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
 
-        foreach (Block value in m_InstanceBlocks)
+        foreach (Biome value in m_InstanceBiome)
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
 
-        foreach (Tool value in m_InstanceTools)
+        foreach (Block value in m_InstanceBlock)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (Player value in m_InstancePlayer)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (NPC value in m_InstanceNPC)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (Monster value in m_InstanceMonster)
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
@@ -126,7 +239,36 @@ public class Pool : MonoBehaviour
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
-        // ------------------------------------------------------------
+
+        foreach (Tool value in m_InstanceTool)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (Consumable value in m_InstanceConsumable)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (Equipement value in m_InstanceEquipement)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (SpecialResource value in m_InstanceSpecialResource)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (VFX value in m_InstanceVFX)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
+        foreach (Audio value in m_InstanceAudio)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
     }
 
     private void InitInstancePool()
@@ -137,23 +279,38 @@ public class Pool : MonoBehaviour
         }
         m_InstancePool.Clear();
 
-        // init les object -------------------------------------
-        foreach (StateMachine value in m_InstanceStateMachines)
+
+        foreach (Manager value in m_InstanceManager)
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
         }
 
-        foreach (Biome value in m_InstanceBiomes)
+        foreach (Map value in m_InstanceMap)
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
         }
 
-        foreach (Block value in m_InstanceBlocks)
+        foreach (Biome value in m_InstanceBiome)
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
         }
 
-        foreach (Tool value in m_InstanceTools)
+        foreach (Block value in m_InstanceBlock)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (Player value in m_InstancePlayer)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (NPC value in m_InstanceNPC)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (Monster value in m_InstanceMonster)
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
         }
@@ -162,7 +319,36 @@ public class Pool : MonoBehaviour
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
         }
-        // ------------------------------------------------------------
+
+        foreach (Tool value in m_InstanceTool)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (Consumable value in m_InstanceConsumable)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (Equipement value in m_InstanceEquipement)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (SpecialResource value in m_InstanceSpecialResource)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (VFX value in m_InstanceVFX)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
+        foreach (Audio value in m_InstanceAudio)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
     }
 
     private void InitDataPool()
@@ -173,27 +359,72 @@ public class Pool : MonoBehaviour
         }
         m_DataPool.Clear();
 
-        foreach (StateMachine value in m_DataStateMachines)
+        foreach (Manager value in m_DataManager)
         {
             m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }
 
-        foreach (Biome value in m_DataBiomes)
+        foreach (Map value in m_DataMap)
         {
             m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }
 
-        foreach (Block value in m_DataBlocks)
+        foreach (Biome value in m_DataBiome)
         {
             m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }
 
-        foreach (Tool value in m_DataTools)
+        foreach (Block value in m_DataBlock)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Player value in m_DataPlayer)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (NPC value in m_DataNPC)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Monster value in m_DataMonster)
         {
             m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }
 
         foreach (UI value in m_DataUI)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Tool value in m_DataTool)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Consumable value in m_DataConsumable)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Equipement value in m_DataEquipement)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (SpecialResource value in m_DataSpecialResource)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (VFX value in m_DataVFX)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Audio value in m_DataAudio)
         {
             m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }
@@ -239,6 +470,11 @@ public class Pool : MonoBehaviour
     private GameObject InitObject(object type)
     {
         GameObject newObject = Instantiate(m_InstancePool[type]);
+        if (m_ParentGameObject == null)
+        {
+            m_ParentGameObject = GameObject.Find(m_ParentGameObjectName);
+        }
+        newObject.transform.parent = m_ParentGameObject.transform;
         newObject.SetActive(false);
 
         return newObject;

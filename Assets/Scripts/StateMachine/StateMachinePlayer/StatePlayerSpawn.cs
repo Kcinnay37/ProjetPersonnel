@@ -20,13 +20,13 @@ public class StatePlayerSpawn : State
 
         m_Transfrom.position = worldPos;
 
-        m_StateMachine.PopCurrState(EnumStates.playerSpawn);
+        m_StateMachine.PopCurrState(EnumStatesPlayer.playerSpawn);
     }
 
     public override void End()
     {
-        m_StateMachine.AddCurrState(EnumStates.playerMove);
-        m_StateMachine.AddCurrState(EnumStates.playerJump);
-        m_StateMachine.AddCurrState(EnumStates.playerEquipInventory);
+        m_StateMachine.AddCurrState(EnumStatesPlayer.playerMove);
+        m_StateMachine.AddCurrState(EnumStatesPlayer.playerJump);
+        m_StateMachine.AddCurrState(EnumStatesPlayer.playerEquipInventory);
     }
 }

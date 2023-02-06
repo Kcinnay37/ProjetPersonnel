@@ -21,6 +21,10 @@ public abstract class State : StateData
     public virtual void End() { }
     // --------------------------------------------------------------------------
 
+    public virtual void OnEnable() { }
+
+    public virtual void OnDisable() { }
+
     // collision ----------------------------------------------------------------
     public virtual void OnCollisionEnter2D(Collision2D collision) { }
 
