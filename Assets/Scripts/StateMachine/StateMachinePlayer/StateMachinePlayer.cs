@@ -14,8 +14,8 @@ public class StateMachinePlayer : StateMachine
     public override void InitAllStates()
     {
         m_States.Add(EnumStatesPlayer.playerSpawn, new StatePlayerSpawn(this));
-        m_States.Add(EnumStatesPlayer.playerMove, new StatePlayerMove(this));
-        m_States.Add(EnumStatesPlayer.playerJump, new StatePlayerJump(this));
+       // m_States.Add(EnumStatesPlayer.playerMove, new StatePlayerMove(this));
+        //m_States.Add(EnumStatesPlayer.playerJump, new StatePlayerJump(this));
     }
 
     public override ScriptableObject GetData()

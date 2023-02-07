@@ -17,9 +17,9 @@ MonoBehaviour:
     chunkMinDepth: 0
     chunkMaxDepth: 10
     rarity: 100
-  chunkWidth: 1000
-  chunkHeight: 1000
+  chunkWidth: 500
+  chunkHeight: 500
   nbChunkRight: 1
   nbChunkDown: 1
   distanceView: 30
-  timeUpdateView: 0.01
+  timeUpdateView: 0.05

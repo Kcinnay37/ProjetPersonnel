@@ -4,29 +4,39 @@ using UnityEngine;
 
 public class StatePlayerSpawn : State
 {
-    Transform m_Transfrom;
+
 
     const float offset = 0.5f;
 
     public StatePlayerSpawn(StateMachine stateMachine) : base(stateMachine)
     {
-        m_Transfrom = m_StateMachine.transform;
+
     }
 
     public override void OnInit()
     {
-        Vector2 position = Vector2.zero;//MapGenerator.GetInitialPoint();
-        Vector3 worldPos = new Vector3(position.x + offset, position.y, -1);
 
-        m_Transfrom.position = worldPos;
+        StateManagerManageMap map = (StateManagerManageMap)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageMap);
 
-        m_StateMachine.PopCurrState(EnumStatesPlayer.playerSpawn);
+        Vector3 pos = map.GetPointToWorld();
+        pos.z = -1;
+        pos.x += offset;
+
+        m_StateMachine.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        m_StateMachine.transform.position = pos;
+
+        //Vector2 position = Vector2.zero;//MapGenerator.GetInitialPoint();
+        //Vector3 worldPos = new Vector3(position.x + offset, position.y, -1);
+
+        //m_Transfrom.position = worldPos;
+
+        //m_StateMachine.PopCurrState(EnumStatesPlayer.playerSpawn);
     }
 
     public override void End()
     {
-        m_StateMachine.AddCurrState(EnumStatesPlayer.playerMove);
-        m_StateMachine.AddCurrState(EnumStatesPlayer.playerJump);
-        m_StateMachine.AddCurrState(EnumStatesPlayer.playerEquipInventory);
+        //m_StateMachine.AddCurrState(EnumStatesPlayer.playerMove);
+        //m_StateMachine.AddCurrState(EnumStatesPlayer.playerJump);
+        //m_StateMachine.AddCurrState(EnumStatesPlayer.playerEquipInventory);
     }
 }

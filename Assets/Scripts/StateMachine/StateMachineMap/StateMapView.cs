@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class StateMapView : StateData
 {
-    private StateMapData m_DataStateMachine;
+    private StateMapManager m_StateMapManager;
     private DataMap m_DataMap;
 
     private Coroutine m_CoroutineUpdateValue;
@@ -50,7 +50,7 @@ public class StateMapView : StateData
 
     public void ResetValue()
     {
-        m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
+        m_StateMapManager = (StateMapManager)m_StateMachine.GetState(EnumStatesMap.manager);
         m_DataMap = (DataMap)m_StateMachine.GetData();
         ResetMapView();
 
@@ -58,13 +58,12 @@ public class StateMapView : StateData
         m_CaseToClear = new Dictionary<Vector2Int, Vector2Int>();
         m_DrawCase = new Dictionary<Vector2Int, Vector2Int>();
 
-        m_DrawGrid = new bool[m_DataStateMachine.m_Grid.GetLength(0), m_DataStateMachine.m_Grid.GetLength(1)];
+        m_DrawGrid = new bool[m_StateMapManager.GetGrid().GetLength(0), m_StateMapManager.GetGrid().GetLength(1)];
     }
 
     private Vector2Int GetPosition()
     {
-        StateMapData data = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
-        return data.m_CurrPoint;
+        return m_StateMapManager.GetPoint();
     }
 
     public void ResetMapView()
@@ -159,7 +158,7 @@ public class StateMapView : StateData
         {
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_CaseToDraw)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[pos.Value.x, pos.Value.y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_StateMapManager.GetGrid()[pos.Value.x, pos.Value.y]);
                 dataBlock.map.SetTile(new Vector3Int(pos.Value.x, pos.Value.y, 0), dataBlock.tile);
 
                 m_DrawGrid[pos.Value.x, pos.Value.y] = true;
@@ -176,7 +175,7 @@ public class StateMapView : StateData
         {
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_CaseToClear)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[pos.Value.x, pos.Value.y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_StateMapManager.GetGrid()[pos.Value.x, pos.Value.y]);
                 dataBlock.map.SetTile(new Vector3Int(pos.Value.x, pos.Value.y, 0), null);
 
                 m_DrawGrid[pos.Value.x, pos.Value.y] = false;
@@ -189,13 +188,11 @@ public class StateMapView : StateData
 
     public void DrawAllGrid()
     {
-        m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
-        m_DataMap = (DataMap)m_StateMachine.GetData();
-        for (int x = 0; x < m_DataStateMachine.m_Grid.GetLength(0); x++)
+        for (int x = 0; x < m_StateMapManager.GetGrid().GetLength(0); x++)
         {
-            for (int y = 0; y < m_DataStateMachine.m_Grid.GetLength(1); y++)
+            for (int y = 0; y < m_StateMapManager.GetGrid().GetLength(1); y++)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[x, y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_StateMapManager.GetGrid()[x, y]);
                 dataBlock.map.SetTile(new Vector3Int(x, y, 0), dataBlock.tile);
             }
         }

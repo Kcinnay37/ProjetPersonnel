@@ -13,7 +13,6 @@ public class StateMachineMap : StateMachine
 
     public override void InitAllStates()
     {
-        AddNewStateData(EnumStatesMap.data, new StateMapData(this));
         AddNewStateData(EnumStatesMap.generate, new StateMapGenerate(this));
         AddNewStateData(EnumStatesMap.view, new StateMapView(this));
 

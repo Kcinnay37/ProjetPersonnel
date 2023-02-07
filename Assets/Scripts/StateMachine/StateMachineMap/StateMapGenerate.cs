@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateMapGenerate : StateData
 {
-    private StateMapData m_DataStateMachine;
+    private StateMapManager m_StateMapManager;
 
     private float m_Scale = 1;
     private int m_Octaves = 1;
@@ -50,7 +50,7 @@ public class StateMapGenerate : StateData
 
     private void InitValueMap()
     {
-        m_DataStateMachine = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
+        m_StateMapManager = (StateMapManager)m_StateMachine.GetState(EnumStatesMap.manager);
         m_DataMap = (DataMap)m_StateMachine.GetData();
 
         if (m_DictDepthChunk == null)
@@ -97,7 +97,7 @@ public class StateMapGenerate : StateData
                 {
                     if (noiseMap[x, y] >= block.minValue && noiseMap[x, y] <= block.maxValue)
                     {
-                        m_DataStateMachine.m_Grid[x + (m_DataMap.chunkWidth * m_CurrGridChunkX), y + (m_DataMap.chunkHeight * m_CurrGridChunkY)] = block.block;
+                        m_StateMapManager.GetGrid()[x + (m_DataMap.chunkWidth * m_CurrGridChunkX), y + (m_DataMap.chunkHeight * m_CurrGridChunkY)] = block.block;
 
                         int checkRarity = Random.Range(1, 101);
                         if (checkRarity <= block.rarity)

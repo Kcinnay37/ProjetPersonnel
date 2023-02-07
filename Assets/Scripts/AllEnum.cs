@@ -98,9 +98,8 @@ public enum EnumAudios
 
 public enum EnumStatesManager
 {
-    initGame,
-    data,
-    spawn
+    manageMap,
+    managePlayer
 }
 
 public enum EnumStatesMap
@@ -108,7 +107,6 @@ public enum EnumStatesMap
     generate,
     manager,
     view,
-    data
 }
 
 public enum EnumStatesPlayer
