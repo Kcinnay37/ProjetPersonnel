@@ -8,6 +8,7 @@ public class StateMapManager : State
     StateMapGenerate m_Generate;
     StateMapView m_View;
     DataMap m_DataMap;
+    bool m_IsGenerate;
 
     public StateMapManager(StateMachine stateMachine) : base(stateMachine)
     {
@@ -21,6 +22,8 @@ public class StateMapManager : State
         m_View = (StateMapView)m_StateMachine.GetStateData(EnumStatesMap.view);
         m_DataMap = (DataMap)m_StateMachine.GetData();
 
+        m_IsGenerate = false;
+
         GenerateMap();
     }
 
@@ -28,7 +31,7 @@ public class StateMapManager : State
     {
         Vector3 mousePos = Input.mousePosition;
         Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        m_View.SetPosition(new Vector3Int((int)worldMousePos.x, (int)worldMousePos.y, 0));
+        m_DataStateMachine.SetPosition(new Vector3Int((int)worldMousePos.x, (int)worldMousePos.y, 0));
     }
     private void GenerateMap()
     {
@@ -39,11 +42,17 @@ public class StateMapManager : State
         m_View.StartUpdateValue();
         m_View.StartDraw();
         m_View.StartClear();
+        m_IsGenerate = true;
     }
 
     private void GenerateNewMap()
     {
         m_Generate.GenerateMap();
         m_DataStateMachine.FindInitialPoint(50);
+    }
+
+    public bool IsGenerate()
+    {
+        return m_IsGenerate;
     }
 }

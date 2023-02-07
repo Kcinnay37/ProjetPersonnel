@@ -13,7 +13,9 @@ public class StateMachineManager : StateMachine
 
     public override void InitAllStates()
     {
+        AddNewStateData(EnumStatesManager.data, new StateManagerData(this));
         AddNewState(EnumStatesManager.initGame, new StateManagerInitGame(this));
+        AddNewState(EnumStatesManager.spawn, new StateManagerSpawn(this));
     }
 
     public override ScriptableObject GetData()

@@ -13,8 +13,6 @@ public class StateMapView : StateData
     private Coroutine m_CoroutineDraw;
     private Coroutine m_CoroutineClear;
 
-    private Vector2Int m_Position;
-
     private Dictionary<Vector2Int, Vector2Int> m_CaseToDraw;
     private Dictionary<Vector2Int, Vector2Int> m_CaseToClear;
     private Dictionary<Vector2Int, Vector2Int> m_DrawCase;
@@ -63,11 +61,10 @@ public class StateMapView : StateData
         m_DrawGrid = new bool[m_DataStateMachine.m_Grid.GetLength(0), m_DataStateMachine.m_Grid.GetLength(1)];
     }
 
-    public void SetPosition(Vector3Int worldPos)
+    private Vector2Int GetPosition()
     {
-        DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStateMachine.m_Grid[0, 0]);
-        Vector3Int localPos = dataBlock.map.WorldToCell(worldPos);
-        m_Position = new Vector2Int(localPos.x, localPos.y);
+        StateMapData data = (StateMapData)m_StateMachine.GetStateData(EnumStatesMap.data);
+        return data.m_CurrPoint;
     }
 
     public void ResetMapView()
@@ -117,13 +114,15 @@ public class StateMapView : StateData
     {
         while (true)
         {
-            for (int i = m_Position.x - m_DataMap.distanceView; i <= m_Position.x + m_DataMap.distanceView; i++)
+            Vector2Int position = GetPosition();
+
+            for (int i = position.x - m_DataMap.distanceView; i <= position.x + m_DataMap.distanceView; i++)
             {
                 if (i < 0 || i >= m_DrawGrid.GetLength(0))
                 {
                     continue;
                 }
-                for (int j = m_Position.y - m_DataMap.distanceView; j <= m_Position.y + m_DataMap.distanceView; j++)
+                for (int j = position.y - m_DataMap.distanceView; j <= position.y + m_DataMap.distanceView; j++)
                 {
                     if (j < 0 || j >= m_DrawGrid.GetLength(1))
                     {
@@ -141,7 +140,7 @@ public class StateMapView : StateData
             }
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_DrawCase)
             {
-                if (pos.Value.x < m_Position.x - m_DataMap.distanceView || pos.Value.x > m_Position.x + m_DataMap.distanceView || pos.Value.y < m_Position.y - m_DataMap.distanceView || pos.Value.y > m_Position.y + m_DataMap.distanceView)
+                if (pos.Value.x < position.x - m_DataMap.distanceView || pos.Value.x > position.x + m_DataMap.distanceView || pos.Value.y < position.y - m_DataMap.distanceView || pos.Value.y > position.y + m_DataMap.distanceView)
                 {
                     if (!m_CaseToClear.ContainsKey(pos.Value))
                     {

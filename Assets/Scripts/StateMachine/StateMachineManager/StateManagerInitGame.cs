@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class StateManagerInitGame : State
 {
-    GameObject map;
-    DataManager data;
+    StateManagerData stateManagerData;
 
     public StateManagerInitGame(StateMachine stateMachine) : base(stateMachine)
     {
@@ -13,23 +12,17 @@ public class StateManagerInitGame : State
 
     public override void OnInit()
     {
-        data = (DataManager)m_StateMachine.GetData();
-        map = Pool.m_Instance.GetObject(data.map);
-        map.SetActive(true);
-        m_StateMachine.StartCoroutine(test());
+        stateManagerData = (StateManagerData)m_StateMachine.GetStateData(EnumStatesManager.data);
     }
 
-    IEnumerator test()
+    public override void Update()
     {
-        yield return new WaitForSeconds(5);
-        Pool.m_Instance.RemoveObject(map, data.map);
-        m_StateMachine.StartCoroutine(test1());
-    }
+        StateMapManager stateMapManager = (StateMapManager)stateManagerData.GetStateMachineMap().GetState(EnumStatesMap.manager);
 
-    IEnumerator test1()
-    {
-        yield return new WaitForSeconds(5);
-        map = Pool.m_Instance.GetObject(data.map);
-        map.SetActive(true);
+        if (stateMapManager.IsGenerate())
+        {
+            m_StateMachine.AddCurrState(EnumStatesManager.spawn);
+            m_StateMachine.PopCurrState(EnumStatesManager.initGame);
+        }
     }
 }
