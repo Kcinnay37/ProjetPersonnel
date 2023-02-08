@@ -51,4 +51,9 @@ public class StateManagerManageMap : State
     {
         return m_StateMapManager.GetPointToWorld();
     }
+
+    public void PopBlockAt(Vector3 worldPos)
+    {
+        m_StateMapManager.PopBlockAt(worldPos);
+    }
 }

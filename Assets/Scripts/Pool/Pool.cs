@@ -461,8 +461,11 @@ public class Pool : MonoBehaviour
             m_ParentGameObject = GameObject.Find(m_ParentGameObjectName);
         }
 
-        currObject.transform.parent = m_ParentGameObject.transform;
-
+        if(currObject.transform.parent.gameObject.activeInHierarchy)
+        {
+            currObject.transform.parent = m_ParentGameObject.transform;
+        }
+        
         m_AvailableInstancePool[type].Add(currObject);
     }
 

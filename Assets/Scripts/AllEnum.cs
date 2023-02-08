@@ -114,13 +114,8 @@ public enum EnumStatesPlayer
     none,
 
     //player
-    playerSpawn,
-    playerMove,
-    playerJump,
-    playerEquipInventory,
-    playerPickaxe,
-
-    //UI
-    UIEquipInventory
+    spawn,
+    controller,
+    pickaxe
 }
 

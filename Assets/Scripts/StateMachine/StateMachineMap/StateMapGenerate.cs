@@ -41,8 +41,8 @@ public class StateMapGenerate : StateData
             {
                 m_CurrGridChunkX = x;
 
-                SetCurrChunk();
-                InitValueChunk();
+                SetCurrBiome();
+                InitValueBiome();
                 GenerateCave();
             }
         }
@@ -110,20 +110,22 @@ public class StateMapGenerate : StateData
         }
     }
 
-    private void SetCurrChunk()
+    private void SetCurrBiome()
     {
         int index = Random.Range(0, m_DictDepthChunk[m_CurrGridChunkY].Count);
         DataMap.Biome biome = m_DictDepthChunk[m_CurrGridChunkY][index];
         m_DataCurrBiome = (DataBiome)Pool.m_Instance.GetData(biome.dataBiome);
 
+        m_StateMapManager.SetGridBiomeAt(new Vector2Int(m_CurrGridChunkX, m_CurrGridChunkY), biome.dataBiome);
+
         int checkRarity = Random.Range(1, 101);
         if (checkRarity > biome.rarity)
         {
-            SetCurrChunk();
+            SetCurrBiome();
         }
     }
 
-    private void InitValueChunk()
+    private void InitValueBiome()
     {
         m_Scale = m_DataCurrBiome.scale;
 

@@ -48,6 +48,19 @@ public class StateMapView : StateData
         }
     }
 
+    public void UpdateCase(Vector2Int pos, EnumBlocks oldBlock)
+    {
+        if(m_DrawGrid[pos.x, pos.y] == true)
+        {
+            DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(oldBlock);
+            dataBlock.map.SetTile(new Vector3Int(pos.x, pos.y, 0), null);
+            m_DrawGrid[pos.x, pos.y] = false;
+            m_DrawCase.Remove(pos);
+
+            m_CaseToDraw.Add(pos, pos);
+        }
+    }
+
     public void ResetValue()
     {
         m_StateMapManager = (StateMapManager)m_StateMachine.GetState(EnumStatesMap.manager);
@@ -63,6 +76,7 @@ public class StateMapView : StateData
 
     private Vector2Int GetPosition()
     {
+        m_StateMapManager.UpdatePoint();
         return m_StateMapManager.GetPoint();
     }
 

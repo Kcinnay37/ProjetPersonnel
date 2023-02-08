@@ -8,7 +8,7 @@ public class StateMachineUI : StateMachine
 
     public override void AddInitialsStates()
     {
-        AddCurrState(EnumStatesPlayer.UIEquipInventory);
+        //AddCurrState(EnumStatesPlayer.UIEquipInventory);
     }
 
     public override void InitAllStates()

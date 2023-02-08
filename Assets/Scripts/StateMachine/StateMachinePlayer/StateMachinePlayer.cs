@@ -8,14 +8,14 @@ public class StateMachinePlayer : StateMachine
 
     public override void AddInitialsStates()
     {
-        AddCurrState(EnumStatesPlayer.playerSpawn);
+        AddCurrState(EnumStatesPlayer.spawn);
     }
 
     public override void InitAllStates()
     {
-        m_States.Add(EnumStatesPlayer.playerSpawn, new StatePlayerSpawn(this));
-       // m_States.Add(EnumStatesPlayer.playerMove, new StatePlayerMove(this));
-        //m_States.Add(EnumStatesPlayer.playerJump, new StatePlayerJump(this));
+        m_States.Add(EnumStatesPlayer.spawn, new StatePlayerSpawn(this));
+        m_States.Add(EnumStatesPlayer.controller, new StatePlayerController(this));
+        m_States.Add(EnumStatesPlayer.pickaxe, new StatePlayerPickaxe(this));
     }
 
     public override ScriptableObject GetData()

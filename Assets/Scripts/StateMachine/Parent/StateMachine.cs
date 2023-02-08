@@ -235,11 +235,13 @@ public abstract class StateMachine : MonoBehaviour
     // retourn une state de la statemachine
     public State GetState(object state)
     {
+        if (!m_States.ContainsKey(state)) return null;
         return m_States[state];
     }
 
     public StateData GetStateData(object state)
     {
+        if (!m_StatesDatas.ContainsKey(state)) return null;
         return m_StatesDatas[state];
     }
 }

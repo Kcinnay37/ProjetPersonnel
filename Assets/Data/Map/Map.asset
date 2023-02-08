@@ -21,5 +21,6 @@ MonoBehaviour:
   chunkHeight: 500
   nbChunkRight: 1
   nbChunkDown: 1
-  distanceView: 30
+  distanceView: 20
   timeUpdateView: 0.05
+  timeUpdatePoint: 0

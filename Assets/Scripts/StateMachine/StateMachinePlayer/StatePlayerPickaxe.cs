@@ -1,32 +1,45 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class StatePlayerPickaxe : State
-//{
-//    DataOutil m_Data;
-//    GameObject m_Object;
+public class StatePlayerPickaxe : State
+{
+    DataPlayer m_DataPlayer;
 
-//    public StatePlayerPickaxe(StateMachine stateMachine) : base(stateMachine)
-//    {
-        
-//    }
+    DataOutil m_Data;
+    GameObject m_Object;
 
-//    public override void OnInit()
-//    {
-//        StatePlayerEquipInventory inventoryState = (StatePlayerEquipInventory)m_StateMachine.GetState(EnumState.playerEquipInventory);
-//        EnumData dataName = inventoryState.GetCurrCase();
+    public StatePlayerPickaxe(StateMachine stateMachine) : base(stateMachine)
+    {
 
-//        m_Data = (DataOutil)Pool.m_Instance.GetData(dataName);
-//        m_Object = Pool.m_Instance.GetObject(m_Data.gameObject);
+    }
 
-//        m_Object.transform.parent = GameObject.Find("PlayerWeaponSlot").transform;
-//        m_Object.SetActive(true);
-//        m_Object.transform.localPosition = Vector3.zero;
-//    }
+    public override void OnInit()
+    {
+        m_DataPlayer = (DataPlayer)m_StateMachine.GetData();
 
-//    public override void End()
-//    {
-//        Pool.m_Instance.RemoveObject(m_Object, m_Data.gameObject);
-//    }
-//}
+        m_Object = Pool.m_Instance.GetObject(EnumTools.pickaxe);
+
+        m_Object.transform.parent = GameObject.Find("PlayerWeaponSlot").transform;
+        m_Object.SetActive(true);
+        m_Object.transform.localPosition = Vector3.zero;
+    }
+
+    public override void Update()
+    {
+        if(Input.GetKeyDown(m_DataPlayer.primarySlotKey))
+        {
+            Vector3 mousePosition = Input.mousePosition;
+            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+
+            StateManagerManageMap manageMap = (StateManagerManageMap)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageMap);
+
+            manageMap.PopBlockAt(mouseWorldPosition);
+        }
+    }
+
+    public override void End()
+    {
+        Pool.m_Instance.RemoveObject(m_Object, EnumTools.pickaxe);
+    }
+}

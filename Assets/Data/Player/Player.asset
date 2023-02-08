@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ae1ab2b4f75d7545a0d64620ee15b76, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  walkSpeed: 0
-  runSpeed: 0
-  leftKey: 0
-  rightKey: 0
-  runKey: 0
-  jumpForce: 0
-  jumpKeyCode: 0
-  primarySlotKey: 0
+  walkSpeed: 5
+  runSpeed: 10
+  leftKey: 97
+  rightKey: 100
+  runKey: 304
+  jumpForce: 325
+  jumpKeyCode: 32
+  primarySlotKey: 323
   sizeInventoryEquip: 0
   sizeInventoryBackPack: 0
