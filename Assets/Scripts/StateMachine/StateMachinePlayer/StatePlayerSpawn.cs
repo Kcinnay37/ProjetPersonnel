@@ -25,7 +25,6 @@ public class StatePlayerSpawn : State
     public override void End()
     {
         m_StateMachine.AddCurrState(EnumStatesPlayer.controller);
-        m_StateMachine.AddCurrState(EnumStatesPlayer.pickaxe);
-        //m_StateMachine.AddCurrState(EnumStatesPlayer.playerEquipInventory);
+        m_StateMachine.AddCurrState(EnumStatesPlayer.equip);
     }
 }

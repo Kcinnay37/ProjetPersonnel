@@ -19,6 +19,7 @@ public class StateMachineManager : StateMachine
     {
         AddNewState(EnumStatesManager.manageMap, new StateManagerManageMap(this));
         AddNewState(EnumStatesManager.managePlayer, new StateManagerManagePlayer(this));
+        AddNewState(EnumStatesManager.manageUI, new StateManagerManageUI(this));
     }
 
     public override ScriptableObject GetData()

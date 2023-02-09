@@ -13,9 +13,10 @@ public class StateMachinePlayer : StateMachine
 
     public override void InitAllStates()
     {
-        m_States.Add(EnumStatesPlayer.spawn, new StatePlayerSpawn(this));
-        m_States.Add(EnumStatesPlayer.controller, new StatePlayerController(this));
-        m_States.Add(EnumStatesPlayer.pickaxe, new StatePlayerPickaxe(this));
+        AddNewState(EnumStatesPlayer.spawn, new StatePlayerSpawn(this));
+        AddNewState(EnumStatesPlayer.controller, new StatePlayerController(this));
+        AddNewState(EnumStatesPlayer.pickaxe, new StatePlayerPickaxe(this));
+        AddNewState(EnumStatesPlayer.equip, new StatePlayerEquip(this));
     }
 
     public override ScriptableObject GetData()

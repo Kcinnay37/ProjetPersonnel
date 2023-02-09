@@ -5,17 +5,29 @@ using UnityEngine;
 [CreateAssetMenu]
 public class DataPlayer : ScriptableObject
 {
-    public float walkSpeed;
-    public float runSpeed;
+    [Header("Key")]
     public KeyCode leftKey;
     public KeyCode rightKey;
     public KeyCode runKey;
 
-    public float jumpForce;
     public KeyCode jumpKeyCode;
 
     public KeyCode primarySlotKey;
+    public KeyCode secondarySlotKey;
 
-    public int sizeInventoryEquip;
-    public int sizeInventoryBackPack;
+    [Header("Stat")]
+    public float walkSpeed;
+    public float runSpeed;
+
+    public float jumpForce;
+
+    public int sizeEquip;
+    public int sizeBackPack;
+
+    public int health;
+    public int armor;
+    public int energy;
+    public int damage;
+    public int attackSpeed;
+    public int damageBlock;
 }

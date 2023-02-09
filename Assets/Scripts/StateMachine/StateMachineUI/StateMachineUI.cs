@@ -8,12 +8,12 @@ public class StateMachineUI : StateMachine
 
     public override void AddInitialsStates()
     {
-        //AddCurrState(EnumStatesPlayer.UIEquipInventory);
+        
     }
 
     public override void InitAllStates()
     {
-        //m_States.Add(EnumState.UIEquipInventory, new StateUIEquipInventory(this));
+        AddNewState(EnumStatesUI.playerEquipUI, new StateUIPlayerEquip(this));
     }
 
     public override ScriptableObject GetData()

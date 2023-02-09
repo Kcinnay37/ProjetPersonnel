@@ -12,13 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ae1ab2b4f75d7545a0d64620ee15b76, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  runSpeed: 10
   leftKey: 97
   rightKey: 100
   runKey: 304
-  jumpForce: 325
   jumpKeyCode: 32
   primarySlotKey: 323
-  sizeInventoryEquip: 0
-  sizeInventoryBackPack: 0
+  secondarySlotKey: 324
+  walkSpeed: 5
+  runSpeed: 10
+  jumpForce: 325
+  sizeEquip: 5
+  sizeBackPack: 1
+  health: 10
+  armor: 5
+  energy: 10
+  damage: 2
+  attackSpeed: 2
+  damageBlock: 5

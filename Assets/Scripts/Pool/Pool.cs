@@ -477,7 +477,7 @@ public class Pool : MonoBehaviour
         {
             m_ParentGameObject = GameObject.Find(m_ParentGameObjectName);
         }
-        newObject.transform.parent = m_ParentGameObject.transform;
+        newObject.transform.SetParent(m_ParentGameObject.transform);
         newObject.SetActive(false);
 
         return newObject;

@@ -61,7 +61,8 @@ public enum EnumMonster
 
 public enum EnumUI
 {
-    slotEquip
+    slot,
+    UIGame
 }
 
 public enum EnumTools
@@ -99,7 +100,8 @@ public enum EnumAudios
 public enum EnumStatesManager
 {
     manageMap,
-    managePlayer
+    managePlayer,
+    manageUI
 }
 
 public enum EnumStatesMap
@@ -111,11 +113,16 @@ public enum EnumStatesMap
 
 public enum EnumStatesPlayer
 {
-    none,
-
-    //player
     spawn,
     controller,
-    pickaxe
+    pickaxe,
+    equip
+}
+
+public enum EnumStatesUI
+{
+    playerEquipUI,
+    playerBackpackUI,
+    playerStatUI
 }
 

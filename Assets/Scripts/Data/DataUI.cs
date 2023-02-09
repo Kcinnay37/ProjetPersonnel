@@ -6,5 +6,8 @@ using UnityEngine.UI;
 [CreateAssetMenu]
 public class DataUI : ScriptableObject
 {
-    public GameObject slotEquip;
+    public GameObject slot;
+    public Sprite imageSlotPrimary;
+    public Sprite imageSlotSecondary;
+    public Sprite imageSlotEquip;
 }

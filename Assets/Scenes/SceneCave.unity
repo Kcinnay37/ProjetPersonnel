@@ -727,8 +727,14 @@ MonoBehaviour:
   m_DataNPC: []
   m_InstanceMonster: []
   m_DataMonster: []
-  m_InstanceUI: []
-  m_DataUI: []
+  m_InstanceUI:
+  - type: 0
+    value: {fileID: 1302386180699377683, guid: 4ecbcdf03d151144bbd03fb8669421b2, type: 3}
+  - type: 1
+    value: {fileID: 3551913678000367760, guid: 3646e432a969b77458f28a6b592a3cd9, type: 3}
+  m_DataUI:
+  - type: 1
+    value: {fileID: 11400000, guid: a38d86cfc45f10e418b712fb46b1cd4e, type: 2}
   m_InstanceTool:
   - type: 0
     value: {fileID: 8384671595252760698, guid: 9b8a78a2b15fffc4fb7e026b579730bb, type: 3}

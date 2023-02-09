@@ -48,7 +48,7 @@ public abstract class StateMachine : MonoBehaviour
     // Fonction pour appeler l'ordre d'execution ---------------------------------
     private void CallStart()
     {
-        // ajoute les state a ajouter et appel leur Awake 
+        // ajoute les state a ajouter et appel leur Awake
         foreach (object state in m_StatesToAdd)
         {
             if (!m_CurrStates.Contains(state))

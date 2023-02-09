@@ -36,6 +36,7 @@ public class StateManagerManageMap : State
             if(stateMapManager.IsGenerate())
             {
                 m_StateMachine.AddCurrState(EnumStatesManager.managePlayer);
+                m_StateMachine.AddCurrState(EnumStatesManager.manageUI);
                 break;
             }
             yield return null;
