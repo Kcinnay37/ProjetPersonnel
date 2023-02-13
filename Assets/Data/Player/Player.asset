@@ -18,14 +18,14 @@ MonoBehaviour:
   jumpKeyCode: 32
   primarySlotKey: 323
   secondarySlotKey: 324
-  walkSpeed: 5
-  runSpeed: 10
-  jumpForce: 325
-  sizeEquip: 5
-  sizeBackPack: 1
-  health: 10
-  armor: 5
-  energy: 10
-  damage: 2
-  attackSpeed: 2
-  damageBlock: 5
+  baseWalkSpeed: 5
+  baseRunSpeed: 10
+  baseJumpForce: 325
+  baseSizeEquip: 4
+  baseSizeBackPack: 0
+  baseMaxHealth: 0
+  baseMaxArmor: 0
+  baseMaxEnergy: 0
+  baseDamage: 0
+  baseAttackSpeed: 0
+  baseDamageBlock: 0

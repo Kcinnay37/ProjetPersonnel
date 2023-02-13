@@ -84,7 +84,7 @@ public enum EnumEquipements
 
 public enum EnumSpecialResources
 {
-
+    none
 }
 
 public enum EnumVFXs
@@ -113,10 +113,20 @@ public enum EnumStatesMap
 
 public enum EnumStatesPlayer
 {
+    none,
+
+    data,
+
     spawn,
+
     controller,
-    pickaxe,
-    equip
+
+    excavation,
+    contruction,
+
+    equip,
+    backpack,
+    manageInventory
 }
 
 public enum EnumStatesUI

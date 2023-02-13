@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class StateManagerManagePlayer : State
 {
-    DataManager data;
+    private DataManager m_Data;
 
-    GameObject m_PlayerObject;
-    StateMachinePlayer m_StateMachinePlayer;
+    private GameObject m_PlayerObject;
+    private StateMachinePlayer m_StateMachinePlayer;
 
-    const float offset = 0.5f;
+    private const float offset = 0.5f;
 
     public StateManagerManagePlayer(StateMachine stateMachine) : base(stateMachine)
     {
+
     }
 
     public override void OnInit()
     {
         // fais spawner le player
-        DataManager data = (DataManager)m_StateMachine.GetData();
-        m_PlayerObject = Pool.m_Instance.GetObject(data.player);
+        m_Data = (DataManager)m_StateMachine.GetData();
+        m_PlayerObject = Pool.m_Instance.GetObject(m_Data.player);
+        m_StateMachinePlayer = m_PlayerObject.GetComponent<StateMachinePlayer>();
 
         StateManagerManageMap map = (StateManagerManageMap)m_StateMachine.GetState(EnumStatesManager.manageMap);
 
@@ -37,5 +39,11 @@ public class StateManagerManagePlayer : State
     {
         if(m_PlayerObject != null) return m_PlayerObject.transform.position;
         else return Vector3.zero;
+    }
+
+    public void InitEquipUI()
+    {
+        StatePlayerEquip statePlayerEquip = (StatePlayerEquip)m_StateMachinePlayer.GetState(EnumStatesPlayer.equip);
+        statePlayerEquip.InitUI();
     }
 }

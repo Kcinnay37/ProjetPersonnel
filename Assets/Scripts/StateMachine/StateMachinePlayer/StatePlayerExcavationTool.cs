@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatePlayerPickaxe : State
+public class StatePlayerExcavationTool : State
 {
-    DataPlayer m_DataPlayer;
+    private DataPlayer m_DataPlayer;
 
-    DataOutil m_Data;
-    GameObject m_Object;
+    private DataTool m_Data;
+    private GameObject m_Object;
 
-    public StatePlayerPickaxe(StateMachine stateMachine) : base(stateMachine)
+    public StatePlayerExcavationTool(StateMachine stateMachine) : base(stateMachine)
     {
 
     }

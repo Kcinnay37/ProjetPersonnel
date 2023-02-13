@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StateManagerManageUI : State
 {
-    GameObject m_UIGameObject;
-    StateMachineUI m_StateMachineUI;
+    private GameObject m_UIGameObject;
+    private StateMachineUI m_StateMachineUI;
 
     public StateManagerManageUI(StateMachine stateMachine) : base(stateMachine)
     {
@@ -20,25 +20,35 @@ public class StateManagerManageUI : State
         m_UIGameObject.SetActive(true);
     }
 
+    //ajoute une state dans la state machine de UI courrant
     public void AddCurrUIState(EnumStatesUI state)
     {
         m_StateMachineUI.AddCurrState(state);
     }
 
+    //retire une state dans la state machine de UI courrant
     public void PopCurrUIState(EnumStatesUI state)
     {
         m_StateMachineUI.PopCurrState(state);
     }
 
-    public void AddSlot()
+    //manipulation inventory equip -------------------------------------------
+    public void AddSlotInventoryEquip()
     {
         StateUIPlayerEquip stateUIPlayerEquip = (StateUIPlayerEquip)m_StateMachineUI.GetState(EnumStatesUI.playerEquipUI);
         stateUIPlayerEquip.AddSlot();
     }
 
-    public void ChangeImageAt(int index, Sprite image)
+    public void UpdateCaseAtInventoryEquip(int index, InventoryCase inventoryCase)
     {
         StateUIPlayerEquip stateUIPlayerEquip = (StateUIPlayerEquip)m_StateMachineUI.GetState(EnumStatesUI.playerEquipUI);
-        stateUIPlayerEquip.ChangeImageAt(index, image);
+        stateUIPlayerEquip.UpdateSlotAt(index, inventoryCase);
     }
+
+    public List<Transform> GetAllSlotInventoryEquip()
+    {
+        StateUIPlayerEquip stateUIPlayerEquip = (StateUIPlayerEquip)m_StateMachineUI.GetState(EnumStatesUI.playerEquipUI);
+        return stateUIPlayerEquip.GetAllSlots();
+    }
+    // --------------------------------------------------------------------------
 }

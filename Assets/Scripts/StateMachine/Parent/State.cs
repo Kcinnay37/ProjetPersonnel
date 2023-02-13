@@ -10,15 +10,12 @@ public abstract class State : StateData
     }
 
     // ordre dexecution -----------------------------------------------------------
-    public virtual void OnInit() { }
 
     public virtual void FixedUpdate() { }
 
     public virtual void Update() { }
 
     public virtual void LateUpdate() { }
-
-    public virtual void End() { }
     // --------------------------------------------------------------------------
 
     public virtual void OnEnable() { }

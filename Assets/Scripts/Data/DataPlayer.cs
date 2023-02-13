@@ -16,18 +16,18 @@ public class DataPlayer : ScriptableObject
     public KeyCode secondarySlotKey;
 
     [Header("Stat")]
-    public float walkSpeed;
-    public float runSpeed;
+    public float baseWalkSpeed;
+    public float baseRunSpeed;
 
-    public float jumpForce;
+    public float baseJumpForce;
 
-    public int sizeEquip;
-    public int sizeBackPack;
+    public int baseSizeEquip;
+    public int baseSizeBackPack;
 
-    public int health;
-    public int armor;
-    public int energy;
-    public int damage;
-    public int attackSpeed;
-    public int damageBlock;
+    public int baseMaxHealth;
+    public int baseMaxArmor;
+    public int baseMaxEnergy;
+    public int baseDamage;
+    public int baseAttackSpeed;
+    public int baseDamageBlock;
 }

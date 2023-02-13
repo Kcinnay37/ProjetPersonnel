@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class DataOutil : DataResource
+public class DataTool : DataResource
 {
     
 }

@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class StatePlayerSpawn : State
 {
-
-
-    
-
     public StatePlayerSpawn(StateMachine stateMachine) : base(stateMachine)
     {
 
@@ -25,6 +21,9 @@ public class StatePlayerSpawn : State
     public override void End()
     {
         m_StateMachine.AddCurrState(EnumStatesPlayer.controller);
+
         m_StateMachine.AddCurrState(EnumStatesPlayer.equip);
+        m_StateMachine.AddCurrState(EnumStatesPlayer.backpack);
+        m_StateMachine.AddCurrState(EnumStatesPlayer.manageInventory);
     }
 }

@@ -103,7 +103,7 @@ public class StateMapView : StateData
     {
         if (m_CoroutineUpdateValue == null)
         {
-            m_CoroutineUpdateValue = m_StateMachine.StartCoroutine(CoroutineUpdateValue2());
+            m_CoroutineUpdateValue = m_StateMachine.StartCoroutine(CoroutineUpdateValue());
         }
     }
 
@@ -111,7 +111,7 @@ public class StateMapView : StateData
     {
         if(m_CoroutineDraw == null)
         {
-            m_CoroutineDraw = m_StateMachine.StartCoroutine(CoroutineDraw2());
+            m_CoroutineDraw = m_StateMachine.StartCoroutine(CoroutineDraw());
         }
     }
 
@@ -119,11 +119,11 @@ public class StateMapView : StateData
     {
         if (m_CoroutineClear == null)
         {
-            m_CoroutineClear = m_StateMachine.StartCoroutine(CoroutineClear2());
+            m_CoroutineClear = m_StateMachine.StartCoroutine(CoroutineClear());
         }
     }
 
-    public IEnumerator CoroutineUpdateValue2()
+    public IEnumerator CoroutineUpdateValue()
     {
         while (true)
         {
@@ -166,7 +166,7 @@ public class StateMapView : StateData
         }
     }
 
-    public IEnumerator CoroutineDraw2()
+    public IEnumerator CoroutineDraw()
     {
         while (true)
         {
@@ -183,7 +183,7 @@ public class StateMapView : StateData
         }
     }
 
-    public IEnumerator CoroutineClear2()
+    public IEnumerator CoroutineClear()
     {
         while (true)
         {

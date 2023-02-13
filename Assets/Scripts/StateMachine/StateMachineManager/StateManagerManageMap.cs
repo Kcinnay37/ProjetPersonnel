@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StateManagerManageMap : State
 {
-    private DataManager data;
+    private DataManager m_Data;
 
     private GameObject m_MapObject;
     private StateMachineMap m_StateMachineMap;
@@ -16,9 +16,9 @@ public class StateManagerManageMap : State
 
     public override void OnInit()
     {
-        data = (DataManager)m_StateMachine.GetData();
+        m_Data = (DataManager)m_StateMachine.GetData();
 
-        m_MapObject = Pool.m_Instance.GetObject(data.map);
+        m_MapObject = Pool.m_Instance.GetObject(m_Data.map);
 
         m_StateMachineMap = m_MapObject.GetComponent<StateMachineMap>();
         m_StateMapManager = (StateMapManager)m_StateMachineMap.GetState(EnumStatesMap.manager);

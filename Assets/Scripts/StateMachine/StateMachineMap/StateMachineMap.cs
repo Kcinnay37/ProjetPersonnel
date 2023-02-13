@@ -15,7 +15,6 @@ public class StateMachineMap : StateMachine
     {
         AddNewStateData(EnumStatesMap.generate, new StateMapGenerate(this));
         AddNewStateData(EnumStatesMap.view, new StateMapView(this));
-
         AddNewState(EnumStatesMap.manager, new StateMapManager(this));
     }
 

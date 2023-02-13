@@ -13,10 +13,17 @@ public class StateMachinePlayer : StateMachine
 
     public override void InitAllStates()
     {
+        AddNewStateData(EnumStatesPlayer.data, new StatePlayerData(this));
+
         AddNewState(EnumStatesPlayer.spawn, new StatePlayerSpawn(this));
+
         AddNewState(EnumStatesPlayer.controller, new StatePlayerController(this));
-        AddNewState(EnumStatesPlayer.pickaxe, new StatePlayerPickaxe(this));
+
+        AddNewState(EnumStatesPlayer.excavation, new StatePlayerExcavationTool(this));
+
         AddNewState(EnumStatesPlayer.equip, new StatePlayerEquip(this));
+        AddNewState(EnumStatesPlayer.backpack, new StatePlayerBackpack(this));
+        AddNewState(EnumStatesPlayer.manageInventory, new StatePlayerManageInventory(this));
     }
 
     public override ScriptableObject GetData()

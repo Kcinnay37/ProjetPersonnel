@@ -738,13 +738,17 @@ MonoBehaviour:
   m_InstanceTool:
   - type: 0
     value: {fileID: 8384671595252760698, guid: 9b8a78a2b15fffc4fb7e026b579730bb, type: 3}
-  m_DataTool: []
+  m_DataTool:
+  - type: 0
+    value: {fileID: 11400000, guid: 25d699bea0cd7b144ab50f302b0a64fa, type: 2}
   m_InstanceConsumable: []
   m_DataConsumable: []
   m_InstanceEquipement: []
   m_DataEquipement: []
   m_InstanceSpecialResource: []
-  m_DataSpecialResource: []
+  m_DataSpecialResource:
+  - type: 0
+    value: {fileID: 11400000, guid: 570e04baa230c314b8f18f4b7511ab73, type: 2}
   m_InstanceVFX: []
   m_DataVFX: []
   m_InstanceAudio: []

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class StatePlayerController : State
 {
-    DataPlayer m_Data;
-    Rigidbody2D m_RigidBody;
-    Animator m_Animator;
+    private DataPlayer m_Data;
+    private Rigidbody2D m_RigidBody;
+    private Animator m_Animator;
 
     public StatePlayerController(StateMachine stateMachine) : base(stateMachine)
     {
@@ -40,11 +40,11 @@ public class StatePlayerController : State
             // si il cour ou pas
             if (Input.GetKey(m_Data.runKey))
             {
-                velo.x = Input.GetAxis("Horizontal") * m_Data.runSpeed;
+                velo.x = Input.GetAxis("Horizontal") * m_Data.baseRunSpeed;
             }
             else
             {
-                velo.x = Input.GetAxis("Horizontal") * m_Data.walkSpeed;
+                velo.x = Input.GetAxis("Horizontal") * m_Data.baseWalkSpeed;
             }
         }
 
@@ -67,14 +67,14 @@ public class StatePlayerController : State
             m_StateMachine.transform.localScale = rota;
         }
 
-        m_Animator.SetFloat("Velo", Mathf.Abs(m_RigidBody.velocity.x / m_Data.runSpeed));
+        m_Animator.SetFloat("Velo", Mathf.Abs(m_RigidBody.velocity.x / m_Data.baseRunSpeed));
     }
 
     private void UpdateJump()
     {
         if (Input.GetKeyDown(m_Data.jumpKeyCode) && CheckCanJump())
         {
-            m_RigidBody.AddForce(new Vector2(0, m_Data.jumpForce * m_RigidBody.mass));
+            m_RigidBody.AddForce(new Vector2(0, m_Data.baseJumpForce * m_RigidBody.mass));
         }
     }
 
