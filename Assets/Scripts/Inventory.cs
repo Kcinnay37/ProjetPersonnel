@@ -44,12 +44,9 @@ public class Inventory : MonoBehaviour
     }
 
     // Set les value d'une case de l'inventaire
-    public void SetCase(int index, DataResource resource, int nb)
+    public void SetCase(int index, InventoryCase inventoryCase)
     {
-        InventoryCase temp = m_Inventory[index];
-        temp.resource = resource;
-        temp.currNb = (nb <= temp.resource.maxStack)? nb : temp.resource.maxStack;
-        m_Inventory[index] = temp;
+        m_Inventory[index] = inventoryCase;
     }
 
     // ajoute une ressource dans l'inventaire
