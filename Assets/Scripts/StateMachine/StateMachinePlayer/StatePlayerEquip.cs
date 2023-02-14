@@ -10,7 +10,7 @@ public class StatePlayerEquip : State
     private Inventory m_InventoryEquip;
     private Inventory m_InventoryEquipSecondary;
 
-    private InventoryCase m_CaseEquip;
+    private int m_IndexEquip;
 
     public StatePlayerEquip(StateMachine stateMachine) : base(stateMachine)
     {
@@ -26,8 +26,7 @@ public class StatePlayerEquip : State
         m_InventoryEquip = new Inventory(2);
         m_InventoryEquipSecondary = new Inventory(m_StatePlayerData.GetSizeInventoryEquip());
 
-        m_CaseEquip.resource = (DataResource)Pool.m_Instance.GetData(EnumSpecialResources.none);
-        m_CaseEquip.currNb = 0;
+        m_IndexEquip = -1;
 
         //ajoute la state du UI player equip
         m_StateManagerManageUI = (StateManagerManageUI)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageUI);
@@ -46,7 +45,7 @@ public class StatePlayerEquip : State
             InventoryCase temp = new InventoryCase();
             temp.resource = (DataResource)Pool.m_Instance.GetData(EnumTools.pickaxe);
             temp.currNb = 1;
-            SetCase(3, temp);
+            SetCase(0, temp);
         }
     }
 
@@ -76,14 +75,35 @@ public class StatePlayerEquip : State
     {
         if(index < 2)
         {
+            if(m_IndexEquip == index)
+            {
+                UnEquip(index);
+            }
+
             m_InventoryEquip.SetCase(index, newCase);
+            
+            if(m_IndexEquip == index)
+            {
+                Equip(index);
+            }
         }
         else
         {
-            m_InventoryEquipSecondary.SetCase(index, newCase);
+            m_InventoryEquipSecondary.SetCase(index - 2, newCase);
         }
 
         m_StateManagerManageUI.UpdateCaseAtInventoryEquip(index, newCase);
+    }
+
+    public InventoryCase PopCase(int index)
+    {
+        InventoryCase emptyCase = new InventoryCase();
+        emptyCase.resource = (DataResource)Pool.m_Instance.GetData(EnumSpecialResources.none);
+        emptyCase.currNb = 0;
+
+        InventoryCase currCase = GetCase(index);
+        SetCase(index, emptyCase);
+        return currCase;
     }
 
     public InventoryCase GetCase(int index)
@@ -94,7 +114,7 @@ public class StatePlayerEquip : State
         }
         else
         {
-            return m_InventoryEquipSecondary.GetCase(index);
+            return m_InventoryEquipSecondary.GetCase(index - 2);
         }
     }
 
@@ -106,7 +126,9 @@ public class StatePlayerEquip : State
 
     private void Equip(int index)
     {
-        m_CaseEquip = m_InventoryEquip.GetCase(index);
+        m_IndexEquip = index;
+
+        InventoryCase currCase = m_InventoryEquip.GetCase(index);
 
         if (index == 0)
         {
@@ -116,7 +138,7 @@ public class StatePlayerEquip : State
         {
             UnEquip(0);
         }
-        m_StateMachine.AddCurrState(m_CaseEquip.resource.state);
+        m_StateMachine.AddCurrState(currCase.resource.state);
 
     }
 }

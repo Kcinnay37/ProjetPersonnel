@@ -732,6 +732,8 @@ MonoBehaviour:
     value: {fileID: 1302386180699377683, guid: 4ecbcdf03d151144bbd03fb8669421b2, type: 3}
   - type: 1
     value: {fileID: 3551913678000367760, guid: 3646e432a969b77458f28a6b592a3cd9, type: 3}
+  - type: 2
+    value: {fileID: 5596813104898256625, guid: f45cc3683ad8f5e4c8c65bbdd13ea7db, type: 3}
   m_DataUI:
   - type: 1
     value: {fileID: 11400000, guid: a38d86cfc45f10e418b712fb46b1cd4e, type: 2}

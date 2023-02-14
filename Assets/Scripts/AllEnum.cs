@@ -62,7 +62,8 @@ public enum EnumMonster
 public enum EnumUI
 {
     slot,
-    UIGame
+    UIGame,
+    content
 }
 
 public enum EnumTools
