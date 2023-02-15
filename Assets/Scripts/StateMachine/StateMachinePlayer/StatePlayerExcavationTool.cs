@@ -6,7 +6,9 @@ public class StatePlayerExcavationTool : State
 {
     private DataPlayer m_DataPlayer;
 
-    private DataTool m_Data;
+    private StatePlayerController m_StatePlayerController;
+
+    private DataTool m_DataTool;
     private GameObject m_Object;
 
     public StatePlayerExcavationTool(StateMachine stateMachine) : base(stateMachine)
@@ -16,8 +18,11 @@ public class StatePlayerExcavationTool : State
 
     public override void OnInit()
     {
+        //initialise les valeur
         m_DataPlayer = (DataPlayer)m_StateMachine.GetData();
+        m_StatePlayerController = (StatePlayerController)m_StateMachine.GetState(EnumStatesPlayer.controller);
 
+        //Instanci l'outil
         m_Object = Pool.m_Instance.GetObject(EnumTools.pickaxe);
 
         m_Object.transform.parent = GameObject.Find("PlayerWeaponSlot").transform;
@@ -25,21 +30,23 @@ public class StatePlayerExcavationTool : State
         m_Object.transform.localPosition = Vector3.zero;
     }
 
-    public override void Update()
-    {
-        if(Input.GetKeyDown(m_DataPlayer.primarySlotKey))
-        {
-            Vector3 mousePosition = Input.mousePosition;
-            Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
-
-            StateManagerManageMap manageMap = (StateManagerManageMap)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageMap);
-
-            manageMap.PopBlockAt(mouseWorldPosition);
-        }
-    }
-
     public override void End()
     {
         Pool.m_Instance.RemoveObject(m_Object, EnumTools.pickaxe);
+    }
+
+    public void ActionKeyDown()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+
+        StateManagerManageMap manageMap = (StateManagerManageMap)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageMap);
+
+        manageMap.PopBlockAt(mouseWorldPosition);
+    }
+
+    public void ActionKey()
+    {
+
     }
 }

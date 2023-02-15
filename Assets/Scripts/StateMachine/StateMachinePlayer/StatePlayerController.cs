@@ -8,6 +8,8 @@ public class StatePlayerController : State
     private Rigidbody2D m_RigidBody;
     private Animator m_Animator;
 
+    private int m_Action;
+
     public StatePlayerController(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -17,13 +19,32 @@ public class StatePlayerController : State
         m_Data = (DataPlayer)m_StateMachine.GetData();
         m_RigidBody = m_StateMachine.GetComponent<Rigidbody2D>();
         m_Animator = m_StateMachine.GetComponent<Animator>();
+
+        m_Action = -1;
     }
 
     public override void Update()
     {
+        UpdateAction();
         UpdateMove();
         UpdateJump();
         UpdateAnimator();
+    }
+
+    private void UpdateAction()
+    {
+        if(Input.GetKeyDown(m_Data.primarySlotKey))
+        {
+            m_Action = 0;
+        }
+        else if(Input.GetKeyDown(m_Data.secondarySlotKey))
+        {
+            m_Action = 1;
+        }
+        else
+        {
+            m_Action = 0;
+        }
     }
 
     private void UpdateMove()
@@ -81,5 +102,10 @@ public class StatePlayerController : State
     private bool CheckCanJump()
     {
         return true;
+    }
+
+    public int GetAction()
+    {
+        return m_Action;
     }
 }

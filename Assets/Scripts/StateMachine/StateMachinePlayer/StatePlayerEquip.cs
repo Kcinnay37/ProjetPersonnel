@@ -40,7 +40,7 @@ public class StatePlayerEquip : State
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             InventoryCase temp = new InventoryCase();
             temp.resource = (DataResource)Pool.m_Instance.GetData(EnumTools.pickaxe);
@@ -77,15 +77,10 @@ public class StatePlayerEquip : State
         {
             if(m_IndexEquip == index)
             {
-                UnEquip(index);
+                UnEquip();
             }
 
             m_InventoryEquip.SetCase(index, newCase);
-            
-            if(m_IndexEquip == index)
-            {
-                Equip(index);
-            }
         }
         else
         {
@@ -118,27 +113,42 @@ public class StatePlayerEquip : State
         }
     }
 
-    private void UnEquip(int index)
+    private void UnEquip()
     {
-        InventoryCase inventoryCase = m_InventoryEquip.GetCase(index);
+        if (m_IndexEquip == -1)
+        {
+            return;
+        }
+
+        InventoryCase inventoryCase = m_InventoryEquip.GetCase(m_IndexEquip);
         m_StateMachine.PopCurrState(inventoryCase.resource.state);
+        m_IndexEquip = -1;
     }
 
-    private void Equip(int index)
+    public void Equip(int index)
     {
-        m_IndexEquip = index;
-
-        InventoryCase currCase = m_InventoryEquip.GetCase(index);
-
-        if (index == 0)
+        if(m_IndexEquip == index)
         {
-            UnEquip(1);
+            ActionKeyDown();
         }
         else
         {
-            UnEquip(0);
+            UnEquip();
+
+            m_IndexEquip = index;
+
+            InventoryCase currCase = m_InventoryEquip.GetCase(index);
+            m_StateMachine.AddCurrState(currCase.resource.state);
         }
-        m_StateMachine.AddCurrState(currCase.resource.state);
+    }
+
+    public void ActionKeyDown()
+    {
+        
+    }
+
+    public void ActionKey()
+    {
 
     }
 }
