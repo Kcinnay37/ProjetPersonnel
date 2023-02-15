@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class StatePlayerManageInventory : State
 {
-    struct MouseItem
+    public struct MouseItem
     {
-        InventoryCase inventoryCase;
-        Transform rootSlot;
+        public InventoryCase inventoryCase;
+        public Transform rootSlot;
     }
 
     DataPlayer m_DataPlayer;
@@ -17,6 +17,7 @@ public class StatePlayerManageInventory : State
     StateManagerManageUI m_StateManagerManagerUI;
 
     GameObject m_ContentMouse;
+    MouseItem m_CurrMouseItem;
 
     private bool m_InventoryUsed;
 
@@ -70,15 +71,18 @@ public class StatePlayerManageInventory : State
         {
             if (!m_InventoryUsed)
             {
-                m_StatePlayerEquip.ActionKeyDown();
+                m_StatePlayerEquip.ActionOldKey();
+            }
+            else
+            {
+                UpdateContent(localPoint);
             }
         }
         else if(Input.GetKeyUp(m_DataPlayer.primarySlotKey) || Input.GetKeyUp(m_DataPlayer.secondarySlotKey))
         {
             m_InventoryUsed = false;
+            m_ContentMouse.SetActive(false);
         }
-
-        UpdateContent(localPoint);
     }
 
     public void UpdateContent(Vector2 localPoint)
@@ -89,26 +93,33 @@ public class StatePlayerManageInventory : State
 
     private void CheckMouseInventoryUI(Vector2 localPoint)
     {
-
         m_StateManagerManagerUI = (StateManagerManageUI)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageUI);
 
-        InventoryCase inventoryCase = GetUIEquip(localPoint);
-        if(inventoryCase.currNb != 0)
+        MouseItem mouseItem = GetUIEquip(localPoint);
+        if(mouseItem.rootSlot != null)
         {
             m_InventoryUsed = true;
+
+            m_ContentMouse.GetComponent<Image>().sprite = mouseItem.inventoryCase.resource.image;
+            m_ContentMouse.SetActive(true);
         }
     }
 
-    public InventoryCase GetUIEquip(Vector2 mousePoint)
+    public MouseItem GetUIEquip(Vector2 mousePoint)
     {
         //prend le transform de tout les slot de l'inventaire equip
         List<Transform> slotsEquip = m_StateManagerManagerUI.GetAllSlotInventoryEquip();
 
         StatePlayerEquip statePlayerEquip = (StatePlayerEquip)m_StateMachine.GetState(EnumStatesPlayer.equip);
 
+        // initialise les valeurs par default
         InventoryCase inventoryCase = new InventoryCase();
         inventoryCase.resource = (DataResource)Pool.m_Instance.GetData(EnumSpecialResources.none);
         inventoryCase.currNb = 0;
+
+        MouseItem mouseItem = new MouseItem();
+        mouseItem.inventoryCase = inventoryCase;
+        mouseItem.rootSlot = null;
 
         //regarde la position sur l'inventaire equip
         int index = 0;
@@ -119,12 +130,13 @@ public class StatePlayerManageInventory : State
             Rect localRect = new Rect(localPosition.x - (currTransform.rect.width / 2), localPosition.y - (currTransform.rect.height / 2), currTransform.rect.width, currTransform.rect.height);
             if (localRect.Contains(mousePoint))
             {
-                inventoryCase = statePlayerEquip.PopCase(index);
-                return inventoryCase;
+                mouseItem.inventoryCase = statePlayerEquip.PopCase(index);
+                mouseItem.rootSlot = currSlot;
+                return mouseItem;
             }
             index++;
         }
-        
-        return inventoryCase;
+
+        return mouseItem;
     }
 }

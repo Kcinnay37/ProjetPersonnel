@@ -144,10 +144,12 @@ public class StatePlayerEquip : State
 
     public void ActionKeyDown()
     {
-        
+        InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
+        StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(currCase.resource.state);
+        stateRessource?.ActionKeyDown();
     }
 
-    public void ActionKey()
+    public void ActionOldKey()
     {
 
     }

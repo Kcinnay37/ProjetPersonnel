@@ -49,7 +49,8 @@ public class StateMapManager : State
     private void GenerateMap()
     {
         //si nouvelle partie
-        GenerateNewMap();
+        m_Generate.GenerateMap();
+        FindInitialPoint(50);
 
         m_View.ResetValue();
         m_View.StartUpdateValue();
@@ -58,11 +59,6 @@ public class StateMapManager : State
         m_IsGenerate = true;
     }
 
-    private void GenerateNewMap()
-    {
-        m_Generate.GenerateMap();
-        FindInitialPoint(50);
-    }
 
     public bool IsGenerate()
     {

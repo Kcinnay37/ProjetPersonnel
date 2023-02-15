@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatePlayerExcavationTool : State
+public class StatePlayerExcavationTool : StateRessource
 {
     private DataPlayer m_DataPlayer;
 
@@ -35,7 +35,7 @@ public class StatePlayerExcavationTool : State
         Pool.m_Instance.RemoveObject(m_Object, EnumTools.pickaxe);
     }
 
-    public void ActionKeyDown()
+    public override void ActionKeyDown()
     {
         Vector3 mousePosition = Input.mousePosition;
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
@@ -45,7 +45,7 @@ public class StatePlayerExcavationTool : State
         manageMap.PopBlockAt(mouseWorldPosition);
     }
 
-    public void ActionKey()
+    public override void ActionOldKey()
     {
 
     }
