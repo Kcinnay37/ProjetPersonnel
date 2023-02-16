@@ -108,26 +108,26 @@ public enum EnumStatesManager
 public enum EnumStatesMap
 {
     generate,
-    manager,
-    view,
+    grid,
+    view
 }
 
 public enum EnumStatesPlayer
 {
     none,
 
-    data,
+    stat,
 
     spawn,
 
-    controller,
+    controllerMovement,
 
     excavation,
     contruction,
 
     equip,
     backpack,
-    manageInventory
+    controllerInventory
 }
 
 public enum EnumStatesUI

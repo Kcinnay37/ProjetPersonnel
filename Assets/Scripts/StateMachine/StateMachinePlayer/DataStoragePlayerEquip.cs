@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatePlayerEquip : State
+public class DataStoragePlayerEquip : DataStorage
 {
-    private StateManagerManageUI m_StateManagerManageUI;
-    private StatePlayerData m_StatePlayerData;
+    private DataStorageManageUI m_DataStorageManageUI;
+    private DataStoragePlayerStat m_DataStoragePlayerStat;
 
     private Inventory m_InventoryEquip;
     private Inventory m_InventoryEquipSecondary;
 
     private int m_IndexEquip;
 
-    public StatePlayerEquip(StateMachine stateMachine) : base(stateMachine)
+    public DataStoragePlayerEquip(StateMachine stateMachine) : base(stateMachine)
     {
 
     }
@@ -20,54 +20,41 @@ public class StatePlayerEquip : State
     public override void OnInit()
     {
         // va chercher le data local du player
-        m_StatePlayerData = (StatePlayerData)m_StateMachine.GetStateData(EnumStatesPlayer.data);
+        m_DataStoragePlayerStat = (DataStoragePlayerStat)m_StateMachine.GetDataStorage(EnumStatesPlayer.stat);
 
         //initialise les inventaire avec la bonne grandeur
         m_InventoryEquip = new Inventory(2);
-        m_InventoryEquipSecondary = new Inventory(m_StatePlayerData.GetSizeInventoryEquip());
+        m_InventoryEquipSecondary = new Inventory(m_DataStoragePlayerStat.GetSizeInventoryEquip());
 
         m_IndexEquip = -1;
 
         //ajoute la state du UI player equip
-        m_StateManagerManageUI = (StateManagerManageUI)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageUI);
-        m_StateManagerManageUI.AddCurrUIState(EnumStatesUI.playerEquipUI);
+        m_DataStorageManageUI = (DataStorageManageUI)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageUI);
+        m_DataStorageManageUI?.AddCurrDataStorageUI(EnumStatesUI.playerEquipUI);
     }
 
     public override void End()
     {
-        m_StateManagerManageUI.PopCurrUIState(EnumStatesUI.playerEquipUI);
-    }
-
-    public override void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            InventoryCase temp = new InventoryCase();
-            temp.resource = (DataResource)Pool.m_Instance.GetData(EnumTools.pickaxe);
-            temp.currNb = 1;
-            SetCase(0, temp);
-        }
+        m_DataStorageManageUI?.PopCurrStateUI(EnumStatesUI.playerEquipUI);
     }
 
     public void InitUI()
-    {
-        StateManagerManageUI stateManagerManageUI = (StateManagerManageUI)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageUI);
-        
+    {   
         for(int i = 0; i < m_InventoryEquipSecondary.GetInventorySize() - 1; i++)
         {
-            stateManagerManageUI.AddSlotInventoryEquip();
+            m_DataStorageManageUI.AddSlotInventoryEquip();
         }
 
         for (int i = 0; i < m_InventoryEquip.GetInventorySize(); i++)
         {
             InventoryCase temp = m_InventoryEquip.GetCase(i);
-            stateManagerManageUI.UpdateCaseAtInventoryEquip(i, temp);
+            m_DataStorageManageUI.UpdateCaseAtInventoryEquip(i, temp);
         }
 
         for (int i = 0; i < m_InventoryEquipSecondary.GetInventorySize(); i++)
         {
             InventoryCase temp = m_InventoryEquipSecondary.GetCase(i);
-            stateManagerManageUI.UpdateCaseAtInventoryEquip(i + 2, temp);
+            m_DataStorageManageUI.UpdateCaseAtInventoryEquip(i + 2, temp);
         }
     }
 
@@ -87,7 +74,7 @@ public class StatePlayerEquip : State
             m_InventoryEquipSecondary.SetCase(index - 2, newCase);
         }
 
-        m_StateManagerManageUI.UpdateCaseAtInventoryEquip(index, newCase);
+        m_DataStorageManageUI.UpdateCaseAtInventoryEquip(index, newCase);
     }
 
     public InventoryCase PopCase(int index)

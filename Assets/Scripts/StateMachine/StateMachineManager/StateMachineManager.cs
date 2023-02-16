@@ -8,18 +8,18 @@ public class StateMachineManager : StateMachine
 
     public static StateMachineManager m_Instance;
 
-    public override void AddInitialsStates()
+    public override void AddInitialsStatesAndData()
     {
         m_Instance = this;
 
-        AddCurrState(EnumStatesManager.manageMap);
+        AddCurrDataStorage(EnumStatesManager.manageMap);
     }
 
-    public override void InitAllStates()
+    public override void InitAllStatesAndData()
     {
-        AddNewState(EnumStatesManager.manageMap, new StateManagerManageMap(this));
-        AddNewState(EnumStatesManager.managePlayer, new StateManagerManagePlayer(this));
-        AddNewState(EnumStatesManager.manageUI, new StateManagerManageUI(this));
+        AddNewDataStorage(EnumStatesManager.manageMap, new DataStorageManageMap(this));
+        AddNewDataStorage(EnumStatesManager.managePlayer, new DataStorageManagePlayer(this));
+        AddNewDataStorage(EnumStatesManager.manageUI, new DataStorageManageUI(this));
     }
 
     public override ScriptableObject GetData()

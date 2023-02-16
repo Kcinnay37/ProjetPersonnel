@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class StatePlayerExcavationTool : StateRessource
 {
-    private DataPlayer m_DataPlayer;
-
-    private StatePlayerController m_StatePlayerController;
-
     private DataTool m_DataTool;
     private GameObject m_Object;
 
@@ -18,10 +14,6 @@ public class StatePlayerExcavationTool : StateRessource
 
     public override void OnInit()
     {
-        //initialise les valeur
-        m_DataPlayer = (DataPlayer)m_StateMachine.GetData();
-        m_StatePlayerController = (StatePlayerController)m_StateMachine.GetState(EnumStatesPlayer.controller);
-
         //Instanci l'outil
         m_Object = Pool.m_Instance.GetObject(EnumTools.pickaxe);
 
@@ -40,9 +32,9 @@ public class StatePlayerExcavationTool : StateRessource
         Vector3 mousePosition = Input.mousePosition;
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
 
-        StateManagerManageMap manageMap = (StateManagerManageMap)StateMachineManager.m_Instance.GetState(EnumStatesManager.manageMap);
+        DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
 
-        manageMap.PopBlockAt(mouseWorldPosition);
+        dataStorageManageMap.PopBlockAt(mouseWorldPosition);
     }
 
     public override void ActionOldKey()

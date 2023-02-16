@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class StateMapView : StateData
+public class DataStorageMapView : DataStorage
 {
-    private StateMapManager m_StateMapManager;
-    private DataMap m_DataMap;
+    private DataStorageMapGrid m_DataStorageMapGrid;
+    private DataMap m_GlobalDataMap;
 
     private Coroutine m_CoroutineUpdateValue;
     private Coroutine m_CoroutineDraw;
@@ -19,12 +19,7 @@ public class StateMapView : StateData
 
     private bool[,] m_DrawGrid;
 
-    public StateMapView(StateMachine stateMachine) : base(stateMachine)
-    {
-
-    }
-
-    public override void OnInit()
+    public DataStorageMapView(StateMachine stateMachine) : base(stateMachine)
     {
 
     }
@@ -63,27 +58,27 @@ public class StateMapView : StateData
 
     public void ResetValue()
     {
-        m_StateMapManager = (StateMapManager)m_StateMachine.GetState(EnumStatesMap.manager);
-        m_DataMap = (DataMap)m_StateMachine.GetData();
+        m_DataStorageMapGrid = (DataStorageMapGrid)m_StateMachine.GetDataStorage(EnumStatesMap.grid);
+        m_GlobalDataMap = (DataMap)m_StateMachine.GetData();
         ResetMapView();
 
         m_CaseToDraw = new Dictionary<Vector2Int, Vector2Int>();
         m_CaseToClear = new Dictionary<Vector2Int, Vector2Int>();
         m_DrawCase = new Dictionary<Vector2Int, Vector2Int>();
 
-        m_DrawGrid = new bool[m_StateMapManager.GetGrid().GetLength(0), m_StateMapManager.GetGrid().GetLength(1)];
+        m_DrawGrid = new bool[m_DataStorageMapGrid.GetGrid().GetLength(0), m_DataStorageMapGrid.GetGrid().GetLength(1)];
     }
 
     private Vector2Int GetPosition()
     {
-        m_StateMapManager.UpdatePoint();
-        return m_StateMapManager.GetPoint();
+        m_DataStorageMapGrid.UpdatePoint();
+        return m_DataStorageMapGrid.GetPoint();
     }
 
     public void ResetMapView()
     {
         //pour tout les chunk de la cave
-        foreach (DataMap.Biome chunk in m_DataMap.mapBiomes)
+        foreach (DataMap.Biome chunk in m_GlobalDataMap.mapBiomes)
         {
             //va chercher le data du chunk actuel
             DataBiome currDataChunk = (DataBiome)Pool.m_Instance.GetData(chunk.dataBiome);
@@ -129,13 +124,13 @@ public class StateMapView : StateData
         {
             Vector2Int position = GetPosition();
 
-            for (int i = position.x - m_DataMap.distanceView; i <= position.x + m_DataMap.distanceView; i++)
+            for (int i = position.x - m_GlobalDataMap.distanceView; i <= position.x + m_GlobalDataMap.distanceView; i++)
             {
                 if (i < 0 || i >= m_DrawGrid.GetLength(0))
                 {
                     continue;
                 }
-                for (int j = position.y - m_DataMap.distanceView; j <= position.y + m_DataMap.distanceView; j++)
+                for (int j = position.y - m_GlobalDataMap.distanceView; j <= position.y + m_GlobalDataMap.distanceView; j++)
                 {
                     if (j < 0 || j >= m_DrawGrid.GetLength(1))
                     {
@@ -153,7 +148,7 @@ public class StateMapView : StateData
             }
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_DrawCase)
             {
-                if (pos.Value.x < position.x - m_DataMap.distanceView || pos.Value.x > position.x + m_DataMap.distanceView || pos.Value.y < position.y - m_DataMap.distanceView || pos.Value.y > position.y + m_DataMap.distanceView)
+                if (pos.Value.x < position.x - m_GlobalDataMap.distanceView || pos.Value.x > position.x + m_GlobalDataMap.distanceView || pos.Value.y < position.y - m_GlobalDataMap.distanceView || pos.Value.y > position.y + m_GlobalDataMap.distanceView)
                 {
                     if (!m_CaseToClear.ContainsKey(pos.Value))
                     {
@@ -162,7 +157,7 @@ public class StateMapView : StateData
                 }
             }
 
-            yield return new WaitForSeconds(m_DataMap.timeUpdateView);
+            yield return new WaitForSeconds(m_GlobalDataMap.timeUpdateView);
         }
     }
 
@@ -172,7 +167,7 @@ public class StateMapView : StateData
         {
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_CaseToDraw)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_StateMapManager.GetGrid()[pos.Value.x, pos.Value.y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStorageMapGrid.GetGrid()[pos.Value.x, pos.Value.y]);
                 dataBlock.map.SetTile(new Vector3Int(pos.Value.x, pos.Value.y, 0), dataBlock.tile);
 
                 m_DrawGrid[pos.Value.x, pos.Value.y] = true;
@@ -189,7 +184,7 @@ public class StateMapView : StateData
         {
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_CaseToClear)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_StateMapManager.GetGrid()[pos.Value.x, pos.Value.y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStorageMapGrid.GetGrid()[pos.Value.x, pos.Value.y]);
                 dataBlock.map.SetTile(new Vector3Int(pos.Value.x, pos.Value.y, 0), null);
 
                 m_DrawGrid[pos.Value.x, pos.Value.y] = false;
@@ -202,11 +197,11 @@ public class StateMapView : StateData
 
     public void DrawAllGrid()
     {
-        for (int x = 0; x < m_StateMapManager.GetGrid().GetLength(0); x++)
+        for (int x = 0; x < m_DataStorageMapGrid.GetGrid().GetLength(0); x++)
         {
-            for (int y = 0; y < m_StateMapManager.GetGrid().GetLength(1); y++)
+            for (int y = 0; y < m_DataStorageMapGrid.GetGrid().GetLength(1); y++)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_StateMapManager.GetGrid()[x, y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStorageMapGrid.GetGrid()[x, y]);
                 dataBlock.map.SetTile(new Vector3Int(x, y, 0), dataBlock.tile);
             }
         }

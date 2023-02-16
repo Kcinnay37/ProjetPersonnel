@@ -20,10 +20,11 @@ public class StatePlayerSpawn : State
 
     public override void End()
     {
-        m_StateMachine.AddCurrState(EnumStatesPlayer.controller);
+        m_StateMachine.AddCurrDataStorage(EnumStatesPlayer.stat);
+        m_StateMachine.AddCurrDataStorage(EnumStatesPlayer.equip);
+        m_StateMachine.AddCurrDataStorage(EnumStatesPlayer.backpack);
 
-        m_StateMachine.AddCurrState(EnumStatesPlayer.equip);
-        m_StateMachine.AddCurrState(EnumStatesPlayer.backpack);
-        m_StateMachine.AddCurrState(EnumStatesPlayer.manageInventory);
+        m_StateMachine.AddCurrState(EnumStatesPlayer.controllerMovement);
+        m_StateMachine.AddCurrState(EnumStatesPlayer.controllerInventory);
     }
 }

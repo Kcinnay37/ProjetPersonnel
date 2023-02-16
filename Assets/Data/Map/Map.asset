@@ -24,3 +24,4 @@ MonoBehaviour:
   distanceView: 20
   timeUpdateView: 0.05
   timeUpdatePoint: 0
+  offsetInitialPoint: 50

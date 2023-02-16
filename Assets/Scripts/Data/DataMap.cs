@@ -27,4 +27,7 @@ public class DataMap : ScriptableObject
     public int distanceView;
     public float timeUpdateView;
     public float timeUpdatePoint;
+
+    [Header("")]
+    public int offsetInitialPoint;
 }

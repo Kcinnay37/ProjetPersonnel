@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMapGenerate : StateData
+public class DataStorageMapGenerate : DataStorage
 {
-    private StateMapManager m_StateMapManager;
+    private DataStorageMapGrid m_DataStorageMapManager;
 
     private float m_Scale = 1;
     private int m_Octaves = 1;
@@ -16,7 +16,7 @@ public class StateMapGenerate : StateData
 
     private Vector2 m_Offset;
 
-    private DataMap m_DataMap;
+    private DataMap m_GlobalDataMap;
     private DataBiome m_DataCurrBiome;
 
     private int m_CurrGridChunkX = 0;
@@ -24,7 +24,7 @@ public class StateMapGenerate : StateData
 
     private Dictionary<int, List<DataMap.Biome>> m_DictDepthChunk;
 
-    public StateMapGenerate(StateMachine stateMachine) : base(stateMachine)
+    public DataStorageMapGenerate(StateMachine stateMachine) : base(stateMachine)
     {
 
     }
@@ -33,11 +33,11 @@ public class StateMapGenerate : StateData
     {
         InitValueMap();
 
-        for (int y = 0; y < m_DataMap.nbChunkDown; y++)
+        for (int y = 0; y < m_GlobalDataMap.nbChunkDown; y++)
         {
             m_CurrGridChunkY = y;
 
-            for (int x = 0; x < m_DataMap.nbChunkRight; x++)
+            for (int x = 0; x < m_GlobalDataMap.nbChunkRight; x++)
             {
                 m_CurrGridChunkX = x;
 
@@ -50,8 +50,8 @@ public class StateMapGenerate : StateData
 
     private void InitValueMap()
     {
-        m_StateMapManager = (StateMapManager)m_StateMachine.GetState(EnumStatesMap.manager);
-        m_DataMap = (DataMap)m_StateMachine.GetData();
+        m_DataStorageMapManager = (DataStorageMapGrid)m_StateMachine.GetDataStorage(EnumStatesMap.grid);
+        m_GlobalDataMap = (DataMap)m_StateMachine.GetData();
 
         if (m_DictDepthChunk == null)
         {
@@ -62,12 +62,12 @@ public class StateMapGenerate : StateData
             m_DictDepthChunk.Clear();
         }
 
-        for (int i = 0; i < m_DataMap.nbChunkDown; i++)
+        for (int i = 0; i < m_GlobalDataMap.nbChunkDown; i++)
         {
             m_DictDepthChunk.Add(i, new List<DataMap.Biome>());
         }
 
-        foreach (DataMap.Biome biome in m_DataMap.mapBiomes)
+        foreach (DataMap.Biome biome in m_GlobalDataMap.mapBiomes)
         {
             for (int i = biome.chunkMinDepth; i <= biome.chunkMaxDepth; i++)
             {
@@ -86,18 +86,18 @@ public class StateMapGenerate : StateData
 
         // algorithme de bruit de Perlin pour générer un bruit de Perlin 2D
         //float[,] noiseMap = Procedural.GenerateNoiseMap(m_DataMap.chunkWidth, m_DataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next());
-        float[,] noiseMap = Procedural.GenerateNoiseMap(m_DataMap.chunkWidth, m_DataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next(), m_Offset, m_HeightCurve);
+        float[,] noiseMap = Procedural.GenerateNoiseMap(m_GlobalDataMap.chunkWidth, m_GlobalDataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next(), m_Offset, m_HeightCurve);
 
         // Parcour tout les element de la grid et defini il est de quelle type selon le bruit de perlin et les valeur de la cave
-        for (int x = 0; x < m_DataMap.chunkWidth; x++)
+        for (int x = 0; x < m_GlobalDataMap.chunkWidth; x++)
         {
-            for (int y = 0; y < m_DataMap.chunkHeight; y++)
+            for (int y = 0; y < m_GlobalDataMap.chunkHeight; y++)
             {
                 foreach (DataBiome.Block block in m_DataCurrBiome.biomeBlocks)
                 {
                     if (noiseMap[x, y] >= block.minValue && noiseMap[x, y] <= block.maxValue)
                     {
-                        m_StateMapManager.GetGrid()[x + (m_DataMap.chunkWidth * m_CurrGridChunkX), y + (m_DataMap.chunkHeight * m_CurrGridChunkY)] = block.block;
+                        m_DataStorageMapManager.GetGrid()[x + (m_GlobalDataMap.chunkWidth * m_CurrGridChunkX), y + (m_GlobalDataMap.chunkHeight * m_CurrGridChunkY)] = block.block;
 
                         int checkRarity = Random.Range(1, 101);
                         if (checkRarity <= block.rarity)
@@ -116,7 +116,7 @@ public class StateMapGenerate : StateData
         DataMap.Biome biome = m_DictDepthChunk[m_CurrGridChunkY][index];
         m_DataCurrBiome = (DataBiome)Pool.m_Instance.GetData(biome.dataBiome);
 
-        m_StateMapManager.SetGridBiomeAt(new Vector2Int(m_CurrGridChunkX, m_CurrGridChunkY), biome.dataBiome);
+        m_DataStorageMapManager.SetGridBiomeAt(new Vector2Int(m_CurrGridChunkX, m_CurrGridChunkY), biome.dataBiome);
 
         int checkRarity = Random.Range(1, 101);
         if (checkRarity > biome.rarity)

@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateMapManager : State
+public class DataStorageMapGrid : DataStorage
 {
-    private StateMapGenerate m_Generate;
-    private StateMapView m_View;
+    private DataStorageMapGenerate m_dataStorageMapGenerate;
+    private DataStorageMapView m_dataStorageMapView;
 
-    private DataMap m_DataMap;
+    private DataMap m_GlobalDataMap;
 
     private bool m_IsGenerate;
 
@@ -15,47 +15,37 @@ public class StateMapManager : State
     private EnumBiomes[,] m_GridBiomes;
     private Vector2Int m_CurrPoint;
 
-
-
-    public StateMapManager(StateMachine stateMachine) : base(stateMachine)
+    public DataStorageMapGrid(StateMachine stateMachine) : base(stateMachine)
     {
 
     }
 
     public override void OnInit()
     {
-        m_Generate = (StateMapGenerate)m_StateMachine.GetStateData(EnumStatesMap.generate);
-        m_View = (StateMapView)m_StateMachine.GetStateData(EnumStatesMap.view);
-        m_DataMap = (DataMap)m_StateMachine.GetData();
+        m_dataStorageMapGenerate = (DataStorageMapGenerate)m_StateMachine.GetDataStorage(EnumStatesMap.generate);
+        m_dataStorageMapView = (DataStorageMapView)m_StateMachine.GetDataStorage(EnumStatesMap.view);
+        m_GlobalDataMap = (DataMap)m_StateMachine.GetData();
 
         m_IsGenerate = false;
 
         m_CurrPoint = Vector2Int.zero;
-        m_GridBlock = new EnumBlocks[m_DataMap.nbChunkRight * m_DataMap.chunkWidth, m_DataMap.nbChunkDown * m_DataMap.chunkHeight];
-        m_GridBiomes = new EnumBiomes[m_DataMap.nbChunkRight, m_DataMap.nbChunkDown];
+        m_GridBlock = new EnumBlocks[m_GlobalDataMap.nbChunkRight * m_GlobalDataMap.chunkWidth, m_GlobalDataMap.nbChunkDown * m_GlobalDataMap.chunkHeight];
+        m_GridBiomes = new EnumBiomes[m_GlobalDataMap.nbChunkRight, m_GlobalDataMap.nbChunkDown];
 
         GenerateMap();
     }
-
-    public override void Update()
-    {
-        //Vector3 mousePos = Input.mousePosition;
-        //Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        //SetPoint(new Vector3Int((int)worldMousePos.x, (int)worldMousePos.y, 0));
-    }
-
 
 
     private void GenerateMap()
     {
         //si nouvelle partie
-        m_Generate.GenerateMap();
-        FindInitialPoint(50);
+        m_dataStorageMapGenerate.GenerateMap();
+        FindInitialPoint(m_GlobalDataMap.offsetInitialPoint);
 
-        m_View.ResetValue();
-        m_View.StartUpdateValue();
-        m_View.StartDraw();
-        m_View.StartClear();
+        m_dataStorageMapView.ResetValue();
+        m_dataStorageMapView.StartUpdateValue();
+        m_dataStorageMapView.StartDraw();
+        m_dataStorageMapView.StartClear();
         m_IsGenerate = true;
     }
 
@@ -121,11 +111,11 @@ public class StateMapManager : State
 
     public void UpdatePoint()
     {
-        StateManagerManagePlayer stateManagerManagePlayer = (StateManagerManagePlayer)StateMachineManager.m_Instance.GetState(EnumStatesManager.managePlayer);
+        DataStorageManagePlayer dataStorageManagePlayer = (DataStorageManagePlayer)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.managePlayer);
 
-        if(stateManagerManagePlayer != null)
+        if(dataStorageManagePlayer != null)
         {
-            SetPoint(stateManagerManagePlayer.GetPlayerPos());
+            SetPoint(dataStorageManagePlayer.GetPlayerPos());
         }
     }
 
@@ -160,6 +150,6 @@ public class StateMapManager : State
         EnumBlocks oldBlock = m_GridBlock[localPos.x, localPos.y];
         m_GridBlock[localPos.x, localPos.y] = EnumBlocks.backGroundEarth;
 
-        m_View.UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
+        m_dataStorageMapView.UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
     }
 }

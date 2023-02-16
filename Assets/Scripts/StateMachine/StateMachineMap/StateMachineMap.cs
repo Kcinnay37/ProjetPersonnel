@@ -6,16 +6,18 @@ public class StateMachineMap : StateMachine
 {
     [SerializeField] EnumMaps m_Data;
 
-    public override void AddInitialsStates()
+    public override void AddInitialsStatesAndData()
     {
-        AddCurrState(EnumStatesMap.manager);
+        AddCurrDataStorage(EnumStatesMap.generate);
+        AddCurrDataStorage(EnumStatesMap.view);
+        AddCurrDataStorage(EnumStatesMap.grid);
     }
 
-    public override void InitAllStates()
+    public override void InitAllStatesAndData()
     {
-        AddNewStateData(EnumStatesMap.generate, new StateMapGenerate(this));
-        AddNewStateData(EnumStatesMap.view, new StateMapView(this));
-        AddNewState(EnumStatesMap.manager, new StateMapManager(this));
+        AddNewDataStorage(EnumStatesMap.generate, new DataStorageMapGenerate(this));
+        AddNewDataStorage(EnumStatesMap.view, new DataStorageMapView(this));
+        AddNewDataStorage(EnumStatesMap.grid, new DataStorageMapGrid(this));
     }
 
     public override ScriptableObject GetData()

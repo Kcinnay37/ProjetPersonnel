@@ -6,14 +6,14 @@ public class StateMachineUI : StateMachine
 {
     [SerializeField] EnumUI m_Data;
 
-    public override void AddInitialsStates()
+    public override void AddInitialsStatesAndData()
     {
         
     }
 
-    public override void InitAllStates()
+    public override void InitAllStatesAndData()
     {
-        AddNewState(EnumStatesUI.playerEquipUI, new StateUIPlayerEquip(this));
+        AddNewDataStorage(EnumStatesUI.playerEquipUI, new DataStorageUIPlayerEquip(this));
     }
 
     public override ScriptableObject GetData()

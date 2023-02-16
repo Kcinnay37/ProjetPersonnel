@@ -6,6 +6,7 @@ public class StateRessource : State
 {
     public StateRessource(StateMachine stateMachine) : base(stateMachine)
     {
+
     }
 
     public virtual void ActionKeyDown()

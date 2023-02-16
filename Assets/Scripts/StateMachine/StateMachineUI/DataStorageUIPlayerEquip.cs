@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StateUIPlayerEquip : State
+public class DataStorageUIPlayerEquip : DataStorage
 {
     private GameObject m_UIPlayerEquip;
 
     private List<Transform> m_Slots;
 
-    public StateUIPlayerEquip(StateMachine stateMachine) : base(stateMachine)
+    public DataStorageUIPlayerEquip(StateMachine stateMachine) : base(stateMachine)
     {
 
     }
@@ -30,8 +30,8 @@ public class StateUIPlayerEquip : State
 
         UpdateListSlot();
 
-        StateManagerManagePlayer stateManagerManagePlayer = (StateManagerManagePlayer)StateMachineManager.m_Instance.GetState(EnumStatesManager.managePlayer);
-        stateManagerManagePlayer.InitEquipUI();
+        DataStorageManagePlayer dataStorageManagePlayer = (DataStorageManagePlayer)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.managePlayer);
+        dataStorageManagePlayer.InitEquipUI();
 
         m_UIPlayerEquip?.SetActive(true);
     }

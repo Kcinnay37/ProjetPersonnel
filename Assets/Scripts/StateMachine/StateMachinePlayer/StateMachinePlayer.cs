@@ -6,24 +6,21 @@ public class StateMachinePlayer : StateMachine
 {
     [SerializeField] EnumPlayers m_Data;
 
-    public override void AddInitialsStates()
+    public override void AddInitialsStatesAndData()
     {
         AddCurrState(EnumStatesPlayer.spawn);
     }
 
-    public override void InitAllStates()
+    public override void InitAllStatesAndData()
     {
-        AddNewStateData(EnumStatesPlayer.data, new StatePlayerData(this));
+        AddNewDataStorage(EnumStatesPlayer.stat, new DataStoragePlayerStat(this));
+        AddNewDataStorage(EnumStatesPlayer.equip, new DataStoragePlayerEquip(this));
+        AddNewDataStorage(EnumStatesPlayer.backpack, new DataStoragePlayerBackpack(this));
 
         AddNewState(EnumStatesPlayer.spawn, new StatePlayerSpawn(this));
-
-        AddNewState(EnumStatesPlayer.controller, new StatePlayerController(this));
-
+        AddNewState(EnumStatesPlayer.controllerMovement, new StatePlayerControllerMovement(this));
         AddNewState(EnumStatesPlayer.excavation, new StatePlayerExcavationTool(this));
-
-        AddNewState(EnumStatesPlayer.equip, new StatePlayerEquip(this));
-        AddNewState(EnumStatesPlayer.backpack, new StatePlayerBackpack(this));
-        AddNewState(EnumStatesPlayer.manageInventory, new StatePlayerManageInventory(this));
+        AddNewState(EnumStatesPlayer.controllerInventory, new StatePlayerControllerInventory(this));
     }
 
     public override ScriptableObject GetData()

@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class StateData
+public abstract class DataStorage
 {
     protected StateMachine m_StateMachine;
 
-    public StateData(StateMachine stateMachine)
+    public DataStorage(StateMachine stateMachine)
     {
         m_StateMachine = stateMachine;
     }
