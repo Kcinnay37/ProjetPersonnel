@@ -99,7 +99,7 @@ public class DataStorageMapGenerate : DataStorage
                     {
                         m_DataStorageMapManager.GetGrid()[x + (m_GlobalDataMap.chunkWidth * m_CurrGridChunkX), y + (m_GlobalDataMap.chunkHeight * m_CurrGridChunkY)] = block.block;
 
-                        int checkRarity = Random.Range(1, 101);
+                        int checkRarity = Random.Range(1, 1001);
                         if (checkRarity <= block.rarity)
                         {
                             break;
@@ -118,7 +118,7 @@ public class DataStorageMapGenerate : DataStorage
 
         m_DataStorageMapManager.SetGridBiomeAt(new Vector2Int(m_CurrGridChunkX, m_CurrGridChunkY), biome.dataBiome);
 
-        int checkRarity = Random.Range(1, 101);
+        int checkRarity = Random.Range(1, 1001);
         if (checkRarity > biome.rarity)
         {
             SetCurrBiome();
@@ -135,7 +135,7 @@ public class DataStorageMapGenerate : DataStorage
 
         m_Lacunarity = m_DataCurrBiome.lacunarity;
 
-        m_Seed = m_DataCurrBiome.seed;
+        m_Seed = m_GlobalDataMap.seed;
 
         m_HeightCurve = m_DataCurrBiome.heightCurve;
 
@@ -171,9 +171,9 @@ public class DataStorageMapGenerate : DataStorage
         }
 
         // Génération aléatoire de la valeur de seed entre minSeed et maxSeed
-        if (m_DataCurrBiome.useRandomSeed)
+        if (m_GlobalDataMap.useRandomSeed)
         {
-            m_Seed = Random.Range(m_DataCurrBiome.minSeed, m_DataCurrBiome.maxSeed + 1);
+            m_Seed = Random.Range(m_GlobalDataMap.minSeed, m_GlobalDataMap.maxSeed + 1);
         }
     }
 }

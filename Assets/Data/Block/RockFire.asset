@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: RockFire
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 885afb3ae8add0449b1146b5b4901af7, type: 3}
-  state: 0
-  gameObject: 2
+  state: 5
   maxStack: 999
   mapName: Environement
   tile: {fileID: 11400000, guid: 0898e021626d03e4ebe6324a14db6ca1, type: 2}
+  blockType: 6
+  blockInstance: 12

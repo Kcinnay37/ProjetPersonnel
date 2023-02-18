@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300014, guid: b217a154a8231e54bbb50405bdfafbaf, type: 3}
   state: 4
-  maxStack: 1
+  maxStack: 10

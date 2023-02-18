@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 04af1a2213b168d499e012cb23f2fbdb, type: 3}
   state: 0
-  gameObject: 2
   maxStack: 0
   mapName: BG
   tile: {fileID: 11400000, guid: 38b335940dd97f94f890caad6c417eee, type: 2}
+  blockType: 4
+  blockInstance: 12

@@ -12,28 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5814d0e0f901d46aa230d9767ad8f3, type: 3}
   m_Name: RockFire
   m_EditorClassIdentifier: 
-  blocksList:
-  - block: 3
-    minValue: 0.6
-    maxValue: 0.7
-    rarity: 5
-  - block: 4
-    minValue: 0.7
-    maxValue: 0.72
-    rarity: 46
-  - block: 11
-    minValue: 0.41
-    maxValue: 1
-    rarity: 38
-  - block: 10
-    minValue: 0.41
-    maxValue: 1
-    rarity: 100
+  biomeBlocks:
   - block: 8
+    minValue: 0.7
+    maxValue: 0.9
+    rarity: 50
+  - block: 5
+    minValue: 0.41
+    maxValue: 0.52
+    rarity: 75
+  - block: 6
+    minValue: 0.53
+    maxValue: 1
+    rarity: 800
+  - block: 3
+    minValue: 0.4
+    maxValue: 1
+    rarity: 1000
+  - block: 4
     minValue: 0
     maxValue: 1
-    rarity: 100
-  scale: 8.2
+    rarity: 1000
+  scale: 14.8
   useRandomScale: 0
   minScale: 0
   maxScale: 0
@@ -50,6 +50,49 @@ MonoBehaviour:
   minLacunarity: 0
   maxLacunarity: 0
   seed: 0
-  useRandomSeed: 1
+  useRandomSeed: 0
   minSeed: 0
   maxSeed: 2147483647
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.64122844
+      outSlope: 0.64122844
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.18735863
+      value: 0.12013968
+      inSlope: 0.88172513
+      outSlope: 0.88172513
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7373343
+      value: 0.7373344
+      inSlope: 1.0611107
+      outSlope: 1.0611107
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.99999976
+      outSlope: 0.99999976
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  offset: {x: 0, y: 0}

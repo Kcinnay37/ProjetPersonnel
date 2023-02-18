@@ -14,6 +14,7 @@ public class StateMachineUI : StateMachine
     public override void InitAllStatesAndData()
     {
         AddNewDataStorage(EnumStatesUI.playerEquipUI, new DataStorageUIPlayerEquip(this));
+        AddNewDataStorage(EnumStatesUI.mouseUI, new DataStorageUIMouse(this));
     }
 
     public override ScriptableObject GetData()

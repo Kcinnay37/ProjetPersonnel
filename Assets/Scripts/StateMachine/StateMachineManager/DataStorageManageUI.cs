@@ -61,4 +61,23 @@ public class DataStorageManageUI : DataStorage
         return stateUIPlayerEquip.GetAllSlots();
     }
     // --------------------------------------------------------------------------
+
+    // manipulation de UI de la souris
+    public void SetActiveMouseContent(bool value)
+    {
+        DataStorageUIMouse dataStorageUIMouse = (DataStorageUIMouse)m_StateMachineUI.GetDataStorage(EnumStatesUI.mouseUI);
+        dataStorageUIMouse.SetActiveMouseContent(value);
+    }
+
+    public void SetValueMouseContent(InventoryCase inventoryCase)
+    {
+        DataStorageUIMouse dataStorageUIMouse = (DataStorageUIMouse)m_StateMachineUI.GetDataStorage(EnumStatesUI.mouseUI);
+        dataStorageUIMouse.SetValueMouseContent(inventoryCase);
+    }
+
+    public void UpdateMouseContentPos(Vector2 pos)
+    {
+        DataStorageUIMouse dataStorageUIMouse = (DataStorageUIMouse)m_StateMachineUI.GetDataStorage(EnumStatesUI.mouseUI);
+        dataStorageUIMouse.UpdateMouseContentPos(pos);
+    }
 }

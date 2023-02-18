@@ -2,27 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatePlayerExcavationTool : StateRessource
+public class StatePlayerBuild : StateRessource
 {
-    private DataTool m_DataTool;
+    private DataBlock m_DataBlock;
     private GameObject m_Object;
 
-    public StatePlayerExcavationTool(StateMachine stateMachine) : base(stateMachine)
+    public StatePlayerBuild(StateMachine stateMachine) : base(stateMachine)
     {
-
     }
 
     public override void OnInit()
     {
         DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
         InventoryCase caseEquip = dataStoragePlayerEquip.GetEquipCase();
-        m_DataTool = (DataTool)caseEquip.resource;
+        m_DataBlock = (DataBlock)caseEquip.resource;
 
         //Instanci l'outil
-        m_Object = Pool.m_Instance.GetObject(m_DataTool.toolInstance);
+        m_Object = Pool.m_Instance.GetObject(m_DataBlock.blockInstance);
+
+        m_Object.GetComponent<SpriteRenderer>().sprite = m_DataBlock.image;
 
         Vector3 scale = m_Object.transform.localScale;
-        if ((m_StateMachine.transform.localScale.x < 0 && scale.x > 0) || (m_StateMachine.transform.localScale.x > 0 && scale.x < 0))
+        
+        if((m_StateMachine.transform.localScale.x < 0 && scale.x > 0) || (m_StateMachine.transform.localScale.x > 0 && scale.x < 0))
         {
             scale.x = -scale.x;
         }
@@ -38,13 +40,9 @@ public class StatePlayerExcavationTool : StateRessource
 
     public override void End()
     {
-        Pool.m_Instance.RemoveObject(m_Object, m_DataTool.toolInstance);
-        m_DataTool = null;
-    }
-
-    public override void Update()
-    {
-        
+        m_Object.GetComponent<SpriteRenderer>().sprite = null;
+        Pool.m_Instance.RemoveObject(m_Object, m_DataBlock.blockInstance);
+        m_DataBlock = null;
     }
 
     public override void ActionKeyDown()
@@ -54,7 +52,7 @@ public class StatePlayerExcavationTool : StateRessource
 
         DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
 
-        dataStorageManageMap.PopBlockAt(mouseWorldPosition);
+        dataStorageManageMap.AddBlockAt(mouseWorldPosition, m_DataBlock.blockType);
     }
 
     public override void ActionOldKey()

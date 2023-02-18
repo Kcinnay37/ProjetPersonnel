@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a1ee27bdc255b41985e9d281cbd58f, type: 3}
+  m_Name: MapCave
+  m_EditorClassIdentifier: 
+  mapBiomes:
+  - dataBiome: 5
+    chunkMinDepth: 8
+    chunkMaxDepth: 8
+    rarity: 1000
+  - dataBiome: 3
+    chunkMinDepth: 7
+    chunkMaxDepth: 7
+    rarity: 1000
+  - dataBiome: 2
+    chunkMinDepth: 6
+    chunkMaxDepth: 6
+    rarity: 1000
+  - dataBiome: 1
+    chunkMinDepth: 5
+    chunkMaxDepth: 5
+    rarity: 1000
+  - dataBiome: 0
+    chunkMinDepth: 4
+    chunkMaxDepth: 4
+    rarity: 1000
+  - dataBiome: 1
+    chunkMinDepth: 3
+    chunkMaxDepth: 3
+    rarity: 1000
+  - dataBiome: 2
+    chunkMinDepth: 2
+    chunkMaxDepth: 2
+    rarity: 1000
+  - dataBiome: 4
+    chunkMinDepth: 1
+    chunkMaxDepth: 1
+    rarity: 1000
+  - dataBiome: 6
+    chunkMinDepth: 0
+    chunkMaxDepth: 0
+    rarity: 1000
+  chunkWidth: 1000
+  chunkHeight: 200
+  nbChunkRight: 1
+  nbChunkDown: 9
+  distanceView: 20
+  timeUpdateView: 0.05
+  timeUpdatePoint: 0
+  seed: 0
+  useRandomSeed: 1
+  minSeed: 0
+  maxSeed: 2147483647
+  offsetInitialPoint: 50
+  drawAllGrid: 0

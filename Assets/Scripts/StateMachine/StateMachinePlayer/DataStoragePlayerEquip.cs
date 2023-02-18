@@ -100,6 +100,23 @@ public class DataStoragePlayerEquip : DataStorage
         }
     }
 
+    public InventoryCase GetEquipCase()
+    {
+        return m_InventoryEquip.GetCase(m_IndexEquip);
+    }
+
+    public bool AddRessource(DataResource resource)
+    {
+        int index = m_InventoryEquipSecondary.AddRessource(resource);
+
+        if(index != -1)
+        {
+            m_DataStorageManageUI.UpdateCaseAtInventoryEquip(index + 2, m_InventoryEquipSecondary.GetCase(index));
+            return true;
+        }
+        return false;
+    }
+
     private void UnEquip()
     {
         if (m_IndexEquip == -1)
@@ -138,6 +155,8 @@ public class DataStoragePlayerEquip : DataStorage
 
     public void ActionOldKey()
     {
-
+        InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
+        StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(currCase.resource.state);
+        stateRessource?.ActionOldKey();
     }
 }

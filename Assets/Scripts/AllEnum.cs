@@ -25,8 +25,6 @@ public enum EnumBiomes
 
 public enum EnumBlocks
 {
-    block,
-
     earth,
     backGroundEarth,
     coal,
@@ -41,7 +39,9 @@ public enum EnumBlocks
 
     rockIce,
     backGroundIce,
-    amethyst
+    amethyst,
+
+    block
 }
 
 public enum EnumPlayers
@@ -123,7 +123,7 @@ public enum EnumStatesPlayer
     controllerMovement,
 
     excavation,
-    contruction,
+    build,
 
     equip,
     backpack,
@@ -134,6 +134,7 @@ public enum EnumStatesUI
 {
     playerEquipUI,
     playerBackpackUI,
-    playerStatUI
+    playerStatUI,
+    mouseUI
 }
 

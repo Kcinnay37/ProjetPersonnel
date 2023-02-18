@@ -12,28 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5814d0e0f901d46aa230d9767ad8f3, type: 3}
   m_Name: RockIce
   m_EditorClassIdentifier: 
-  blocksList:
-  - block: 2
-    minValue: 0.6
-    maxValue: 0.7
-    rarity: 5
-  - block: 4
+  biomeBlocks:
+  - block: 11
     minValue: 0.7
-    maxValue: 0.72
-    rarity: 46
-  - block: 12
-    minValue: 0.41
     maxValue: 1
-    rarity: 30
-  - block: 10
+    rarity: 80
+  - block: 5
     minValue: 0.41
+    maxValue: 0.51
+    rarity: 75
+  - block: 9
+    minValue: 0.5
     maxValue: 1
-    rarity: 100
-  - block: 8
+    rarity: 749
+  - block: 3
+    minValue: 0.4
+    maxValue: 1
+    rarity: 1000
+  - block: 4
     minValue: 0
     maxValue: 1
-    rarity: 100
-  scale: 8.2
+    rarity: 1000
+  scale: 10
   useRandomScale: 0
   minScale: 0
   maxScale: 0
@@ -50,6 +50,40 @@ MonoBehaviour:
   minLacunarity: 0
   maxLacunarity: 0
   seed: 0
-  useRandomSeed: 1
+  useRandomSeed: 0
   minSeed: 0
   maxSeed: 2147483647
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.8286685
+      outSlope: 0.8286685
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.80131024
+      value: 0.66402054
+      inSlope: 1.2598219
+      outSlope: 1.2598219
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1.6909752
+      outSlope: 1.6909752
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  offset: {x: 0, y: 0}

@@ -52,8 +52,13 @@ public class DataStorageManageMap : DataStorage
         return m_DataStorageMapGrid.GetPointToWorld();
     }
 
-    public void PopBlockAt(Vector3 worldPos)
+    public bool PopBlockAt(Vector3 worldPos)
     {
-        m_DataStorageMapGrid.PopBlockAt(worldPos);
+        return m_DataStorageMapGrid.PopBlockAt(worldPos);
+    }
+
+    public bool AddBlockAt(Vector3 pos, EnumBlocks block)
+    {
+        return m_DataStorageMapGrid.AddBlockAt(pos, block);
     }
 }

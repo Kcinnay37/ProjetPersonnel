@@ -36,14 +36,24 @@ public class DataStorageMapGrid : DataStorage
     }
 
 
-    private void GenerateMap()
+    public void GenerateMap()
     {
         //si nouvelle partie
         m_dataStorageMapGenerate.GenerateMap();
         FindInitialPoint(m_GlobalDataMap.offsetInitialPoint);
 
         m_dataStorageMapView.ResetValue();
-        m_dataStorageMapView.StartUpdateValue();
+
+        if (m_GlobalDataMap.drawAllGrid)
+        {
+            m_dataStorageMapView.DrawAllGrid();
+        }
+        else
+        {   
+            m_dataStorageMapView.StartUpdateValue();
+            
+        }
+
         m_dataStorageMapView.StartDraw();
         m_dataStorageMapView.StartClear();
         m_IsGenerate = true;
@@ -138,18 +148,45 @@ public class DataStorageMapGrid : DataStorage
         m_GridBiomes[pos.x, pos.y] = biome;
     }
 
-    public void AddBlockAt(Vector3 pos, EnumBlocks block)
-    {
-        //m_View.UpdateCase(pos);
-    }
-
-    public void PopBlockAt(Vector3 pos)
+    public bool AddBlockAt(Vector3 pos, EnumBlocks block)
     {
         Vector3Int localPos = ConvertWorldToCell(pos);
 
-        EnumBlocks oldBlock = m_GridBlock[localPos.x, localPos.y];
-        m_GridBlock[localPos.x, localPos.y] = EnumBlocks.backGroundEarth;
+        EnumBiomes currBiome = m_GridBiomes[localPos.x / m_GlobalDataMap.chunkWidth, localPos.y / m_GlobalDataMap.chunkHeight];
+        DataBiome dataBiom = (DataBiome)Pool.m_Instance.GetData(currBiome);
 
+        EnumBlocks blockBackground = dataBiom.biomeBlocks[dataBiom.biomeBlocks.Count - 1].block;
+        EnumBlocks oldBlock = m_GridBlock[localPos.x, localPos.y];
+
+        if(oldBlock != blockBackground)
+        {
+            return false;
+        }
+
+        m_GridBlock[localPos.x, localPos.y] = block;
         m_dataStorageMapView.UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
+
+        return true;
+    }
+
+    public bool PopBlockAt(Vector3 pos)
+    {
+        Vector3Int localPos = ConvertWorldToCell(pos);
+
+        EnumBiomes currBiome = m_GridBiomes[localPos.x / m_GlobalDataMap.chunkWidth, localPos.y / m_GlobalDataMap.chunkHeight];
+        DataBiome dataBiom = (DataBiome)Pool.m_Instance.GetData(currBiome);
+
+        EnumBlocks oldBlock = m_GridBlock[localPos.x, localPos.y];
+        EnumBlocks newBlock = dataBiom.biomeBlocks[dataBiom.biomeBlocks.Count - 1].block;
+
+        if (oldBlock == newBlock)
+        {
+            return false;
+        }
+
+        m_GridBlock[localPos.x, localPos.y] = dataBiom.biomeBlocks[dataBiom.biomeBlocks.Count - 1].block;
+        m_dataStorageMapView.UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
+
+        return true;
     }
 }

@@ -11,7 +11,7 @@ public class DataMap : ScriptableObject
         public EnumBiomes dataBiome;
         public int chunkMinDepth;
         public int chunkMaxDepth;
-        [Range(0, 100)]
+        [Range(0, 1000)]
         public int rarity;
     }
 
@@ -29,5 +29,12 @@ public class DataMap : ScriptableObject
     public float timeUpdatePoint;
 
     [Header("")]
+    public int seed = 0;
+    public bool useRandomSeed = false;
+    public int minSeed;
+    public int maxSeed;
+
+    [Header("")]
     public int offsetInitialPoint;
+    public bool drawAllGrid;
 }

@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour
     }
 
     // ajoute une ressource dans l'inventaire
-    public void AddRessource(DataResource dataResource)
+    public int AddRessource(DataResource dataResource)
     {
         for(int i = 0; i < GetInventorySize(); i++)
         {
@@ -61,7 +61,7 @@ public class Inventory : MonoBehaviour
                     InventoryCase temp = m_Inventory[i];
                     temp.currNb++;
                     m_Inventory[i] = temp;
-                    return;
+                    return i;
                 }
             }
         }
@@ -74,9 +74,11 @@ public class Inventory : MonoBehaviour
                 temp.resource = dataResource;
                 temp.currNb++;
                 m_Inventory[i] = temp;
-                return;
+                return i;
             }
         }
+
+        return -1;
     }
 
     //remet une case a ses stat initial

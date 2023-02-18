@@ -11,7 +11,7 @@ public class DataBiome : ScriptableObject
         public EnumBlocks block;
         public float minValue;
         public float maxValue;
-        [Range(0, 100)]
+        [Range(0, 1000)]
         public int rarity;
     }
 
@@ -56,12 +56,6 @@ public class DataBiome : ScriptableObject
     public float minLacunarity;
     [Range(0.0f, 3f)]
     public float maxLacunarity;
-
-    [Header("")]
-    public int seed = 0;
-    public bool useRandomSeed = false;
-    public int minSeed;
-    public int maxSeed;
 
     [Header("")]
     public AnimationCurve heightCurve;

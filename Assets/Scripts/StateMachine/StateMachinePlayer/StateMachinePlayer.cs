@@ -20,6 +20,7 @@ public class StateMachinePlayer : StateMachine
         AddNewState(EnumStatesPlayer.spawn, new StatePlayerSpawn(this));
         AddNewState(EnumStatesPlayer.controllerMovement, new StatePlayerControllerMovement(this));
         AddNewState(EnumStatesPlayer.excavation, new StatePlayerExcavationTool(this));
+        AddNewState(EnumStatesPlayer.build, new StatePlayerBuild(this));
         AddNewState(EnumStatesPlayer.controllerInventory, new StatePlayerControllerInventory(this));
     }
 
