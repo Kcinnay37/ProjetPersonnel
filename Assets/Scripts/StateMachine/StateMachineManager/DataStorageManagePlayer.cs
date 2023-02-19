@@ -47,4 +47,10 @@ public class DataStorageManagePlayer : DataStorage
         DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachinePlayer.GetDataStorage(EnumStatesPlayer.equip);
         dataStoragePlayerEquip.InitUI();
     }
+
+    public bool CollectResource(object resource)
+    {
+        StatePlayerControllerInventory statePlayerControllerInventory = (StatePlayerControllerInventory)m_StateMachinePlayer.GetState(EnumStatesPlayer.controllerInventory);
+        return statePlayerControllerInventory.CollectResource(resource);
+    }
 }

@@ -20,6 +20,5 @@ public class DataBlock : DataResource
     }
     public string mapName;
     public TileBase tile;
-    public EnumBlocks blockType;
-    public EnumBlocks blockInstance;
+    public EnumBlocks instanceType;
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public struct InventoryCase
 {
-    public DataResource resource;
+    public object resource;
     public int currNb;
 }
 
@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
     {
         m_Inventory.Add(new InventoryCase());
         InventoryCase temp = m_Inventory[m_Inventory.Count - 1];
-        temp.resource = (DataResource)Pool.m_Instance.GetData(EnumSpecialResources.none);
+        temp.resource = EnumSpecialResources.none;
         temp.currNb = 0;
         m_Inventory[m_Inventory.Count - 1] = temp;
     }
@@ -50,13 +50,14 @@ public class Inventory : MonoBehaviour
     }
 
     // ajoute une ressource dans l'inventaire
-    public int AddRessource(DataResource dataResource)
+    public int AddRessource(object dataResource)
     {
         for(int i = 0; i < GetInventorySize(); i++)
         {
-            if(m_Inventory[i].resource == dataResource)
+            if (m_Inventory[i].resource.Equals(dataResource))
             {
-                if(m_Inventory[i].currNb < dataResource.maxStack)
+                DataResource resource = (DataResource)Pool.m_Instance.GetData(dataResource);
+                if (m_Inventory[i].currNb < resource.maxStack)
                 {
                     InventoryCase temp = m_Inventory[i];
                     temp.currNb++;
@@ -68,26 +69,63 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < GetInventorySize(); i++)
         {
-            if (m_Inventory[i].resource == (DataResource)Pool.m_Instance.GetData(EnumSpecialResources.none))
+            if(m_Inventory[i].resource is EnumSpecialResources)
             {
-                InventoryCase temp = m_Inventory[i];
-                temp.resource = dataResource;
-                temp.currNb++;
-                m_Inventory[i] = temp;
-                return i;
+                EnumSpecialResources resource = (EnumSpecialResources)m_Inventory[i].resource;
+                if (resource == EnumSpecialResources.none)
+                {
+                    InventoryCase temp = m_Inventory[i];
+                    temp.resource = dataResource;
+                    temp.currNb++;
+                    m_Inventory[i] = temp;
+                    return i;
+                }
             }
         }
 
         return -1;
     }
 
+    public bool IncrementCountAt(int index)
+    {
+        InventoryCase temp = m_Inventory[index];
+
+        DataResource resource = (DataResource)Pool.m_Instance.GetData(temp.resource);
+        if(temp.currNb < resource.maxStack)
+        {
+            temp.currNb++;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool DecrementCountAt(int index)
+    {
+        InventoryCase temp = m_Inventory[index];
+
+        DataResource resource = (DataResource)Pool.m_Instance.GetData(temp.resource);
+        if (temp.currNb > 1)
+        {
+            temp.currNb--;
+            return true;
+        }
+        else
+        {
+            ClearCase(index);
+            return false;
+        }
+    }
+
     //remet une case a ses stat initial
     public void ClearCase(int index)
     {
         InventoryCase temp = m_Inventory[index];
-        temp.resource = (DataResource)Pool.m_Instance.GetData(EnumSpecialResources.none);
+        temp.resource = EnumSpecialResources.none;
         temp.currNb = 0;
-        m_Inventory[m_Inventory.Count - 1] = temp;
+        m_Inventory[index] = temp;
     }
 
     public int GetInventorySize()

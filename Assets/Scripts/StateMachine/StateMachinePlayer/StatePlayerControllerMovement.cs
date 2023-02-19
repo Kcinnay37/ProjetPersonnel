@@ -8,6 +8,8 @@ public class StatePlayerControllerMovement : State
     private Rigidbody2D m_RigidBody;
     private Animator m_Animator;
 
+    private int m_PlayerDir = 1;
+
     public StatePlayerControllerMovement(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -56,14 +58,16 @@ public class StatePlayerControllerMovement : State
         //rotationne le player dans la bonne direction
         if (m_RigidBody.velocity.x < 0)
         {
+            m_PlayerDir = -1;
             Vector3 rota = m_StateMachine.transform.localScale;
-            rota.x = -1;
+            rota.x = m_PlayerDir;
             m_StateMachine.transform.localScale = rota;
         }
         else if (m_RigidBody.velocity.x > 0)
         {
+            m_PlayerDir = 1;
             Vector3 rota = m_StateMachine.transform.localScale;
-            rota.x = 1;
+            rota.x = m_PlayerDir;
             m_StateMachine.transform.localScale = rota;
         }
 
@@ -81,5 +85,10 @@ public class StatePlayerControllerMovement : State
     private bool CheckCanJump()
     {
         return true;
+    }
+
+    public int GetPlayerDir()
+    {
+        return m_PlayerDir;
     }
 }

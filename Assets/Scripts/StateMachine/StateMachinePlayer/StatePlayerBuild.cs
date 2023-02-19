@@ -5,6 +5,7 @@ using UnityEngine;
 public class StatePlayerBuild : StateRessource
 {
     private DataBlock m_DataBlock;
+    private EnumBlocks m_BlockType;
     private GameObject m_Object;
 
     public StatePlayerBuild(StateMachine stateMachine) : base(stateMachine)
@@ -15,12 +16,13 @@ public class StatePlayerBuild : StateRessource
     {
         DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
         InventoryCase caseEquip = dataStoragePlayerEquip.GetEquipCase();
-        m_DataBlock = (DataBlock)caseEquip.resource;
+        m_DataBlock = (DataBlock)Pool.m_Instance.GetData(caseEquip.resource);
+        m_BlockType = (EnumBlocks)caseEquip.resource;
 
         //Instanci l'outil
-        m_Object = Pool.m_Instance.GetObject(m_DataBlock.blockInstance);
-
-        m_Object.GetComponent<SpriteRenderer>().sprite = m_DataBlock.image;
+        m_Object = Pool.m_Instance.GetObject(m_DataBlock.instanceType);
+        m_Object.GetComponent<ResourceInWorld>().InitResource(true, Vector2.zero, caseEquip.resource, EnumBlocks.block);
+        
 
         Vector3 scale = m_Object.transform.localScale;
         
@@ -41,7 +43,7 @@ public class StatePlayerBuild : StateRessource
     public override void End()
     {
         m_Object.GetComponent<SpriteRenderer>().sprite = null;
-        Pool.m_Instance.RemoveObject(m_Object, m_DataBlock.blockInstance);
+        Pool.m_Instance.RemoveObject(m_Object, m_DataBlock.instanceType);
         m_DataBlock = null;
     }
 
@@ -52,7 +54,7 @@ public class StatePlayerBuild : StateRessource
 
         DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
 
-        dataStorageManageMap.AddBlockAt(mouseWorldPosition, m_DataBlock.blockType);
+        dataStorageManageMap.AddBlockAt(mouseWorldPosition, m_BlockType);
     }
 
     public override void ActionOldKey()

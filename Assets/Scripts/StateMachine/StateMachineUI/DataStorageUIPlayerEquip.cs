@@ -67,10 +67,12 @@ public class DataStorageUIPlayerEquip : DataStorage
 
     public void UpdateSlotAt(int index, InventoryCase inventoryCase)
     {
-        m_Slots[index].GetChild(0).GetComponent<Image>().sprite = inventoryCase.resource.image;
+        DataResource resource = (DataResource)Pool.m_Instance.GetData(inventoryCase.resource);
+
+        m_Slots[index].GetChild(0).GetComponent<Image>().sprite = resource.image;
         m_Slots[index].GetChild(0).GetChild(0).GetComponent<Text>().text = inventoryCase.currNb.ToString();
 
-        if(inventoryCase.resource.image == null || inventoryCase.currNb == 0)
+        if(resource.image == null || inventoryCase.currNb == 0)
         {
             m_Slots[index].GetChild(0).gameObject.SetActive(false);
         }

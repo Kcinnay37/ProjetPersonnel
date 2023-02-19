@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu]
 public class DataTool : DataResource
 {
-    public EnumTools toolInstance;
+    public EnumTools instanceType;
 }

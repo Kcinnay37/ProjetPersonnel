@@ -25,7 +25,9 @@ public class DataStorageUIMouse : DataStorage
 
     public void SetValueMouseContent(InventoryCase inventoryCase)
     {
-        m_ContentMouse.GetComponent<Image>().sprite = inventoryCase.resource.image;
+        DataResource resource = (DataResource)Pool.m_Instance.GetData(inventoryCase.resource);
+
+        m_ContentMouse.GetComponent<Image>().sprite = resource.image;
         m_ContentMouse.GetComponentInChildren<Text>().text = inventoryCase.currNb.ToString();
     }
 

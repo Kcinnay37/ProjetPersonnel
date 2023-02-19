@@ -80,11 +80,31 @@ public class DataStoragePlayerEquip : DataStorage
     public InventoryCase PopCase(int index)
     {
         InventoryCase emptyCase = new InventoryCase();
-        emptyCase.resource = (DataResource)Pool.m_Instance.GetData(EnumSpecialResources.none);
+        emptyCase.resource = EnumSpecialResources.none;
         emptyCase.currNb = 0;
 
         InventoryCase currCase = GetCase(index);
         SetCase(index, emptyCase);
+        return currCase;
+    }
+
+    public InventoryCase PopHalfCase(int index)
+    {
+        InventoryCase slotCase = GetCase(index);
+        InventoryCase currCase = new InventoryCase();
+        currCase.resource = EnumSpecialResources.none;
+        currCase.currNb = 0;
+
+        if(slotCase.currNb > 1)
+        {
+            int half = slotCase.currNb / 2;
+            slotCase.currNb = slotCase.currNb - half;
+            currCase.currNb = half;
+
+            currCase.resource = slotCase.resource;
+        }
+        
+        SetCase(index, slotCase);
         return currCase;
     }
 
@@ -105,7 +125,7 @@ public class DataStoragePlayerEquip : DataStorage
         return m_InventoryEquip.GetCase(m_IndexEquip);
     }
 
-    public bool AddRessource(DataResource resource)
+    public bool AddRessource(object resource)
     {
         int index = m_InventoryEquipSecondary.AddRessource(resource);
 
@@ -125,7 +145,10 @@ public class DataStoragePlayerEquip : DataStorage
         }
 
         InventoryCase inventoryCase = m_InventoryEquip.GetCase(m_IndexEquip);
-        m_StateMachine.PopCurrState(inventoryCase.resource.state);
+
+        DataResource resource = (DataResource)Pool.m_Instance.GetData(inventoryCase.resource);
+
+        m_StateMachine.PopCurrState(resource.state);
         m_IndexEquip = -1;
     }
 
@@ -142,21 +165,24 @@ public class DataStoragePlayerEquip : DataStorage
             m_IndexEquip = index;
 
             InventoryCase currCase = m_InventoryEquip.GetCase(index);
-            m_StateMachine.AddCurrState(currCase.resource.state);
+            DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
+            m_StateMachine.AddCurrState(resource.state);
         }
     }
 
     public void ActionKeyDown()
     {
         InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
-        StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(currCase.resource.state);
+        DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
+        StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(resource.state);
         stateRessource?.ActionKeyDown();
     }
 
     public void ActionOldKey()
     {
         InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
-        StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(currCase.resource.state);
+        DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
+        StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(resource.state);
         stateRessource?.ActionOldKey();
     }
 }
