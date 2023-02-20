@@ -122,7 +122,43 @@ public class DataStoragePlayerEquip : DataStorage
 
     public InventoryCase GetEquipCase()
     {
+        if(m_IndexEquip == -1)
+        {
+            InventoryCase emptyCase = new InventoryCase();
+            emptyCase.resource = EnumSpecialResources.none;
+            emptyCase.currNb = 0;
+            return emptyCase;
+        }
+
         return m_InventoryEquip.GetCase(m_IndexEquip);
+    }
+
+    public object DropOneAtCaseEquip()
+    {
+        if (m_IndexEquip == -1)
+        {
+            return null;
+        }
+        
+        InventoryCase inventoryCase = m_InventoryEquip.GetCase(m_IndexEquip);
+
+        if (inventoryCase.currNb == 0)
+        {
+            return null;
+        }
+
+        object currResource = inventoryCase.resource;
+
+        inventoryCase.currNb--;
+        if (inventoryCase.currNb <= 0)
+        {
+            inventoryCase.resource = EnumSpecialResources.none;
+            SetCase(m_IndexEquip, inventoryCase);
+            return currResource;
+        }
+        m_InventoryEquip.SetCase(m_IndexEquip, inventoryCase);
+        m_DataStorageManageUI.UpdateCaseAtInventoryEquip(m_IndexEquip, inventoryCase);
+        return currResource;
     }
 
     public bool AddRessource(object resource)
@@ -172,6 +208,8 @@ public class DataStoragePlayerEquip : DataStorage
 
     public void ActionKeyDown()
     {
+        if (m_IndexEquip == -1) return;
+
         InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
         DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
         StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(resource.state);
@@ -180,9 +218,21 @@ public class DataStoragePlayerEquip : DataStorage
 
     public void ActionOldKey()
     {
+        if (m_IndexEquip == -1) return;
+
         InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
         DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
         StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(resource.state);
         stateRessource?.ActionOldKey();
+    }
+
+    public void ActionKeyUp()
+    {
+        if (m_IndexEquip == -1) return;
+
+        InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
+        DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
+        StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(resource.state);
+        stateRessource?.ActionKeyUp();
     }
 }

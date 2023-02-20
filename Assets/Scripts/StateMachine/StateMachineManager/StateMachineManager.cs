@@ -20,6 +20,7 @@ public class StateMachineManager : StateMachine
         AddNewDataStorage(EnumStatesManager.manageMap, new DataStorageManageMap(this));
         AddNewDataStorage(EnumStatesManager.managePlayer, new DataStorageManagePlayer(this));
         AddNewDataStorage(EnumStatesManager.manageUI, new DataStorageManageUI(this));
+        AddNewDataStorage(EnumStatesManager.manageResource, new DataStorageManageResource(this));
     }
 
     public override ScriptableObject GetData()

@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: Ice
   m_EditorClassIdentifier: 
   biomeBlocks:
-  - block: 11
+  - block: 0
     minValue: 0.7
     maxValue: 0.8
     rarity: 300
-  - block: 11
+  - block: 0
     minValue: 0.8
     maxValue: 0.95
     rarity: 200
-  - block: 9
+  - block: 12
     minValue: 0.3
     maxValue: 1
     rarity: 1000
-  - block: 10
+  - block: 3
     minValue: 0
     maxValue: 1
     rarity: 1000

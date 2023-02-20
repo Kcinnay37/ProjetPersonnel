@@ -34,6 +34,7 @@ public class DataStorageManageMap : DataStorage
             m_DataStorageMapGrid = (DataStorageMapGrid)m_StateMachineMap.GetDataStorage(EnumStatesMap.grid);
             if (m_DataStorageMapGrid != null && m_DataStorageMapGrid.IsGenerate())
             {
+                m_StateMachine.AddCurrDataStorage(EnumStatesManager.manageResource);
                 m_StateMachine.AddCurrDataStorage(EnumStatesManager.manageUI);
                 m_StateMachine.AddCurrDataStorage(EnumStatesManager.managePlayer);
                 break;
@@ -50,6 +51,11 @@ public class DataStorageManageMap : DataStorage
     public Vector3 GetPointToWorld()
     {
         return m_DataStorageMapGrid.GetPointToWorld();
+    }
+
+    public Vector3Int GetWorldToCell(Vector3 worldPos)
+    {
+        return m_DataStorageMapGrid.ConvertWorldToCell(worldPos);
     }
 
     public bool PopBlockAt(Vector3 worldPos)

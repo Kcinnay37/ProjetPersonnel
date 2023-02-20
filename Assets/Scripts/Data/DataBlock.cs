@@ -6,6 +6,8 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu]
 public class DataBlock : DataResource
 {
+    public int health;
+
     private Tilemap tilemap;
     public Tilemap map
     {
@@ -21,4 +23,8 @@ public class DataBlock : DataResource
     public string mapName;
     public TileBase tile;
     public EnumBlocks instanceType;
+    public EnumBlocks dataType;
+
+    public override object GetInstanceType() { return instanceType; }
+    public override object GetDataType() { return dataType; }
 }

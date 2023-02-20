@@ -187,6 +187,12 @@ public class DataStorageMapGrid : DataStorage
         m_GridBlock[localPos.x, localPos.y] = dataBiom.biomeBlocks[dataBiom.biomeBlocks.Count - 1].block;
         m_dataStorageMapView.UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
 
+        DataStorageManageResource dataStorageManageResource = (DataStorageManageResource)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageResource);
+
+        Vector3 posBlockInstance = pos;
+        posBlockInstance.z = -2;
+        dataStorageManageResource.InstanciateResourceInWorldAt(oldBlock, posBlockInstance, Vector2.zero, 1);
+
         return true;
     }
 }

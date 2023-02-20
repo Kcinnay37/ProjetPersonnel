@@ -15,6 +15,8 @@ public class DataPlayer : ScriptableObject
     public KeyCode primarySlotKey;
     public KeyCode secondarySlotKey;
 
+    public KeyCode dropResourceEquipKey;
+
     [Header("Stat")]
     public float baseWalkSpeed;
     public float baseRunSpeed;

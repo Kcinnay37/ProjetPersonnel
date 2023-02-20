@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 673470508770871192}
   - component: {fileID: -727924013285466253}
   - component: {fileID: 3336420234932023174}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -902431521
+  m_SortingLayerID: 79159695
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
@@ -94,7 +94,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 9204237647278154841}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c31ee95a77d99f0419ae4bbdf03894fa, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -127,7 +127,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c31ee95a77d99f0419ae4bbdf03894fa, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -146,3 +146,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TimeCanCollect: 0.5
   m_TimeToLive: 60
+  m_TimeCheckDistance: 0.2
+  m_DistanceToDelete: 15

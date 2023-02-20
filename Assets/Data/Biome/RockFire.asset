@@ -17,15 +17,15 @@ MonoBehaviour:
     minValue: 0.7
     maxValue: 0.9
     rarity: 50
-  - block: 5
+  - block: 9
     minValue: 0.41
     maxValue: 0.52
     rarity: 75
-  - block: 6
+  - block: 11
     minValue: 0.53
     maxValue: 1
     rarity: 800
-  - block: 3
+  - block: 10
     minValue: 0.4
     maxValue: 1
     rarity: 1000
@@ -49,10 +49,6 @@ MonoBehaviour:
   useRandomLacunarity: 0
   minLacunarity: 0
   maxLacunarity: 0
-  seed: 0
-  useRandomSeed: 0
-  minSeed: 0
-  maxSeed: 2147483647
   heightCurve:
     serializedVersion: 2
     m_Curve:

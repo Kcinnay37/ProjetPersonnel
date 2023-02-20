@@ -49,16 +49,20 @@ public class StatePlayerBuild : StateRessource
 
     public override void ActionKeyDown()
     {
+
+    }
+
+    public override void ActionOldKey()
+    {
         Vector3 mousePosition = Input.mousePosition;
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
 
         DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
 
-        dataStorageManageMap.AddBlockAt(mouseWorldPosition, m_BlockType);
-    }
-
-    public override void ActionOldKey()
-    {
-
+        if (dataStorageManageMap.AddBlockAt(mouseWorldPosition, m_BlockType))
+        {
+            DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
+            dataStoragePlayerEquip.DropOneAtCaseEquip();
+        }
     }
 }

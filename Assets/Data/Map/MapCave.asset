@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: MapCave
   m_EditorClassIdentifier: 
   mapBiomes:
-  - dataBiome: 5
+  - dataBiome: 3
     chunkMinDepth: 8
     chunkMaxDepth: 8
     rarity: 1000
-  - dataBiome: 3
+  - dataBiome: 6
     chunkMinDepth: 7
     chunkMaxDepth: 7
     rarity: 1000
-  - dataBiome: 2
+  - dataBiome: 4
     chunkMinDepth: 6
     chunkMaxDepth: 6
     rarity: 1000
@@ -37,15 +37,15 @@ MonoBehaviour:
     chunkMinDepth: 3
     chunkMaxDepth: 3
     rarity: 1000
-  - dataBiome: 2
+  - dataBiome: 4
     chunkMinDepth: 2
     chunkMaxDepth: 2
     rarity: 1000
-  - dataBiome: 4
+  - dataBiome: 5
     chunkMinDepth: 1
     chunkMaxDepth: 1
     rarity: 1000
-  - dataBiome: 6
+  - dataBiome: 2
     chunkMinDepth: 0
     chunkMaxDepth: 0
     rarity: 1000

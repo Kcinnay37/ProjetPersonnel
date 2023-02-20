@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class ResourceInWorld : MonoBehaviour
 {
-    [SerializeField] private float m_TimeCanCollect;
-    [SerializeField] private float m_TimeToLive;
+    private const float m_TimeCanCollect = 0.5f;
+    private const float m_TimeToLive = 60f;
+    private const float m_TimeCheckDistance = 0.2f;
+    private const float m_DistanceToDelete = 20f;
 
     private bool m_Equip;
 
-    private bool m_CanCollect;
     private Coroutine m_CoroutineCanCollect;
     private Coroutine m_CoroutineLive;
+    private Coroutine m_CoroutineCheckDistance;
 
     private Vector2 m_InitialVelocityForce;
 
@@ -31,16 +33,40 @@ public class ResourceInWorld : MonoBehaviour
     {
         if (!m_Equip)
         {
-            GetComponent<BoxCollider2D>().isTrigger = false;
+            BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
+            if(boxCollider2D != null)
+            {
+                boxCollider2D.isTrigger = false;
+            }
 
+            PolygonCollider2D polygonCollider2D = GetComponent<PolygonCollider2D>();
+            if(polygonCollider2D != null)
+            {
+                polygonCollider2D.isTrigger = false;
+            }
+
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             GetComponent<Rigidbody2D>().AddForce(m_InitialVelocityForce);
             m_CoroutineCanCollect = StartCoroutine(CoroutineSpawn());
             m_CoroutineLive = StartCoroutine(CoroutineLive());
+            m_CoroutineCheckDistance = StartCoroutine(CoroutineCheckDistance());
 
         }
         else
         {
-            GetComponent<BoxCollider2D>().isTrigger = true;
+            BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
+            if (boxCollider2D != null)
+            {
+                boxCollider2D.isTrigger = true;
+            }
+
+            PolygonCollider2D polygonCollider2D = GetComponent<PolygonCollider2D>();
+            if (polygonCollider2D != null)
+            {
+                polygonCollider2D.isTrigger = true;
+            }
+
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         }
 
         if(m_DataType != null)
@@ -48,13 +74,12 @@ public class ResourceInWorld : MonoBehaviour
             DataResource dataResource = (DataResource)Pool.m_Instance.GetData(m_DataType);
             GetComponent<SpriteRenderer>().sprite = dataResource.image;
         }
-        
-        m_CanCollect = false;
+        gameObject.layer = LayerMask.NameToLayer("ResourceCantTake");
     }
 
     private void OnDisable()
     {
-        m_CanCollect = false;
+        gameObject.layer = LayerMask.NameToLayer("ResourceCantTake");
         m_InitialVelocityForce = Vector2.zero;
 
         if(m_CoroutineCanCollect != null)
@@ -65,11 +90,15 @@ public class ResourceInWorld : MonoBehaviour
         {
             StopCoroutine(m_CoroutineLive);
         }
+        if (m_CoroutineCheckDistance != null)
+        {
+            StopCoroutine(m_CoroutineLive);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.transform.CompareTag("Player") && m_CanCollect)
+        if(collision.transform.CompareTag("Player"))
         {
             DataStorageManagePlayer dataStorageManagePlayer = (DataStorageManagePlayer)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.managePlayer);
             if(dataStorageManagePlayer.CollectResource(m_DataType))
@@ -82,12 +111,27 @@ public class ResourceInWorld : MonoBehaviour
     IEnumerator CoroutineSpawn()
     {
         yield return new WaitForSeconds(m_TimeCanCollect);
-        m_CanCollect = true;
+        gameObject.layer = LayerMask.NameToLayer("ResourceCanTake");
     }
 
     IEnumerator CoroutineLive()
     {
         yield return new WaitForSeconds(m_TimeToLive);
         Pool.m_Instance?.RemoveObject(gameObject, m_InstanceType);
+    }
+
+    IEnumerator CoroutineCheckDistance()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(m_TimeCheckDistance);
+            DataStorageManagePlayer dataStorageManagePlayer = (DataStorageManagePlayer)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.managePlayer);
+            Vector3 playerPos = dataStorageManagePlayer.GetPlayerPos();
+            float distance = Vector3.Distance(transform.position, playerPos);
+            if (distance >= m_DistanceToDelete)
+            {
+                Pool.m_Instance?.RemoveObject(gameObject, m_InstanceType);
+            }
+        }
     }
 }

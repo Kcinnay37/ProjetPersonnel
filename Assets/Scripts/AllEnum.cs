@@ -1,140 +1,124 @@
-public enum EnumManagers
+public enum EnumAudios
 {
-    gameManagerCave
-}
-
-public enum EnumMaps
-{
-    mapCave,
-    mapColonie
 }
 
 public enum EnumBiomes
 {
     earth,
     earthRock,
-
-    rock,
-    rockIce,
-    rockFire,
-
-    ice,
-
     fire,
+    ice,
+    rock,
+    rockFire,
+    rockIce,
 }
 
 public enum EnumBlocks
 {
-    earth,
-    backGroundEarth,
-    coal,
-
-    rock,
-    backGroundRock,
-    iron,
-
-    rockFire,
-    backGroundFire,
-    emerald,
-
-    rockIce,
-    backGroundIce,
     amethyst,
-
-    block
-}
-
-public enum EnumPlayers
-{
-    player
-}
-
-public enum EnumNPCs
-{
-
-}
-
-public enum EnumMonster
-{
-
-}
-
-public enum EnumUI
-{
-    slot,
-    UIGame,
-    content
-}
-
-public enum EnumTools
-{
-    pickaxe,
-    sword,
-    axe
+    backGroundEarth,
+    backGroundFire,
+    backGroundIce,
+    backGroundRock,
+    block,
+    coal,
+    earth,
+    Emerald,
+    iron,
+    rock,
+    rockFire,
+    rockIce,
 }
 
 public enum EnumConsumables
 {
-
 }
 
 public enum EnumEquipements
 {
+}
 
+public enum EnumManagers
+{
+    gameManagerCave,
+}
+
+public enum EnumMaps
+{
+    mapCave,
+    mapColonie,
+}
+
+public enum EnumMonster
+{
+}
+
+public enum EnumNPCs
+{
+}
+
+public enum EnumPlayers
+{
+    player,
 }
 
 public enum EnumSpecialResources
 {
-    none
-}
-
-public enum EnumVFXs
-{
-
-}
-
-public enum EnumAudios
-{
-
+    none,
 }
 
 public enum EnumStatesManager
 {
     manageMap,
     managePlayer,
-    manageUI
+    manageResource,
+    manageUI,
 }
 
 public enum EnumStatesMap
 {
     generate,
     grid,
-    view
+    view,
 }
 
 public enum EnumStatesPlayer
 {
-    none,
-
-    stat,
-
-    spawn,
-
-    controllerMovement,
-
-    excavation,
-    build,
-
-    equip,
     backpack,
-    controllerInventory
+    build,
+    controllerInventory,
+    controllerMovement,
+    equip,
+    excavation,
+    none,
+    spawn,
+    stat,
 }
 
 public enum EnumStatesUI
 {
-    playerEquipUI,
+    worldUI,
+    mouseUI,
     playerBackpackUI,
+    playerEquipUI,
     playerStatUI,
-    mouseUI
 }
 
+public enum EnumTools
+{
+    axe,
+    pickaxe,
+    sword,
+}
+
+public enum EnumUI
+{
+    cellUI,
+    content,
+    slot,
+    UIGame,
+}
+
+public enum EnumVFXs
+{
+}

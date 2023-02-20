@@ -58,19 +58,14 @@ public class StatePlayerControllerInventory : State
 
     public override void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetKeyDown(KeyCode.Q))
         {
             CollectResource(EnumTools.pickaxe);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(m_GlobalDataPlayer.dropResourceEquipKey))
         {
-            m_DataStoragePlayerEquip.AddRessource(EnumBlocks.earth);
-        }
-
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            DropResource(EnumBlocks.earth);
+            DropEquipResource();
         }
 
         //va chercher la position de la souris selon le canvas
@@ -107,7 +102,7 @@ public class StatePlayerControllerInventory : State
     private void ActionKey()
     {
         //si l'inventaire est pas utiliser
-        if(!m_InventoryUsed)
+        if (!m_InventoryUsed)
         {
             //si la primary key est appuyer et elle est actif
             if (Input.GetKeyDown(m_GlobalDataPlayer.primarySlotKey) && m_PrimaryKeyUse)
@@ -151,6 +146,11 @@ public class StatePlayerControllerInventory : State
             if ((Input.GetKey(m_GlobalDataPlayer.primarySlotKey) && m_PrimaryKeyUse) || (Input.GetKey(m_GlobalDataPlayer.secondarySlotKey) && m_SecondaryKeyUse))
             {
                 m_DataStoragePlayerEquip.ActionOldKey();
+            }
+
+            if ((Input.GetKeyUp(m_GlobalDataPlayer.primarySlotKey) && m_PrimaryKeyUse) || (Input.GetKeyUp(m_GlobalDataPlayer.secondarySlotKey) && m_SecondaryKeyUse))
+            {
+                m_DataStoragePlayerEquip.ActionKeyUp();
             }
         }
         else
@@ -279,13 +279,36 @@ public class StatePlayerControllerInventory : State
 
     private void DropCurrMouseItemInWorld(bool justOne)
     {
+        if (m_CurrMouseItem.inventoryCase.resource.Equals(EnumSpecialResources.none))
+        {
+            return;
+        }
+
         if (justOne)
         {
-            Debug.Log("drop une item dans le monde");
+            if(m_CurrMouseItem.inventoryCase.currNb > 0)
+            {
+                m_CurrMouseItem.inventoryCase.currNb--;
+                DropResource(m_CurrMouseItem.inventoryCase.resource);
+
+                m_DataStorageManageUI.SetValueMouseContent(m_CurrMouseItem.inventoryCase);
+            }
+
+            if (m_CurrMouseItem.inventoryCase.currNb <= 0)
+            {
+                m_CurrMouseItem.inventoryCase.resource = EnumSpecialResources.none;
+                m_DataStorageManageUI.SetActiveMouseContent(false);
+            }
         }
         else
         {
-            Debug.Log("drop tout les items dans le monde");
+            for(int i = 0; i < m_CurrMouseItem.inventoryCase.currNb; i++)
+            {
+                DropResource(m_CurrMouseItem.inventoryCase.resource);
+            }
+            m_CurrMouseItem.inventoryCase.resource = EnumSpecialResources.none;
+            m_CurrMouseItem.inventoryCase.currNb = 0;
+            m_DataStorageManageUI.SetActiveMouseContent(false);
         }
     }
 
@@ -358,18 +381,16 @@ public class StatePlayerControllerInventory : State
 
     private void DropResource(object dataResource)
     {
-        dynamic data = Pool.m_Instance.GetData(dataResource);
-
         StatePlayerControllerMovement statePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
         int dirPlayer = statePlayerControllerMovement.GetPlayerDir();
 
+        DataStorageManageResource dataStorageManageResource = (DataStorageManageResource)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageResource);
 
-        GameObject objectResource = Pool.m_Instance.GetObject(data.instanceType);
-        objectResource.GetComponent<ResourceInWorld>().InitResource(false, Vector2.right * dirPlayer * 5, dataResource, data.instanceType); ;
-        objectResource.transform.rotation = Quaternion.identity;
-        objectResource.transform.position = m_StateMachine.transform.position;
+        Vector3 pos = m_StateMachine.transform.position;
+        pos.y += 1;
+        pos.z -= 1;
 
-        objectResource.SetActive(true);
+        dataStorageManageResource.InstanciateResourceInWorldAt(dataResource, pos, Vector2.right * dirPlayer * 100, dirPlayer);
     }
 
     public bool CollectResource(object resource)
@@ -383,9 +404,10 @@ public class StatePlayerControllerInventory : State
 
     public void DropEquipResource()
     {
-        StatePlayerControllerMovement statePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
-        int dirPlayer = statePlayerControllerMovement.GetPlayerDir();
-
-
+        object resource = m_DataStoragePlayerEquip.DropOneAtCaseEquip();
+        if(resource != null)
+        {
+            DropResource(resource);
+        }
     }
 }

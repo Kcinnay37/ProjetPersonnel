@@ -13,27 +13,27 @@ MonoBehaviour:
   m_Name: EarthRock
   m_EditorClassIdentifier: 
   biomeBlocks:
-  - block: 5
+  - block: 9
     minValue: 0.8
     maxValue: 1
     rarity: 50
-  - block: 2
+  - block: 6
     minValue: 0.46
     maxValue: 0.7
     rarity: 50
-  - block: 3
+  - block: 10
     minValue: 0.5
     maxValue: 0.6
     rarity: 300
-  - block: 3
+  - block: 10
     minValue: 0.6
     maxValue: 0.8
     rarity: 500
-  - block: 3
+  - block: 10
     minValue: 0.8
     maxValue: 1
     rarity: 1000
-  - block: 0
+  - block: 7
     minValue: 0.43
     maxValue: 1
     rarity: 1000

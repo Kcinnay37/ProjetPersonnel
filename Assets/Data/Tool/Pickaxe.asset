@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: Pickaxe
   m_EditorClassIdentifier: 
   image: {fileID: 21300014, guid: b217a154a8231e54bbb50405bdfafbaf, type: 3}
-  state: 4
+  state: 5
   maxStack: 1
+  distance: 2
+  damage: 1
+  intervalAttack: 0.01
+  instanceType: 1
+  dataType: 1

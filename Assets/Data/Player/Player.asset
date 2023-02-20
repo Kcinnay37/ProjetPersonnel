@@ -18,6 +18,7 @@ MonoBehaviour:
   jumpKeyCode: 32
   primarySlotKey: 323
   secondarySlotKey: 324
+  dropResourceEquipKey: 101
   baseWalkSpeed: 5
   baseRunSpeed: 10
   baseJumpForce: 325

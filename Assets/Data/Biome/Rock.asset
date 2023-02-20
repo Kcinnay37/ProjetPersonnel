@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   biomeBlocks:
-  - block: 5
+  - block: 9
     minValue: 0.6
     maxValue: 0.8
     rarity: 50
-  - block: 3
+  - block: 10
     minValue: 0.4
     maxValue: 1
     rarity: 1000
@@ -41,10 +41,6 @@ MonoBehaviour:
   useRandomLacunarity: 0
   minLacunarity: 0
   maxLacunarity: 0
-  seed: 0
-  useRandomSeed: 0
-  minSeed: 0
-  maxSeed: 2147483647
   heightCurve:
     serializedVersion: 2
     m_Curve:

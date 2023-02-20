@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   image: {fileID: 21300000, guid: 3caf2c637f5a0ec4ba865b97b896e3f0, type: 3}
-  state: 5
+  state: 1
   maxStack: 999
   mapName: Environement
   tile: {fileID: 11400000, guid: 20d6c1eb886434c4e8de8652b7e4f359, type: 2}
-  blockType: 3
-  blockInstance: 12
+  instanceType: 5
+  dataType: 10

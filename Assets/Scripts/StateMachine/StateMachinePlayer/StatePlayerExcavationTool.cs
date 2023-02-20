@@ -7,6 +7,12 @@ public class StatePlayerExcavationTool : StateRessource
     private DataTool m_DataTool;
     private GameObject m_Object;
 
+    private Vector3Int m_CurrCellPoint;
+    private Coroutine m_CoroutineDestroyBlock;
+    private Vector3 m_HitPoint;
+
+    private bool m_DestoyBlock;
+
     public StatePlayerExcavationTool(StateMachine stateMachine) : base(stateMachine)
     {
 
@@ -20,6 +26,7 @@ public class StatePlayerExcavationTool : StateRessource
 
         //Instanci l'outil
         m_Object = Pool.m_Instance.GetObject(m_DataTool.instanceType);
+        m_Object.GetComponent<ResourceInWorld>().InitResource(true, Vector2.zero, caseEquip.resource, m_DataTool.instanceType);
 
         Vector3 scale = m_Object.transform.localScale;
         if ((m_StateMachine.transform.localScale.x < 0 && scale.x > 0) || (m_StateMachine.transform.localScale.x > 0 && scale.x < 0))
@@ -34,6 +41,11 @@ public class StatePlayerExcavationTool : StateRessource
         m_Object.transform.localPosition = Vector3.zero;
 
         m_Object.transform.localRotation = Quaternion.identity;
+
+        m_CurrCellPoint = Vector3Int.zero;
+        m_HitPoint = Vector3.zero;
+        m_CoroutineDestroyBlock = null;
+        m_DestoyBlock = false;
     }
 
     public override void End()
@@ -49,21 +61,76 @@ public class StatePlayerExcavationTool : StateRessource
 
     public override void ActionKeyDown()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
-
-        DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
-
-        dataStorageManageMap.PopBlockAt(mouseWorldPosition);
+        
     }
 
     public override void ActionOldKey()
     {
+        if (m_DestoyBlock)
+        {
+            DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
+            dataStorageManageMap.PopBlockAt(m_HitPoint);
+
+            m_CurrCellPoint = Vector3Int.zero;
+            m_HitPoint = Vector3.zero;
+            m_DestoyBlock = false;
+        }
+
         Vector3 mousePosition = Input.mousePosition;
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+        Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+        Vector2 parentPos = m_Object.GetComponentInParent<Transform>().position;
 
-        DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
+        Vector2 dir = (mouseWorldPosition - parentPos).normalized;
 
-        dataStorageManageMap.PopBlockAt(mouseWorldPosition);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(parentPos, dir, m_DataTool.distance);
+
+        Debug.DrawRay(parentPos, dir * m_DataTool.distance);
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            if(hit.transform.CompareTag("Environement"))
+            {
+                DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
+
+                Vector3Int cellPoint = dataStorageManageMap.GetWorldToCell(hit.point + (new Vector2(0.01f, 0.01f) * dir));
+                if(!cellPoint.Equals(m_CurrCellPoint))
+                {
+                    if (m_CoroutineDestroyBlock != null)
+                    {
+                        m_StateMachine.StopCoroutine(m_CoroutineDestroyBlock);
+                    }
+                    m_CurrCellPoint = cellPoint;
+                    m_CoroutineDestroyBlock = m_StateMachine.StartCoroutine(CoroutineDestroyBlock());
+                }
+                m_HitPoint = hit.point + (new Vector2(0.01f, 0.01f) * dir);
+                return;
+            }
+        }
+
+        if (m_CoroutineDestroyBlock != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineDestroyBlock);
+            m_CurrCellPoint = Vector3Int.zero;
+            m_HitPoint = Vector3.zero;
+            m_DestoyBlock = false;
+        }
+    }
+
+    public override void ActionKeyUp()
+    {
+        if (m_CoroutineDestroyBlock != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineDestroyBlock);
+        }
+
+        m_CurrCellPoint = Vector3Int.zero;
+        m_HitPoint = Vector3.zero;
+        m_DestoyBlock = false;
+    }
+
+    private IEnumerator CoroutineDestroyBlock()
+    {
+        yield return new WaitForSeconds(m_DataTool.intervalAttack);
+        m_DestoyBlock = true;
     }
 }
