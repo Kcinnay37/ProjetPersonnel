@@ -51,6 +51,8 @@ public class ResourceInWorld : MonoBehaviour
             m_CoroutineLive = StartCoroutine(CoroutineLive());
             m_CoroutineCheckDistance = StartCoroutine(CoroutineCheckDistance());
 
+            EventManager.StartListening("CheckResourceInGround", CheckResourceInGround);
+
         }
         else
         {
@@ -131,5 +133,21 @@ public class ResourceInWorld : MonoBehaviour
                 Pool.m_Instance?.RemoveObject(gameObject, m_InstanceType);
             }
         }
+    }
+
+    object CheckResourceInGround(Dictionary<string, object> parametres)
+    {
+        Dictionary<EnumBlocks, EnumBlocks> backGroundBlockDictionary = (Dictionary<EnumBlocks, EnumBlocks>)parametres["dictBlockBackGround"];
+
+        Vector2Int currPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(transform.position);
+        EnumBlocks currBlock = Map.m_Instance.GetGrid().GetGrid()[currPos.x, currPos.y];
+
+
+        if(!backGroundBlockDictionary.ContainsKey(currBlock))
+        {
+            Pool.m_Instance.RemoveObject(gameObject, m_InstanceType);
+        }
+
+        return null;
     }
 }

@@ -12,6 +12,9 @@ public class StatePlayerBuild : StateRessource
 
     private Transform m_RaycastPoint;
 
+    private StatePlayerControllerMovement m_StatePlayerControllerMovement;
+    private Animator m_Animator;
+
     public StatePlayerBuild(StateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -21,6 +24,9 @@ public class StatePlayerBuild : StateRessource
         m_RaycastPoint = GameObject.Find("PlayerRaycastPoint").transform;
 
         m_GlobalDataPlayer = (DataPlayer)m_StateMachine.GetData();
+
+        m_StatePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
+        m_Animator = m_StateMachine.GetComponent<Animator>();
 
         DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
         InventoryCase caseEquip = dataStoragePlayerEquip.GetEquipCase();
@@ -91,6 +97,11 @@ public class StatePlayerBuild : StateRessource
 
         Debug.DrawRay(firstPos, dir * dist);
 
+        if(dir.x * m_StatePlayerControllerMovement.GetPlayerDir() < 0)
+        {
+            return;
+        }
+
         //regarde si il a de l'environement dans les jambe
         RaycastHit2D[] hits = Physics2D.RaycastAll(firstPos, dir, dist);
         foreach (RaycastHit2D hit in hits)
@@ -103,6 +114,8 @@ public class StatePlayerBuild : StateRessource
 
         if (Map.m_Instance.GetGrid().AddBlockAt(mouseWorldPosition, m_BlockType))
         {
+            m_Animator.SetTrigger("DropBlock");
+
             DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
             dataStoragePlayerEquip.DropOneAtCaseEquip();
         }
