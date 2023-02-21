@@ -6,7 +6,7 @@ using UnityEngine;
 public class DataTool : DataResource
 {
     public float distance;
-    public float damage;
+    public int damage;
     public float intervalAttack;
 
     public EnumTools instanceType;

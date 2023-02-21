@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3551913676912083606}
   - component: {fileID: 3551913676912083605}
   m_Layer: 5
-  m_Name: CanvasUISreen
+  m_Name: UIScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3551913678000367761}
-  - component: {fileID: 8049901027391428743}
+  - component: {fileID: 5388676429037729455}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -173,7 +173,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8049901027391428743
+--- !u!114 &5388676429037729455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,10 +182,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3551913678000367760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f824d3128148d9a488fc5aaa008cb60d, type: 3}
+  m_Script: {fileID: 11500000, guid: ebae6d1f94f411e4ea416ba835e86b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Data: 2
+  m_DataUI: 3
 --- !u!1 &3551913678486393277
 GameObject:
   m_ObjectHideFlags: 0

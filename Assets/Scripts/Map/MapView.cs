@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class DataStorageMapView : DataStorage
+public class MapView
 {
-    private DataStorageMapGrid m_DataStorageMapGrid;
-    private DataMap m_GlobalDataMap;
+    private Map m_Map;
 
     private Coroutine m_CoroutineUpdateValue;
     private Coroutine m_CoroutineDraw;
@@ -19,26 +18,44 @@ public class DataStorageMapView : DataStorage
 
     private bool[,] m_DrawGrid;
 
-    public DataStorageMapView(StateMachine stateMachine) : base(stateMachine)
+    public MapView(Map map)
     {
-
+        m_Map = map;
     }
 
-    public override void End()
+    public void StartView()
+    {
+        ResetValue();
+
+        if (m_Map.GetData().drawAllGrid)
+        {
+            DrawAllGrid();
+        }
+        else
+        {
+            StartUpdateValue();
+
+        }
+
+        StartDraw();
+        StartClear();
+    }
+
+    public void End()
     {
         if(m_CoroutineUpdateValue != null)
         {
-            m_StateMachine.StopCoroutine(m_CoroutineUpdateValue);
+            m_Map.StopCoroutine(m_CoroutineUpdateValue);
             m_CoroutineUpdateValue = null;
         }
         if(m_CoroutineDraw != null)
         {
-            m_StateMachine.StopCoroutine(m_CoroutineDraw);
+            m_Map.StopCoroutine(m_CoroutineDraw);
             m_CoroutineDraw = null;
         }
         if(m_CoroutineClear != null)
         {
-            m_StateMachine.StopCoroutine(m_CoroutineClear);
+            m_Map.StopCoroutine(m_CoroutineClear);
             m_CoroutineClear = null;
         }
     }
@@ -58,27 +75,25 @@ public class DataStorageMapView : DataStorage
 
     public void ResetValue()
     {
-        m_DataStorageMapGrid = (DataStorageMapGrid)m_StateMachine.GetDataStorage(EnumStatesMap.grid);
-        m_GlobalDataMap = (DataMap)m_StateMachine.GetData();
         ResetMapView();
 
         m_CaseToDraw = new Dictionary<Vector2Int, Vector2Int>();
         m_CaseToClear = new Dictionary<Vector2Int, Vector2Int>();
         m_DrawCase = new Dictionary<Vector2Int, Vector2Int>();
 
-        m_DrawGrid = new bool[m_DataStorageMapGrid.GetGrid().GetLength(0), m_DataStorageMapGrid.GetGrid().GetLength(1)];
+        m_DrawGrid = new bool[m_Map.GetGrid().GetGrid().GetLength(0), m_Map.GetGrid().GetGrid().GetLength(1)];
     }
 
     private Vector2Int GetPosition()
     {
-        m_DataStorageMapGrid.UpdatePoint();
-        return m_DataStorageMapGrid.GetPoint();
+        m_Map.GetGrid().UpdatePoint();
+        return m_Map.GetGrid().GetPoint();
     }
 
     public void ResetMapView()
     {
         //pour tout les chunk de la cave
-        foreach (DataMap.Biome chunk in m_GlobalDataMap.mapBiomes)
+        foreach (DataMap.Biome chunk in m_Map.GetData().mapBiomes)
         {
             //va chercher le data du chunk actuel
             DataBiome currDataChunk = (DataBiome)Pool.m_Instance.GetData(chunk.dataBiome);
@@ -98,7 +113,7 @@ public class DataStorageMapView : DataStorage
     {
         if (m_CoroutineUpdateValue == null)
         {
-            m_CoroutineUpdateValue = m_StateMachine.StartCoroutine(CoroutineUpdateValue());
+            m_CoroutineUpdateValue = m_Map.StartCoroutine(CoroutineUpdateValue());
         }
     }
 
@@ -106,7 +121,7 @@ public class DataStorageMapView : DataStorage
     {
         if(m_CoroutineDraw == null)
         {
-            m_CoroutineDraw = m_StateMachine.StartCoroutine(CoroutineDraw());
+            m_CoroutineDraw = m_Map.StartCoroutine(CoroutineDraw());
         }
     }
 
@@ -114,7 +129,7 @@ public class DataStorageMapView : DataStorage
     {
         if (m_CoroutineClear == null)
         {
-            m_CoroutineClear = m_StateMachine.StartCoroutine(CoroutineClear());
+            m_CoroutineClear = m_Map.StartCoroutine(CoroutineClear());
         }
     }
 
@@ -124,13 +139,13 @@ public class DataStorageMapView : DataStorage
         {
             Vector2Int position = GetPosition();
 
-            for (int i = position.x - m_GlobalDataMap.distanceView; i <= position.x + m_GlobalDataMap.distanceView; i++)
+            for (int i = position.x - m_Map.GetData().distanceView; i <= position.x + m_Map.GetData().distanceView; i++)
             {
                 if (i < 0 || i >= m_DrawGrid.GetLength(0))
                 {
                     continue;
                 }
-                for (int j = position.y - m_GlobalDataMap.distanceView; j <= position.y + m_GlobalDataMap.distanceView; j++)
+                for (int j = position.y - m_Map.GetData().distanceView; j <= position.y + m_Map.GetData().distanceView; j++)
                 {
                     if (j < 0 || j >= m_DrawGrid.GetLength(1))
                     {
@@ -148,7 +163,7 @@ public class DataStorageMapView : DataStorage
             }
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_DrawCase)
             {
-                if (pos.Value.x < position.x - m_GlobalDataMap.distanceView || pos.Value.x > position.x + m_GlobalDataMap.distanceView || pos.Value.y < position.y - m_GlobalDataMap.distanceView || pos.Value.y > position.y + m_GlobalDataMap.distanceView)
+                if (pos.Value.x < position.x - m_Map.GetData().distanceView || pos.Value.x > position.x + m_Map.GetData().distanceView || pos.Value.y < position.y - m_Map.GetData().distanceView || pos.Value.y > position.y + m_Map.GetData().distanceView)
                 {
                     if (!m_CaseToClear.ContainsKey(pos.Value))
                     {
@@ -157,7 +172,7 @@ public class DataStorageMapView : DataStorage
                 }
             }
 
-            yield return new WaitForSeconds(m_GlobalDataMap.timeUpdateView);
+            yield return new WaitForSeconds(m_Map.GetData().timeUpdateView);
         }
     }
 
@@ -167,7 +182,7 @@ public class DataStorageMapView : DataStorage
         {
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_CaseToDraw)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStorageMapGrid.GetGrid()[pos.Value.x, pos.Value.y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_Map.GetGrid().GetGrid()[pos.Value.x, pos.Value.y]);
                 dataBlock.map.SetTile(new Vector3Int(pos.Value.x, pos.Value.y, 0), dataBlock.tile);
 
                 m_DrawGrid[pos.Value.x, pos.Value.y] = true;
@@ -184,7 +199,7 @@ public class DataStorageMapView : DataStorage
         {
             foreach (KeyValuePair<Vector2Int, Vector2Int> pos in m_CaseToClear)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStorageMapGrid.GetGrid()[pos.Value.x, pos.Value.y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_Map.GetGrid().GetGrid()[pos.Value.x, pos.Value.y]);
                 dataBlock.map.SetTile(new Vector3Int(pos.Value.x, pos.Value.y, 0), null);
 
                 m_DrawGrid[pos.Value.x, pos.Value.y] = false;
@@ -197,11 +212,11 @@ public class DataStorageMapView : DataStorage
 
     public void DrawAllGrid()
     {
-        for (int x = 0; x < m_DataStorageMapGrid.GetGrid().GetLength(0); x++)
+        for (int x = 0; x < m_Map.GetGrid().GetGrid().GetLength(0); x++)
         {
-            for (int y = 0; y < m_DataStorageMapGrid.GetGrid().GetLength(1); y++)
+            for (int y = 0; y < m_Map.GetGrid().GetGrid().GetLength(1); y++)
             {
-                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_DataStorageMapGrid.GetGrid()[x, y]);
+                DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_Map.GetGrid().GetGrid()[x, y]);
                 dataBlock.map.SetTile(new Vector3Int(x, y, 0), dataBlock.tile);
             }
         }

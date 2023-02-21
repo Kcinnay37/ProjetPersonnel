@@ -15,6 +15,7 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 258b356e51a347743b9d5315a68f4b5c, type: 3}
   state: 1
   maxStack: 999
+  health: 100
   mapName: Environement
   tile: {fileID: 11400000, guid: 2d43364932a2a5b41ad0a2b3ebba3daf, type: 2}
   instanceType: 5

@@ -30,3 +30,4 @@ MonoBehaviour:
   baseDamage: 0
   baseAttackSpeed: 0
   baseDamageBlock: 0
+  blockDropDistance: 3

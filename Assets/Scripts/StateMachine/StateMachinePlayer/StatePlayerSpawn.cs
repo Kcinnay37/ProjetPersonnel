@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class StatePlayerSpawn : State
 {
+    private const float offset = 0.5f;
+
     public StatePlayerSpawn(StateMachine stateMachine) : base(stateMachine)
     {
 
@@ -14,6 +16,15 @@ public class StatePlayerSpawn : State
     {
         CinemachineVirtualCamera virtualCamera = GameObject.FindObjectOfType<CinemachineVirtualCamera>();
         virtualCamera.Follow = GameObject.Find("FollowCam").transform;
+        
+        Vector3 pos = Map.m_Instance.GetGrid().GetPointToWorld();
+        pos.z = -1;
+        pos.x += offset;
+        pos.y += 1;
+
+        m_StateMachine.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        m_StateMachine.transform.position = pos;
+
 
         m_StateMachine.PopCurrState(EnumStatesPlayer.spawn);
     }

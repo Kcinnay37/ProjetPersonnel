@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataStorageMapGenerate : DataStorage
+public class MapGenerate
 {
-    private DataStorageMapGrid m_DataStorageMapManager;
+    private Map m_Map;
 
     private float m_Scale = 1;
     private int m_Octaves = 1;
@@ -16,7 +16,6 @@ public class DataStorageMapGenerate : DataStorage
 
     private Vector2 m_Offset;
 
-    private DataMap m_GlobalDataMap;
     private DataBiome m_DataCurrBiome;
 
     private int m_CurrGridChunkX = 0;
@@ -24,20 +23,20 @@ public class DataStorageMapGenerate : DataStorage
 
     private Dictionary<int, List<DataMap.Biome>> m_DictDepthChunk;
 
-    public DataStorageMapGenerate(StateMachine stateMachine) : base(stateMachine)
+    public MapGenerate(Map map)
     {
-
+        m_Map = map;
     }
 
     public void GenerateMap()
     {
         InitValueMap();
 
-        for (int y = 0; y < m_GlobalDataMap.nbChunkDown; y++)
+        for (int y = 0; y < m_Map.GetData().nbChunkDown; y++)
         {
             m_CurrGridChunkY = y;
 
-            for (int x = 0; x < m_GlobalDataMap.nbChunkRight; x++)
+            for (int x = 0; x < m_Map.GetData().nbChunkRight; x++)
             {
                 m_CurrGridChunkX = x;
 
@@ -50,9 +49,6 @@ public class DataStorageMapGenerate : DataStorage
 
     private void InitValueMap()
     {
-        m_DataStorageMapManager = (DataStorageMapGrid)m_StateMachine.GetDataStorage(EnumStatesMap.grid);
-        m_GlobalDataMap = (DataMap)m_StateMachine.GetData();
-
         if (m_DictDepthChunk == null)
         {
             m_DictDepthChunk = new Dictionary<int, List<DataMap.Biome>>();
@@ -62,12 +58,12 @@ public class DataStorageMapGenerate : DataStorage
             m_DictDepthChunk.Clear();
         }
 
-        for (int i = 0; i < m_GlobalDataMap.nbChunkDown; i++)
+        for (int i = 0; i < m_Map.GetData().nbChunkDown; i++)
         {
             m_DictDepthChunk.Add(i, new List<DataMap.Biome>());
         }
 
-        foreach (DataMap.Biome biome in m_GlobalDataMap.mapBiomes)
+        foreach (DataMap.Biome biome in m_Map.GetData().mapBiomes)
         {
             for (int i = biome.chunkMinDepth; i <= biome.chunkMaxDepth; i++)
             {
@@ -86,18 +82,18 @@ public class DataStorageMapGenerate : DataStorage
 
         // algorithme de bruit de Perlin pour générer un bruit de Perlin 2D
         //float[,] noiseMap = Procedural.GenerateNoiseMap(m_DataMap.chunkWidth, m_DataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next());
-        float[,] noiseMap = Procedural.GenerateNoiseMap(m_GlobalDataMap.chunkWidth, m_GlobalDataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next(), m_Offset, m_HeightCurve);
+        float[,] noiseMap = Procedural.GenerateNoiseMap(m_Map.GetData().chunkWidth, m_Map.GetData().chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next(), m_Offset, m_HeightCurve);
 
         // Parcour tout les element de la grid et defini il est de quelle type selon le bruit de perlin et les valeur de la cave
-        for (int x = 0; x < m_GlobalDataMap.chunkWidth; x++)
+        for (int x = 0; x < m_Map.GetData().chunkWidth; x++)
         {
-            for (int y = 0; y < m_GlobalDataMap.chunkHeight; y++)
+            for (int y = 0; y < m_Map.GetData().chunkHeight; y++)
             {
                 foreach (DataBiome.Block block in m_DataCurrBiome.biomeBlocks)
                 {
                     if (noiseMap[x, y] >= block.minValue && noiseMap[x, y] <= block.maxValue)
                     {
-                        m_DataStorageMapManager.GetGrid()[x + (m_GlobalDataMap.chunkWidth * m_CurrGridChunkX), y + (m_GlobalDataMap.chunkHeight * m_CurrGridChunkY)] = block.block;
+                        m_Map.GetGrid().GetGrid()[x + (m_Map.GetData().chunkWidth * m_CurrGridChunkX), y + (m_Map.GetData().chunkHeight * m_CurrGridChunkY)] = block.block;
 
                         int checkRarity = Random.Range(1, 1001);
                         if (checkRarity <= block.rarity)
@@ -116,7 +112,7 @@ public class DataStorageMapGenerate : DataStorage
         DataMap.Biome biome = m_DictDepthChunk[m_CurrGridChunkY][index];
         m_DataCurrBiome = (DataBiome)Pool.m_Instance.GetData(biome.dataBiome);
 
-        m_DataStorageMapManager.SetGridBiomeAt(new Vector2Int(m_CurrGridChunkX, m_CurrGridChunkY), biome.dataBiome);
+        m_Map.GetGrid().SetGridBiomeAt(new Vector2Int(m_CurrGridChunkX, m_CurrGridChunkY), biome.dataBiome);
 
         int checkRarity = Random.Range(1, 1001);
         if (checkRarity > biome.rarity)
@@ -135,7 +131,7 @@ public class DataStorageMapGenerate : DataStorage
 
         m_Lacunarity = m_DataCurrBiome.lacunarity;
 
-        m_Seed = m_GlobalDataMap.seed;
+        m_Seed = m_Map.GetData().seed;
 
         m_HeightCurve = m_DataCurrBiome.heightCurve;
 
@@ -171,9 +167,9 @@ public class DataStorageMapGenerate : DataStorage
         }
 
         // Génération aléatoire de la valeur de seed entre minSeed et maxSeed
-        if (m_GlobalDataMap.useRandomSeed)
+        if (m_Map.GetData().useRandomSeed)
         {
-            m_Seed = Random.Range(m_GlobalDataMap.minSeed, m_GlobalDataMap.maxSeed + 1);
+            m_Seed = Random.Range(m_Map.GetData().minSeed, m_Map.GetData().maxSeed + 1);
         }
     }
 }

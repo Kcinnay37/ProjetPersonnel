@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class StatePlayerBuild : StateRessource
 {
+    private DataPlayer m_GlobalDataPlayer;
+
     private DataBlock m_DataBlock;
     private EnumBlocks m_BlockType;
     private GameObject m_Object;
+
+    private Transform m_RaycastPoint;
 
     public StatePlayerBuild(StateMachine stateMachine) : base(stateMachine)
     {
@@ -14,6 +18,10 @@ public class StatePlayerBuild : StateRessource
 
     public override void OnInit()
     {
+        m_RaycastPoint = GameObject.Find("PlayerRaycastPoint").transform;
+
+        m_GlobalDataPlayer = (DataPlayer)m_StateMachine.GetData();
+
         DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
         InventoryCase caseEquip = dataStoragePlayerEquip.GetEquipCase();
         m_DataBlock = (DataBlock)Pool.m_Instance.GetData(caseEquip.resource);
@@ -54,12 +62,46 @@ public class StatePlayerBuild : StateRessource
 
     public override void ActionOldKey()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+        Vector2 mousePosition = Input.mousePosition;
+        Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+        Vector2 firstPos = m_RaycastPoint.position;
 
-        DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
+        Vector2 dir = (mouseWorldPosition - firstPos).normalized;
 
-        if (dataStorageManageMap.AddBlockAt(mouseWorldPosition, m_BlockType))
+        //regarde si la souris est trop loin
+        if (Vector2.Distance(m_RaycastPoint.position, mouseWorldPosition) > m_GlobalDataPlayer.blockDropDistance)
+        {
+            return;
+        }
+
+        Vector3Int cornerUpLeft = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x - 0.4f, firstPos.y + 0.9f, 0.0f));
+        Vector3Int cornerUpRight = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x + 0.4f, firstPos.y + 0.9f, 0.0f));
+        Vector3Int cornerBotLeft = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x - 0.4f, firstPos.y - 0.9f, 0.0f));
+        Vector3Int cornerBotRight = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x + 0.4f, firstPos.y - 0.9f, 0.0f));
+
+        Vector3Int cellMousePos = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(mouseWorldPosition.x, mouseWorldPosition.y, 0.0f));
+
+        if(cellMousePos == cornerUpLeft || cellMousePos == cornerUpRight || cellMousePos == cornerBotLeft || cellMousePos == cornerBotRight)
+        {
+            return;
+        }
+
+
+        float dist = Vector2.Distance(firstPos, mouseWorldPosition);
+
+        Debug.DrawRay(firstPos, dir * dist);
+
+        //regarde si il a de l'environement dans les jambe
+        RaycastHit2D[] hits = Physics2D.RaycastAll(firstPos, dir, dist);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.transform.CompareTag("Environement"))
+            {
+                return;
+            }
+        }
+
+        if (Map.m_Instance.GetGrid().AddBlockAt(mouseWorldPosition, m_BlockType))
         {
             DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
             dataStoragePlayerEquip.DropOneAtCaseEquip();

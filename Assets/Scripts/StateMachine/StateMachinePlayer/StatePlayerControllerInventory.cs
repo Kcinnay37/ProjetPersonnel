@@ -16,7 +16,6 @@ public class StatePlayerControllerInventory : State
     DataPlayer m_GlobalDataPlayer;
 
     Canvas m_Canvas;
-    DataStorageManageUI m_DataStorageManageUI;
 
     MouseItem m_CurrMouseItem;
 
@@ -42,10 +41,8 @@ public class StatePlayerControllerInventory : State
         m_DataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
         m_DataStoragePlayerBackpack = (DataStoragePlayerBackpack)m_StateMachine.GetDataStorage(EnumStatesPlayer.backpack);
 
-        m_Canvas = GameObject.FindObjectOfType<Canvas>();
-
-        m_DataStorageManageUI = (DataStorageManageUI)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageUI);
-        m_DataStorageManageUI.AddCurrDataStorageUI(EnumStatesUI.mouseUI);    
+        GameObject uiScreen = GameObject.Find("UIScreen");
+        m_Canvas = uiScreen.GetComponent<Canvas>();
 
         m_PrimaryKeyUse = false;
         m_SecondaryKeyUse = false;
@@ -114,8 +111,8 @@ public class StatePlayerControllerInventory : State
                 if (m_CurrMouseItem.setRoot != null && m_CurrMouseItem.inventoryCase.currNb != 0)
                 {
                     m_InventoryUsed = true;
-                    m_DataStorageManageUI.SetValueMouseContent(m_CurrMouseItem.inventoryCase);
-                    m_DataStorageManageUI.SetActiveMouseContent(true);
+                    UI.m_Instance.GetUIMouse().SetValueMouseContent(m_CurrMouseItem.inventoryCase);
+                    UI.m_Instance.GetUIMouse().SetActiveMouseContent(true);
                     return;
                 }
 
@@ -133,8 +130,8 @@ public class StatePlayerControllerInventory : State
                 {
                     m_InventoryUsed = true;
 
-                    m_DataStorageManageUI.SetValueMouseContent(m_CurrMouseItem.inventoryCase);
-                    m_DataStorageManageUI.SetActiveMouseContent(true);
+                    UI.m_Instance.GetUIMouse().SetValueMouseContent(m_CurrMouseItem.inventoryCase);
+                    UI.m_Instance.GetUIMouse().SetActiveMouseContent(true);
                     return;
                 }
 
@@ -172,7 +169,7 @@ public class StatePlayerControllerInventory : State
             //si le joueur continue de tenir appuyer la key actif fait suivre le content au UI de la souris
             if((Input.GetKey(m_GlobalDataPlayer.primarySlotKey) && m_PrimaryKeyUse) || (Input.GetKey(m_GlobalDataPlayer.secondarySlotKey) && m_SecondaryKeyUse))
             {
-                m_DataStorageManageUI.UpdateMouseContentPos(localPoint);
+                UI.m_Instance.GetUIMouse().UpdateMouseContentPos(localPoint);
             }
 
             //si le joueur arret d'appuyer sur la key actif drop tout les resource de la souris
@@ -190,7 +187,7 @@ public class StatePlayerControllerInventory : State
 
                 m_InventoryUsed = false;
 
-                m_DataStorageManageUI.SetActiveMouseContent(false);
+                UI.m_Instance.GetUIMouse().SetActiveMouseContent(false);
             }
         }
     }
@@ -217,13 +214,13 @@ public class StatePlayerControllerInventory : State
                 slot.setRoot(inventoryCase);
 
                 m_CurrMouseItem.inventoryCase.currNb--;
-                m_DataStorageManageUI.SetValueMouseContent(m_CurrMouseItem.inventoryCase);
+                UI.m_Instance.GetUIMouse().SetValueMouseContent(m_CurrMouseItem.inventoryCase);
             }
 
             if (m_CurrMouseItem.inventoryCase.currNb <= 0)
             {
                 m_CurrMouseItem.inventoryCase.resource = EnumSpecialResources.none;
-                m_DataStorageManageUI.SetActiveMouseContent(false);
+                UI.m_Instance.GetUIMouse().SetActiveMouseContent(false);
             }
         }
         else
@@ -254,7 +251,7 @@ public class StatePlayerControllerInventory : State
                 slot.setRoot(m_CurrMouseItem.inventoryCase);
                 SetCurrMouseItemRoot(slot.inventoryCase);  
             }
-            m_DataStorageManageUI.SetActiveMouseContent(false);
+            UI.m_Instance.GetUIMouse().SetActiveMouseContent(false);
         }
     }
 
@@ -291,13 +288,13 @@ public class StatePlayerControllerInventory : State
                 m_CurrMouseItem.inventoryCase.currNb--;
                 DropResource(m_CurrMouseItem.inventoryCase.resource);
 
-                m_DataStorageManageUI.SetValueMouseContent(m_CurrMouseItem.inventoryCase);
+                UI.m_Instance.GetUIMouse().SetValueMouseContent(m_CurrMouseItem.inventoryCase);
             }
 
             if (m_CurrMouseItem.inventoryCase.currNb <= 0)
             {
                 m_CurrMouseItem.inventoryCase.resource = EnumSpecialResources.none;
-                m_DataStorageManageUI.SetActiveMouseContent(false);
+                UI.m_Instance.GetUIMouse().SetActiveMouseContent(false);
             }
         }
         else
@@ -308,7 +305,7 @@ public class StatePlayerControllerInventory : State
             }
             m_CurrMouseItem.inventoryCase.resource = EnumSpecialResources.none;
             m_CurrMouseItem.inventoryCase.currNb = 0;
-            m_DataStorageManageUI.SetActiveMouseContent(false);
+            UI.m_Instance.GetUIMouse().SetActiveMouseContent(false);
         }
     }
 
@@ -328,7 +325,7 @@ public class StatePlayerControllerInventory : State
     private MouseItem GetMouseClickInEquipUI(Vector2 mousePoint, bool primaryKey, bool pop)
     {
         //prend le transform de tout les slot de l'inventaire equip
-        List<Transform> slotsEquip = m_DataStorageManageUI.GetAllSlotInventoryEquip();
+        List<Transform> slotsEquip = UI.m_Instance.GetUIPlayerEquip().GetAllSlots();
 
         // initialise les valeurs par default
         InventoryCase inventoryCase = new InventoryCase();
@@ -384,13 +381,11 @@ public class StatePlayerControllerInventory : State
         StatePlayerControllerMovement statePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
         int dirPlayer = statePlayerControllerMovement.GetPlayerDir();
 
-        DataStorageManageResource dataStorageManageResource = (DataStorageManageResource)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageResource);
-
         Vector3 pos = m_StateMachine.transform.position;
         pos.y += 1;
         pos.z -= 1;
 
-        dataStorageManageResource.InstanciateResourceInWorldAt(dataResource, pos, Vector2.right * dirPlayer * 100, dirPlayer);
+        GameManager.m_Instance.InstanciateResourceInWorldAt(dataResource, pos, Vector2.right * dirPlayer * 100, dirPlayer);
     }
 
     public bool CollectResource(object resource)

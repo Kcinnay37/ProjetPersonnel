@@ -6,12 +6,17 @@ public class StatePlayerExcavationTool : StateRessource
 {
     private DataTool m_DataTool;
     private GameObject m_Object;
+    private Transform m_RayFirstPos;
 
     private Vector3Int m_CurrCellPoint;
     private Coroutine m_CoroutineDestroyBlock;
     private Vector3 m_HitPoint;
 
     private bool m_DestoyBlock;
+
+    private Animator m_Animator;
+
+    StatePlayerControllerMovement m_StatePlayerControllerMovement;
 
     public StatePlayerExcavationTool(StateMachine stateMachine) : base(stateMachine)
     {
@@ -20,6 +25,12 @@ public class StatePlayerExcavationTool : StateRessource
 
     public override void OnInit()
     {
+        m_Animator = m_StateMachine.GetComponent<Animator>();
+
+        m_RayFirstPos = GameObject.Find("PlayerRaycastPoint").transform;
+
+        m_StatePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
+
         DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);
         InventoryCase caseEquip = dataStoragePlayerEquip.GetEquipCase();
         m_DataTool = (DataTool)Pool.m_Instance.GetData(caseEquip.resource);
@@ -46,6 +57,7 @@ public class StatePlayerExcavationTool : StateRessource
         m_HitPoint = Vector3.zero;
         m_CoroutineDestroyBlock = null;
         m_DestoyBlock = false;
+        m_Animator.SetTrigger("Attack");
     }
 
     public override void End()
@@ -68,31 +80,39 @@ public class StatePlayerExcavationTool : StateRessource
     {
         if (m_DestoyBlock)
         {
-            DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
-            dataStorageManageMap.PopBlockAt(m_HitPoint);
+            Map.m_Instance.GetGrid().PopBlockAt(m_HitPoint);
 
-            m_CurrCellPoint = Vector3Int.zero;
-            m_HitPoint = Vector3.zero;
-            m_DestoyBlock = false;
+            ResetValue();
         }
 
-        Vector3 mousePosition = Input.mousePosition;
+        Vector2 mousePosition = Input.mousePosition;
         Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
-        Vector2 parentPos = m_Object.GetComponentInParent<Transform>().position;
+        Vector2 firstPos = m_RayFirstPos.position;
 
-        Vector2 dir = (mouseWorldPosition - parentPos).normalized;
+        Vector2 dir = (mouseWorldPosition - firstPos).normalized;
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(parentPos, dir, m_DataTool.distance);
 
-        Debug.DrawRay(parentPos, dir * m_DataTool.distance);
+        Debug.DrawRay(firstPos, dir * m_DataTool.distance);
+
+        if(dir.x * m_StatePlayerControllerMovement.GetPlayerDir() < 0)
+        {
+            if (m_CoroutineDestroyBlock != null)
+            {
+                m_StateMachine.StopCoroutine(m_CoroutineDestroyBlock);
+            }
+            ResetValue();
+            return;
+        }
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(firstPos, dir, m_DataTool.distance);
+
+        
 
         foreach (RaycastHit2D hit in hits)
         {
             if(hit.transform.CompareTag("Environement"))
             {
-                DataStorageManageMap dataStorageManageMap = (DataStorageManageMap)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageMap);
-
-                Vector3Int cellPoint = dataStorageManageMap.GetWorldToCell(hit.point + (new Vector2(0.01f, 0.01f) * dir));
+                Vector3Int cellPoint = Map.m_Instance.GetGrid().ConvertWorldToCell(hit.point + (new Vector2(0.01f, 0.01f) * dir));
                 if(!cellPoint.Equals(m_CurrCellPoint))
                 {
                     if (m_CoroutineDestroyBlock != null)
@@ -110,9 +130,7 @@ public class StatePlayerExcavationTool : StateRessource
         if (m_CoroutineDestroyBlock != null)
         {
             m_StateMachine.StopCoroutine(m_CoroutineDestroyBlock);
-            m_CurrCellPoint = Vector3Int.zero;
-            m_HitPoint = Vector3.zero;
-            m_DestoyBlock = false;
+            ResetValue();
         }
     }
 
@@ -123,14 +141,38 @@ public class StatePlayerExcavationTool : StateRessource
             m_StateMachine.StopCoroutine(m_CoroutineDestroyBlock);
         }
 
+        ResetValue();
+    }
+
+    private void ResetValue()
+    {
         m_CurrCellPoint = Vector3Int.zero;
         m_HitPoint = Vector3.zero;
         m_DestoyBlock = false;
+        UI.m_Instance.GetUIWorld().EndBlockUI();
+
+        m_Animator.SetBool("Attack", false);
     }
 
     private IEnumerator CoroutineDestroyBlock()
     {
-        yield return new WaitForSeconds(m_DataTool.intervalAttack);
+        DataBlock block = Map.m_Instance.GetGrid().GetBlockAt(m_CurrCellPoint.x, m_CurrCellPoint.y);
+        int initialHealth = block.health;
+
+        UI.m_Instance.GetUIWorld().InitBlockUI(m_CurrCellPoint);
+        int currHealth = initialHealth;
+
+        m_Animator.SetFloat("AttackSpeed", 1 / m_DataTool.intervalAttack);
+        m_Animator.SetBool("Attack", true);
+
+        while (currHealth > 0)
+        {
+            
+            yield return new WaitForSeconds(m_DataTool.intervalAttack);
+            currHealth -= m_DataTool.damage;
+            UI.m_Instance.GetUIWorld().SetSlider(currHealth, initialHealth);
+        }
+        
         m_DestoyBlock = true;
     }
 }

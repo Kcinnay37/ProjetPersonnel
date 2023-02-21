@@ -100,8 +100,7 @@ public class ResourceInWorld : MonoBehaviour
     {
         if(collision.transform.CompareTag("Player"))
         {
-            DataStorageManagePlayer dataStorageManagePlayer = (DataStorageManagePlayer)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.managePlayer);
-            if(dataStorageManagePlayer.CollectResource(m_DataType))
+            if(GameManager.m_Instance.CurrPlayerCollectResource(m_DataType))
             {
                 Pool.m_Instance?.RemoveObject(gameObject, m_InstanceType);
             }
@@ -125,8 +124,7 @@ public class ResourceInWorld : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(m_TimeCheckDistance);
-            DataStorageManagePlayer dataStorageManagePlayer = (DataStorageManagePlayer)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.managePlayer);
-            Vector3 playerPos = dataStorageManagePlayer.GetPlayerPos();
+            Vector3 playerPos = GameManager.m_Instance.GetCurrPlayerPos();
             float distance = Vector3.Distance(transform.position, playerPos);
             if (distance >= m_DistanceToDelete)
             {

@@ -2,72 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataStorageMapGrid : DataStorage
+public class MapGrid
 {
-    private DataStorageMapGenerate m_dataStorageMapGenerate;
-    private DataStorageMapView m_dataStorageMapView;
-
-    private DataMap m_GlobalDataMap;
-
-    private bool m_IsGenerate;
+    private Map m_Map;
 
     private EnumBlocks[,] m_GridBlock;
     private EnumBiomes[,] m_GridBiomes;
     private Vector2Int m_CurrPoint;
 
-    public DataStorageMapGrid(StateMachine stateMachine) : base(stateMachine)
+    public MapGrid(Map map)
     {
-
-    }
-
-    public override void OnInit()
-    {
-        m_dataStorageMapGenerate = (DataStorageMapGenerate)m_StateMachine.GetDataStorage(EnumStatesMap.generate);
-        m_dataStorageMapView = (DataStorageMapView)m_StateMachine.GetDataStorage(EnumStatesMap.view);
-        m_GlobalDataMap = (DataMap)m_StateMachine.GetData();
-
-        m_IsGenerate = false;
-
+        m_Map = map;
         m_CurrPoint = Vector2Int.zero;
-        m_GridBlock = new EnumBlocks[m_GlobalDataMap.nbChunkRight * m_GlobalDataMap.chunkWidth, m_GlobalDataMap.nbChunkDown * m_GlobalDataMap.chunkHeight];
-        m_GridBiomes = new EnumBiomes[m_GlobalDataMap.nbChunkRight, m_GlobalDataMap.nbChunkDown];
-
-        GenerateMap();
     }
 
 
-    public void GenerateMap()
+    public void InitValue()
     {
-        //si nouvelle partie
-        m_dataStorageMapGenerate.GenerateMap();
-        FindInitialPoint(m_GlobalDataMap.offsetInitialPoint);
-
-        m_dataStorageMapView.ResetValue();
-
-        if (m_GlobalDataMap.drawAllGrid)
-        {
-            m_dataStorageMapView.DrawAllGrid();
-        }
-        else
-        {   
-            m_dataStorageMapView.StartUpdateValue();
-            
-        }
-
-        m_dataStorageMapView.StartDraw();
-        m_dataStorageMapView.StartClear();
-        m_IsGenerate = true;
+        m_GridBlock = new EnumBlocks[m_Map.GetData().nbChunkRight * m_Map.GetData().chunkWidth, m_Map.GetData().nbChunkDown * m_Map.GetData().chunkHeight];
+        m_GridBiomes = new EnumBiomes[m_Map.GetData().nbChunkRight, m_Map.GetData().nbChunkDown];
     }
 
-
-    public bool IsGenerate()
+    public void InitInitialPoint()
     {
-        return m_IsGenerate;
+        FindInitialPoint(m_Map.GetData().offsetInitialPoint);
     }
 
     public EnumBlocks[,] GetGrid()
     {
         return m_GridBlock;
+    }
+
+    public DataBlock GetBlockAt(int x, int y)
+    {
+        DataBlock block = (DataBlock)Pool.m_Instance.GetData(m_GridBlock[x, y]);
+        return block;
     }
 
     private void FindInitialPoint(int offSet)
@@ -121,11 +90,10 @@ public class DataStorageMapGrid : DataStorage
 
     public void UpdatePoint()
     {
-        DataStorageManagePlayer dataStorageManagePlayer = (DataStorageManagePlayer)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.managePlayer);
-
-        if(dataStorageManagePlayer != null)
+       Vector3 pos = GameManager.m_Instance.GetCurrPlayerPos();
+        if(pos != Vector3.zero)
         {
-            SetPoint(dataStorageManagePlayer.GetPlayerPos());
+            SetPoint(pos);
         }
     }
 
@@ -152,7 +120,7 @@ public class DataStorageMapGrid : DataStorage
     {
         Vector3Int localPos = ConvertWorldToCell(pos);
 
-        EnumBiomes currBiome = m_GridBiomes[localPos.x / m_GlobalDataMap.chunkWidth, localPos.y / m_GlobalDataMap.chunkHeight];
+        EnumBiomes currBiome = m_GridBiomes[localPos.x / m_Map.GetData().chunkWidth, localPos.y / m_Map.GetData().chunkHeight];
         DataBiome dataBiom = (DataBiome)Pool.m_Instance.GetData(currBiome);
 
         EnumBlocks blockBackground = dataBiom.biomeBlocks[dataBiom.biomeBlocks.Count - 1].block;
@@ -164,7 +132,7 @@ public class DataStorageMapGrid : DataStorage
         }
 
         m_GridBlock[localPos.x, localPos.y] = block;
-        m_dataStorageMapView.UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
+        m_Map.GetView().UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
 
         return true;
     }
@@ -173,7 +141,7 @@ public class DataStorageMapGrid : DataStorage
     {
         Vector3Int localPos = ConvertWorldToCell(pos);
 
-        EnumBiomes currBiome = m_GridBiomes[localPos.x / m_GlobalDataMap.chunkWidth, localPos.y / m_GlobalDataMap.chunkHeight];
+        EnumBiomes currBiome = m_GridBiomes[localPos.x / m_Map.GetData().chunkWidth, localPos.y / m_Map.GetData().chunkHeight];
         DataBiome dataBiom = (DataBiome)Pool.m_Instance.GetData(currBiome);
 
         EnumBlocks oldBlock = m_GridBlock[localPos.x, localPos.y];
@@ -185,13 +153,11 @@ public class DataStorageMapGrid : DataStorage
         }
 
         m_GridBlock[localPos.x, localPos.y] = dataBiom.biomeBlocks[dataBiom.biomeBlocks.Count - 1].block;
-        m_dataStorageMapView.UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
-
-        DataStorageManageResource dataStorageManageResource = (DataStorageManageResource)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageResource);
+        m_Map.GetView().UpdateCase(new Vector2Int(localPos.x, localPos.y), oldBlock);
 
         Vector3 posBlockInstance = pos;
         posBlockInstance.z = -2;
-        dataStorageManageResource.InstanciateResourceInWorldAt(oldBlock, posBlockInstance, Vector2.zero, 1);
+        GameManager.m_Instance.InstanciateResourceInWorldAt(oldBlock, posBlockInstance, Vector2.zero, 1);
 
         return true;
     }

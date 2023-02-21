@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DataStoragePlayerEquip : DataStorage
 {
-    private DataStorageManageUI m_DataStorageManageUI;
     private DataStoragePlayerStat m_DataStoragePlayerStat;
 
     private Inventory m_InventoryEquip;
@@ -28,33 +27,33 @@ public class DataStoragePlayerEquip : DataStorage
 
         m_IndexEquip = -1;
 
-        //ajoute la state du UI player equip
-        m_DataStorageManageUI = (DataStorageManageUI)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.manageUI);
-        m_DataStorageManageUI?.AddCurrDataStorageUI(EnumStatesUI.playerEquipUI);
+        InitUI();
     }
 
     public override void End()
     {
-        m_DataStorageManageUI?.PopCurrStateUI(EnumStatesUI.playerEquipUI);
+        UI.m_Instance.GetUIPlayerEquip()?.CloseUI();
     }
 
     public void InitUI()
-    {   
-        for(int i = 0; i < m_InventoryEquipSecondary.GetInventorySize() - 1; i++)
+    {
+        UI.m_Instance.GetUIPlayerEquip().InitUI();
+
+        for (int i = 0; i < m_InventoryEquipSecondary.GetInventorySize() - 1; i++)
         {
-            m_DataStorageManageUI.AddSlotInventoryEquip();
+            UI.m_Instance.GetUIPlayerEquip().AddSlot();
         }
 
         for (int i = 0; i < m_InventoryEquip.GetInventorySize(); i++)
         {
             InventoryCase temp = m_InventoryEquip.GetCase(i);
-            m_DataStorageManageUI.UpdateCaseAtInventoryEquip(i, temp);
+            UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(i, temp);
         }
 
         for (int i = 0; i < m_InventoryEquipSecondary.GetInventorySize(); i++)
         {
             InventoryCase temp = m_InventoryEquipSecondary.GetCase(i);
-            m_DataStorageManageUI.UpdateCaseAtInventoryEquip(i + 2, temp);
+            UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(i + 2, temp);
         }
     }
 
@@ -74,7 +73,7 @@ public class DataStoragePlayerEquip : DataStorage
             m_InventoryEquipSecondary.SetCase(index - 2, newCase);
         }
 
-        m_DataStorageManageUI.UpdateCaseAtInventoryEquip(index, newCase);
+        UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(index, newCase);
     }
 
     public InventoryCase PopCase(int index)
@@ -157,7 +156,7 @@ public class DataStoragePlayerEquip : DataStorage
             return currResource;
         }
         m_InventoryEquip.SetCase(m_IndexEquip, inventoryCase);
-        m_DataStorageManageUI.UpdateCaseAtInventoryEquip(m_IndexEquip, inventoryCase);
+        UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(m_IndexEquip, inventoryCase);
         return currResource;
     }
 
@@ -167,7 +166,7 @@ public class DataStoragePlayerEquip : DataStorage
 
         if(index != -1)
         {
-            m_DataStorageManageUI.UpdateCaseAtInventoryEquip(index + 2, m_InventoryEquipSecondary.GetCase(index));
+            UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(index + 2, m_InventoryEquipSecondary.GetCase(index));
             return true;
         }
         return false;

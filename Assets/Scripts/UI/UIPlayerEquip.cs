@@ -3,42 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DataStorageUIPlayerEquip : DataStorage
+public class UIPlayerEquip
 {
+    private UI m_UI;
+
     private GameObject m_UIPlayerEquip;
 
     private List<Transform> m_Slots;
 
-    public DataStorageUIPlayerEquip(StateMachine stateMachine) : base(stateMachine)
+    public UIPlayerEquip(UI ui)
     {
+        m_UI = ui;
 
+        m_UIPlayerEquip = GameObject.Find("UIPlayerEquip");
+
+        m_Slots = new List<Transform>();
+        UpdateListSlot();
     }
 
-    public override void OnInit()
+    public void InitUI()
     {
-        m_Slots = new List<Transform>();
-
-        Canvas canvas = m_StateMachine.GetComponentInChildren<Canvas>();
-        for(int i = 0; i < canvas.transform.childCount; i++)
-        {
-            if(canvas.transform.GetChild(i).name == "UIPlayerEquip")
-            {
-                m_UIPlayerEquip = canvas.transform.GetChild(i).gameObject;
-                break;
-            }
-        }
-
-        UpdateListSlot();
-
-        DataStorageManagePlayer dataStorageManagePlayer = (DataStorageManagePlayer)StateMachineManager.m_Instance.GetDataStorage(EnumStatesManager.managePlayer);
-        dataStorageManagePlayer.InitEquipUI();
-
         m_UIPlayerEquip?.SetActive(true);
     }
 
-    public override void End()
+    public void CloseUI()
     {
-        m_UIPlayerEquip?.SetActive(false);
+        if (m_UIPlayerEquip == null) return;
+        m_UIPlayerEquip.SetActive(false);
     }
     
     //ajoute une slot dans le UI

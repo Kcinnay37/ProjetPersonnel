@@ -32,4 +32,6 @@ public class DataPlayer : ScriptableObject
     public int baseDamage;
     public int baseAttackSpeed;
     public int baseDamageBlock;
+
+    public float blockDropDistance;
 }

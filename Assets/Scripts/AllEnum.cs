@@ -1,5 +1,6 @@
 public enum EnumAudios
 {
+
 }
 
 public enum EnumBiomes
@@ -32,10 +33,12 @@ public enum EnumBlocks
 
 public enum EnumConsumables
 {
+
 }
 
 public enum EnumEquipements
 {
+
 }
 
 public enum EnumManagers
@@ -51,10 +54,12 @@ public enum EnumMaps
 
 public enum EnumMonster
 {
+
 }
 
 public enum EnumNPCs
 {
+
 }
 
 public enum EnumPlayers
@@ -113,7 +118,7 @@ public enum EnumTools
 
 public enum EnumUI
 {
-    cellUI,
+    blockUI,
     content,
     slot,
     UIGame,
@@ -121,4 +126,5 @@ public enum EnumUI
 
 public enum EnumVFXs
 {
+
 }
