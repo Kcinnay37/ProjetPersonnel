@@ -63,6 +63,11 @@ public class EventManager
         Func<Dictionary<string, object>, object> currEvent;
         if (m_Instance.m_EventDictionary.TryGetValue(eventName, out currEvent))
         {
+            if(currEvent == null)
+            {
+                return returnValue;
+            }
+
             foreach(Func<Dictionary<string, object>, object> function in currEvent.GetInvocationList())
             {
                 returnValue.Add(function(parametre));

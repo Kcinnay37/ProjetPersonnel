@@ -61,7 +61,7 @@ public class UIPlayerEquip
         DataResource resource = (DataResource)Pool.m_Instance.GetData(inventoryCase.resource);
 
         m_Slots[index].GetChild(0).GetComponent<Image>().sprite = resource.image;
-        m_Slots[index].GetChild(0).GetChild(0).GetComponent<Text>().text = inventoryCase.currNb.ToString();
+        m_Slots[index].GetChild(0).GetChild(1).GetComponent<Text>().text = inventoryCase.currNb.ToString();
 
         if(resource.image == null || inventoryCase.currNb == 0)
         {

@@ -162,7 +162,15 @@ public class DataStoragePlayerEquip : DataStorage
 
     public bool AddRessource(object resource)
     {
-        int index = m_InventoryEquipSecondary.AddRessource(resource);
+        int index = m_InventoryEquip.IncrementResource(resource);
+
+        if (index != -1)
+        {
+            UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(index, m_InventoryEquip.GetCase(index));
+            return true;
+        }
+
+        index = m_InventoryEquipSecondary.AddRessource(resource);
 
         if(index != -1)
         {

@@ -84,7 +84,47 @@ public class StatePlayerControllerMovement : State
 
     private bool CheckCanJump()
     {
-        return true;
+        Vector2 playerPos = m_StateMachine.transform.position;
+
+        Vector2 pos1 = playerPos;
+        
+
+        Vector2 pos2 = playerPos;
+        
+        if(m_PlayerDir == 1)
+        {
+            pos1.x -= 0.34f;
+            pos2.x += 0.25f;
+        }
+        else
+        {
+            pos1.x += 0.34f;
+            pos2.x -= 0.25f;
+        }
+
+        RaycastHit2D[] hit1 = Physics2D.RaycastAll(pos1, Vector2.down, 0.1f);
+        RaycastHit2D[] hit2 = Physics2D.RaycastAll(pos2, Vector2.down, 0.1f);
+
+        Debug.DrawRay(pos1, Vector2.down * 0.1f);
+        Debug.DrawRay(pos2, Vector2.down * 0.1f);
+
+        foreach (RaycastHit2D hits in hit1)
+        {
+            if (hits.transform.CompareTag("Environement"))
+            {
+                return true;
+            }
+        }
+
+        foreach (RaycastHit2D hits in hit2)
+        {
+            if (hits.transform.CompareTag("Environement"))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public int GetPlayerDir()

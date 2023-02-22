@@ -84,7 +84,9 @@ public class ResourceInWorld : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("ResourceCantTake");
         m_InitialVelocityForce = Vector2.zero;
 
-        if(m_CoroutineCanCollect != null)
+        EventManager.StopListening("CheckResourceInGround", CheckResourceInGround);
+
+        if (m_CoroutineCanCollect != null)
         {
             StopCoroutine(m_CoroutineCanCollect);
         }
@@ -141,7 +143,6 @@ public class ResourceInWorld : MonoBehaviour
 
         Vector2Int currPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(transform.position);
         EnumBlocks currBlock = Map.m_Instance.GetGrid().GetGrid()[currPos.x, currPos.y];
-
 
         if(!backGroundBlockDictionary.ContainsKey(currBlock))
         {

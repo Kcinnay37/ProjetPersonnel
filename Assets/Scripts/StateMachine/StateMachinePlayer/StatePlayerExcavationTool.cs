@@ -106,8 +106,6 @@ public class StatePlayerExcavationTool : StateRessource
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(firstPos, dir, m_DataTool.distance);
 
-        
-
         foreach (RaycastHit2D hit in hits)
         {
             if(hit.transform.CompareTag("Environement"))

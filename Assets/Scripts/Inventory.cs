@@ -86,6 +86,26 @@ public class Inventory : MonoBehaviour
         return -1;
     }
 
+    public int IncrementResource(object dataResource)
+    {
+        for (int i = 0; i < GetInventorySize(); i++)
+        {
+            if (m_Inventory[i].resource.Equals(dataResource))
+            {
+                DataResource resource = (DataResource)Pool.m_Instance.GetData(dataResource);
+                if (m_Inventory[i].currNb < resource.maxStack)
+                {
+                    InventoryCase temp = m_Inventory[i];
+                    temp.currNb++;
+                    m_Inventory[i] = temp;
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+    }
+
     public bool IncrementCountAt(int index)
     {
         InventoryCase temp = m_Inventory[index];

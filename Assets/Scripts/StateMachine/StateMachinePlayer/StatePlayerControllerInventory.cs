@@ -55,7 +55,7 @@ public class StatePlayerControllerInventory : State
 
     public override void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             CollectResource(EnumTools.pickaxe);
         }
@@ -348,7 +348,6 @@ public class StatePlayerControllerInventory : State
                 int paramIndex = index;
                 Action<InventoryCase> setCaseAction = (caseItem) => m_DataStoragePlayerEquip.SetCase(paramIndex, caseItem);
                 Func<InventoryCase> getCaseFunc = () => m_DataStoragePlayerEquip.GetCase(paramIndex);
-
                 if (pop)
                 {
                     if (primaryKey)
