@@ -54,7 +54,7 @@ public enum EnumMaps
 
 public enum EnumMonster
 {
-
+    zombie
 }
 
 public enum EnumNPCs
@@ -70,6 +70,7 @@ public enum EnumPlayers
 public enum EnumSpecialResources
 {
     none,
+    resourceInWorld
 }
 
 public enum EnumStatesManager
@@ -87,6 +88,12 @@ public enum EnumStatesMap
     view,
 }
 
+public enum EnumStatesMonster
+{
+    brain,
+    movement
+}
+
 public enum EnumStatesPlayer
 {
     backpack,
@@ -95,6 +102,7 @@ public enum EnumStatesPlayer
     controllerMovement,
     equip,
     excavation,
+    meleeWeapon,
     none,
     spawn,
     stat,

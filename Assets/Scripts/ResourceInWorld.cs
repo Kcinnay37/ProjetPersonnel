@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class ResourceInWorld : MonoBehaviour
 {
-    private const float m_TimeCanCollect = 0.5f;
-    private const float m_TimeToLive = 60f;
-    private const float m_TimeCheckDistance = 0.2f;
-    private const float m_DistanceToDelete = 20f;
+    private DataResourceInWorld m_Data;
 
     private bool m_Equip;
 
     private Coroutine m_CoroutineCanCollect;
-    private Coroutine m_CoroutineLive;
-    private Coroutine m_CoroutineCheckDistance;
 
     private Vector2 m_InitialVelocityForce;
 
@@ -31,6 +26,8 @@ public class ResourceInWorld : MonoBehaviour
 
     private void OnEnable()
     {
+        m_Data = (DataResourceInWorld)Pool.m_Instance.GetData(EnumSpecialResources.resourceInWorld);
+
         if (!m_Equip)
         {
             BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
@@ -48,10 +45,9 @@ public class ResourceInWorld : MonoBehaviour
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             GetComponent<Rigidbody2D>().AddForce(m_InitialVelocityForce);
             m_CoroutineCanCollect = StartCoroutine(CoroutineSpawn());
-            m_CoroutineLive = StartCoroutine(CoroutineLive());
-            m_CoroutineCheckDistance = StartCoroutine(CoroutineCheckDistance());
 
             EventManager.StartListening("CheckResourceInGround", CheckResourceInGround);
+            EventManager.StartListening("CheckResourceDistanceToPlayer", CheckDistanceToPlayer);
 
         }
         else
@@ -85,18 +81,11 @@ public class ResourceInWorld : MonoBehaviour
         m_InitialVelocityForce = Vector2.zero;
 
         EventManager.StopListening("CheckResourceInGround", CheckResourceInGround);
+        EventManager.StopListening("CheckResourceDistanceToPlayer", CheckDistanceToPlayer);
 
         if (m_CoroutineCanCollect != null)
         {
             StopCoroutine(m_CoroutineCanCollect);
-        }
-        if (m_CoroutineLive != null)
-        {
-            StopCoroutine(m_CoroutineLive);
-        }
-        if (m_CoroutineCheckDistance != null)
-        {
-            StopCoroutine(m_CoroutineLive);
         }
     }
 
@@ -104,37 +93,17 @@ public class ResourceInWorld : MonoBehaviour
     {
         if(collision.transform.CompareTag("Player"))
         {
-            if(GameManager.m_Instance.CurrPlayerCollectResource(m_DataType))
+            if(PlayerManager.m_Instance.CurrPlayerCollectResource(m_DataType))
             {
-                Pool.m_Instance?.RemoveObject(gameObject, m_InstanceType);
+                ResourceManager.m_Instance.RemoveResource(this);
             }
         }
     }
 
     IEnumerator CoroutineSpawn()
     {
-        yield return new WaitForSeconds(m_TimeCanCollect);
+        yield return new WaitForSeconds(m_Data.timeCanCollect);
         gameObject.layer = LayerMask.NameToLayer("ResourceCanTake");
-    }
-
-    IEnumerator CoroutineLive()
-    {
-        yield return new WaitForSeconds(m_TimeToLive);
-        Pool.m_Instance?.RemoveObject(gameObject, m_InstanceType);
-    }
-
-    IEnumerator CoroutineCheckDistance()
-    {
-        while(true)
-        {
-            yield return new WaitForSeconds(m_TimeCheckDistance);
-            Vector3 playerPos = GameManager.m_Instance.GetCurrPlayerPos();
-            float distance = Vector3.Distance(transform.position, playerPos);
-            if (distance >= m_DistanceToDelete)
-            {
-                Pool.m_Instance?.RemoveObject(gameObject, m_InstanceType);
-            }
-        }
     }
 
     object CheckResourceInGround(Dictionary<string, object> parametres)
@@ -146,9 +115,28 @@ public class ResourceInWorld : MonoBehaviour
 
         if(!backGroundBlockDictionary.ContainsKey(currBlock))
         {
-            Pool.m_Instance.RemoveObject(gameObject, m_InstanceType);
+            ResourceManager.m_Instance.RemoveResource(this);
         }
 
         return null;
+    }
+
+    object CheckDistanceToPlayer(Dictionary<string, object> parametres)
+    {
+        Vector3 playerPos = (Vector3)parametres["playerPos"];
+        float maxDist = (float)parametres["maxDist"];
+
+        float distance = Vector3.Distance(transform.position, playerPos);
+        if (distance >= maxDist)
+        {
+            ResourceManager.m_Instance.UnActiveResource(this);
+        }
+
+        return null;
+    }
+
+    public object GetInstanceType()
+    {
+        return m_InstanceType;
     }
 }

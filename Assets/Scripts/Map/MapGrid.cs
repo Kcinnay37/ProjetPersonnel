@@ -67,6 +67,11 @@ public class MapGrid
         }
     }
 
+    public EnumBiomes GetBiomeAtCurrPoint()
+    {
+        return m_GridBiomes[m_CurrPoint.x / m_Map.GetData().chunkWidth, m_CurrPoint.y / m_Map.GetData().chunkHeight];
+    }
+
     public void SetPoint(Vector3 worldPos)
     {
         if (worldPos == Vector3.zero) return;
@@ -81,6 +86,24 @@ public class MapGrid
         return m_CurrPoint;
     }
 
+    public Dictionary<EnumBlocks, EnumBlocks> GetBackGroundDict()
+    {
+        Dictionary<EnumBlocks, EnumBlocks> backGroundBlockDictionary = new Dictionary<EnumBlocks, EnumBlocks>();
+        DataMap dataMap = Map.m_Instance.GetData();
+
+        foreach (DataMap.Biome biome in dataMap.mapBiomes)
+        {
+            DataBiome dataBiome = (DataBiome)Pool.m_Instance.GetData(biome.dataBiome);
+
+            if (!backGroundBlockDictionary.ContainsKey(dataBiome.biomeBlocks[dataBiome.biomeBlocks.Count - 1].block))
+            {
+                backGroundBlockDictionary.Add(dataBiome.biomeBlocks[dataBiome.biomeBlocks.Count - 1].block, dataBiome.biomeBlocks[dataBiome.biomeBlocks.Count - 1].block);
+            }
+        }
+        return backGroundBlockDictionary;
+    }
+
+
     public Vector3 GetPointToWorld()
     {
         DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_GridBlock[0, 0]);
@@ -90,7 +113,7 @@ public class MapGrid
 
     public void UpdatePoint()
     {
-       Vector3 pos = GameManager.m_Instance.GetCurrPlayerPos();
+       Vector3 pos = PlayerManager.m_Instance.GetCurrPlayerPos();
         if(pos != Vector3.zero)
         {
             SetPoint(pos);
@@ -157,8 +180,10 @@ public class MapGrid
 
         Vector3 posBlockInstance = pos;
         posBlockInstance.z = -2;
-        GameManager.m_Instance.InstanciateResourceInWorldAt(oldBlock, posBlockInstance, Vector2.zero, 1);
+        ResourceManager.m_Instance.InstanciateResourceInWorldAt(oldBlock, posBlockInstance, Vector2.zero, 1);
 
         return true;
     }
 }
+
+

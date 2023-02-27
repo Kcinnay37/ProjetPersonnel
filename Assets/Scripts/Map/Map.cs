@@ -9,6 +9,7 @@ public class Map : MonoBehaviour
     private MapGrid m_MapGrid;
     private MapGenerate m_MapGenerate;
     private MapView m_MapView;
+    private MapPathfinding m_MapPathfinding;
 
     public static Map m_Instance;
 
@@ -21,6 +22,12 @@ public class Map : MonoBehaviour
         m_MapGenerate = new MapGenerate(this);
         m_MapView = new MapView(this);
         m_MapGrid = new MapGrid(this);
+        m_MapPathfinding = new MapPathfinding(this);
+    }
+
+    private void Start()
+    {
+        GenerateMap();
     }
 
     public void GenerateMap()
@@ -50,5 +57,10 @@ public class Map : MonoBehaviour
     public DataMap GetData()
     {
         return (DataMap)Pool.m_Instance.GetData(m_DataMap);
+    }
+
+    public MapPathfinding GetPathfinding()
+    {
+        return m_MapPathfinding;
     }
 }

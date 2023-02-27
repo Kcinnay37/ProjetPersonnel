@@ -123,6 +123,98 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &309651568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 309651571}
+  - component: {fileID: 309651570}
+  m_Layer: 0
+  m_Name: ResourceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &309651570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309651568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85869a3683dfee41bc9a34f6ab60ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TimeCheckResourceInGround: 0.1
+  m_TimeCheckDistanceToPlayer: 0.2
+  m_DistanceToPlayerStopPhysique: 20
+  m_TimeToLive: 120
+--- !u!4 &309651571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 309651568}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &771349793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 771349795}
+  - component: {fileID: 771349794}
+  m_Layer: 0
+  m_Name: PlayerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &771349794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771349793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25bf473b7b130d2499e6bb470641d62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: 0
+  m_WaitForSpawn: 0.5
+--- !u!4 &771349795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771349793}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1174770280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -232,7 +324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3551913678000367761, guid: 3646e432a969b77458f28a6b592a3cd9, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3551913678000367761, guid: 3646e432a969b77458f28a6b592a3cd9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -399,7 +491,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1689296140
 GameObject:
@@ -492,8 +584,12 @@ MonoBehaviour:
     value: {fileID: 11400000, guid: 937d0d5c0f5b77f4d8717bc8527a8c49, type: 2}
   m_InstanceNPC: []
   m_DataNPC: []
-  m_InstanceMonster: []
-  m_DataMonster: []
+  m_InstanceMonster:
+  - type: 0
+    value: {fileID: 6000315670688354917, guid: dccda948de4d46047b3e55a4bd622659, type: 3}
+  m_DataMonster:
+  - type: 0
+    value: {fileID: 11400000, guid: 7c28482ef3734a1409bc933feb5d443b, type: 2}
   m_InstanceUI:
   - type: 0
     value: {fileID: 8323517588953076913, guid: 7772679717238da41883dc548276d95d, type: 3}
@@ -509,9 +605,13 @@ MonoBehaviour:
   m_InstanceTool:
   - type: 1
     value: {fileID: 8384671595252760698, guid: 9b8a78a2b15fffc4fb7e026b579730bb, type: 3}
+  - type: 2
+    value: {fileID: 1049203296283054317, guid: d7a06836a66020540b83b81778a7ca15, type: 3}
   m_DataTool:
   - type: 1
     value: {fileID: 11400000, guid: 25d699bea0cd7b144ab50f302b0a64fa, type: 2}
+  - type: 2
+    value: {fileID: 11400000, guid: 36810af257f872145ac09223c09fd7e1, type: 2}
   m_InstanceConsumable: []
   m_DataConsumable: []
   m_InstanceEquipement: []
@@ -520,6 +620,8 @@ MonoBehaviour:
   m_DataSpecialResource:
   - type: 0
     value: {fileID: 11400000, guid: 570e04baa230c314b8f18f4b7511ab73, type: 2}
+  - type: 1
+    value: {fileID: 11400000, guid: 1ce97b8f30a650241822f861a3cef374, type: 2}
   m_InstanceVFX: []
   m_DataVFX: []
   m_InstanceAudio: []
@@ -537,7 +639,107 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1965220255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1965220258}
+  - component: {fileID: 1965220257}
+  m_Layer: 0
+  m_Name: MonsterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1965220257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965220255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a33aeb8e2febad24d83e1a73ecc84e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomeDifficulties:
+  - biome: 0
+    maxStrength: 4
+    monsterSpawn:
+    - monster: 0
+      typeSpawn: 0
+      strength: 2
+      rarity: 1000
+  - biome: 1
+    maxStrength: 6
+    monsterSpawn:
+    - monster: 0
+      typeSpawn: 0
+      strength: 2
+      rarity: 1000
+  - biome: 4
+    maxStrength: 8
+    monsterSpawn:
+    - monster: 0
+      typeSpawn: 0
+      strength: 2
+      rarity: 1000
+  - biome: 5
+    maxStrength: 10
+    monsterSpawn:
+    - monster: 0
+      typeSpawn: 0
+      strength: 2
+      rarity: 1000
+  - biome: 6
+    maxStrength: 10
+    monsterSpawn:
+    - monster: 0
+      typeSpawn: 0
+      strength: 2
+      rarity: 1000
+  - biome: 2
+    maxStrength: 12
+    monsterSpawn:
+    - monster: 0
+      typeSpawn: 0
+      strength: 2
+      rarity: 1000
+  - biome: 3
+    maxStrength: 12
+    monsterSpawn:
+    - monster: 0
+      typeSpawn: 0
+      strength: 2
+      rarity: 1000
+  m_DistanceSpawn: 18
+  m_OffsetViewPlayer: 10
+  m_TimeCheckForSpawn: 0.2
+  m_TimeToCheckDistanceToPlayer: 0.1
+  m_DistanceToPlayerStopPhysique: 18
+  m_TimeToLiveDisabled: 120
+  m_TimeWaitToStart: 5
+--- !u!4 &1965220258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965220255}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &855563613498422934
 PrefabInstance:
@@ -666,7 +868,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6551019327868616624, guid: 102a9122683df5b4f820d368c05dd1ca, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6551019327868616624, guid: 102a9122683df5b4f820d368c05dd1ca, type: 3}
       propertyPath: m_LocalPosition.x
@@ -727,7 +929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8808192072722735762, guid: 0a7c276714134874990473d93df8d5e3, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8808192072722735762, guid: 0a7c276714134874990473d93df8d5e3, type: 3}
       propertyPath: m_LocalPosition.x

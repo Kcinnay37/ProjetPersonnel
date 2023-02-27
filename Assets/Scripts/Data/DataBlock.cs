@@ -24,6 +24,7 @@ public class DataBlock : DataResource
     public TileBase tile;
     public EnumBlocks instanceType;
     public EnumBlocks dataType;
+    public float coneRadius;
 
     public override object GetInstanceType() { return instanceType; }
     public override object GetDataType() { return dataType; }
