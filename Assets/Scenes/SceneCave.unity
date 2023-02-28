@@ -672,7 +672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   biomeDifficulties:
   - biome: 0
-    maxStrength: 4
+    maxStrength: 0
     monsterSpawn:
     - monster: 0
       typeSpawn: 0

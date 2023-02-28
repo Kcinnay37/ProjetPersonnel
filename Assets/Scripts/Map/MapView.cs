@@ -210,6 +210,11 @@ public class MapView
         }
     }
 
+    public bool CheckCellIsDraw(Vector2Int pos)
+    {
+        return m_DrawCase.ContainsKey(pos);
+    }
+
     public void DrawAllGrid()
     {
         for (int x = 0; x < m_Map.GetGrid().GetGrid().GetLength(0); x++)

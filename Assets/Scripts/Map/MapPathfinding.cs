@@ -13,7 +13,7 @@ public class MapPathfinding
 
     public struct Node
     {
-        public Node(int cost, Vector2Int pos, Vector2Int from, int jumpHeight, int dropHeight, int airMove)
+        public Node(int cost, Vector2Int pos, Vector2Int from, int jumpHeight, int dropHeight, int airMove, bool delete)
         {
             currCost = cost;
             position = pos;
@@ -23,6 +23,8 @@ public class MapPathfinding
             currDropHeight = dropHeight;
 
             currAirMove = airMove;
+
+            deleteAfter = delete;
         }
 
         public int currCost;
@@ -34,6 +36,8 @@ public class MapPathfinding
         public int currDropHeight;
 
         public int currAirMove;
+
+        public bool deleteAfter;
     }
 
     public Dictionary<Vector2Int, Node> GetAllMovePossibility(Vector2Int leftBotObject, Vector2Int sizeObject, int jumpHeight, int airMoveSpeed)
@@ -44,7 +48,7 @@ public class MapPathfinding
         Dictionary<Vector2Int, Node> nodes = new Dictionary<Vector2Int, Node>();
 
         List<Node> nodeToGo = new List<Node>();
-        nodeToGo.Add(new Node(0, leftBotObject, Vector2Int.zero, 0, 0, 0));
+        nodeToGo.Add(new Node(0, leftBotObject, Vector2Int.zero, 0, 0, 0, false));
 
         while (true)
         {
@@ -57,6 +61,12 @@ public class MapPathfinding
             //prend le prochain movement
             Node currNode = nodeToGo[0];
             nodeToGo.RemoveAt(0);
+
+            //verifi si la node est rendu a l'ecran
+            if (!Map.m_Instance.GetView().CheckCellIsDraw(currNode.position))
+            {
+                continue;
+            }
 
             //si le movement existe deja regarde sont cost et le change si il a a etre change
             if (nodes.ContainsKey(currNode.position))
@@ -124,68 +134,134 @@ public class MapPathfinding
                 currNode.currJumpHeight = 0;
                 currNode.currDropHeight = 0;
                 currNode.currAirMove = 0;
+                currNode.deleteAfter = false;
                 nodes[currNode.position] = currNode;
             }
 
-            //si il peut aller au bot
-            if(goBot)
+            Vector2Int pathfrom = Vector2Int.zero;
+            if (currNode.deleteAfter)
             {
-                if (currNode.currDropHeight == 0 && currNode.currJumpHeight == 0)
-                {
-                    goTop = false;
-                    currNode.currAirMove++;
-                    nodes[currNode.position] = currNode;
-                }
-
-                //ajoute un node en bas
-                nodeToGo.Add(new Node(currNode.currCost + 2, new Vector2Int(currNode.position.x, currNode.position.y - 1), currNode.position, 0, currNode.currDropHeight + 1, 0));
+                pathfrom = currNode.pathfrom;
+            }
+            else
+            {
+                pathfrom = currNode.position;
             }
 
-            //si il peut aller au top
-            if(goTop)
+            //si c'est le premier trou qu'il tombe
+            if (goBot && currNode.currDropHeight == 0 && currNode.currJumpHeight == 0)
             {
-                //si il peut monter
-                if(currNode.currJumpHeight < jumpHeight && currNode.currDropHeight == 0)
-                {
-                    //ajoute un node
-                    nodeToGo.Add(new Node(currNode.currCost + 2, new Vector2Int(currNode.position.x, currNode.position.y + 1), currNode.position, currNode.currJumpHeight + 1, 0, 0));
-                }
+                goTop = false;
+                currNode.currAirMove = airMoveSpeed + 1;
+                currNode.deleteAfter = true;
+                pathfrom = currNode.pathfrom;
+                nodes[currNode.position] = currNode;
             }
+
+
 
             //si il peut aller a droit
-            if(goRight)
-            {
-                //si il est dans les air
-                if(currNode.currJumpHeight != 0 || currNode.currDropHeight != 0 || currNode.currAirMove != 0)
-                {
-                    if(currNode.currAirMove <= airMoveSpeed)
-                    {
-                        nodeToGo.Add(new Node(currNode.currCost + 2, new Vector2Int(currNode.position.x + 1, currNode.position.y), currNode.position, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1));
-                    }
-                }
-                //si il est sur le sol
-                else
-                {
-                    nodeToGo.Add(new Node(currNode.currCost + 1, new Vector2Int(currNode.position.x + 1, currNode.position.y), currNode.position, 0, 0, 0));
-                }
-            }
-
-            //si il peut peut aller a gauche
-            if(goLeft)
+            if (goRight)
             {
                 //si il est dans les air
                 if (currNode.currJumpHeight != 0 || currNode.currDropHeight != 0 || currNode.currAirMove != 0)
                 {
                     if (currNode.currAirMove <= airMoveSpeed)
                     {
-                        nodeToGo.Add(new Node(currNode.currCost + 2, new Vector2Int(currNode.position.x - 1, currNode.position.y), currNode.position, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1));
+                        Vector2Int pos = new Vector2Int(currNode.position.x + 1, currNode.position.y);
+                        if (!nodes.ContainsKey(pos) || nodes[pos].currCost > currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight)
+                        {
+                            if (currNode.currAirMove == airMoveSpeed)
+                            {
+                                nodeToGo.Add(new Node(currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight, pos, pathfrom, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1, true));
+                            }
+                            else
+                            {
+                                nodeToGo.Add(new Node(currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight, pos, pathfrom, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1, false));
+                            }
+                        }
                     }
                 }
                 //si il est sur le sol
                 else
                 {
-                    nodeToGo.Add(new Node(currNode.currCost + 1, new Vector2Int(currNode.position.x - 1, currNode.position.y), currNode.position, 0, 0, 0));
+                    Vector2Int pos = new Vector2Int(currNode.position.x + 1, currNode.position.y);
+                    if (!nodes.ContainsKey(pos) || nodes[pos].currCost > currNode.currCost + 1)
+                    {
+                        nodeToGo.Add(new Node(currNode.currCost + 1, pos, pathfrom, 0, 0, 0, false));
+                    }
+
                 }
+            }
+
+            //si il peut peut aller a gauche
+            if (goLeft)
+            {
+                //si il est dans les air
+                if (currNode.currJumpHeight != 0 || currNode.currDropHeight != 0 || currNode.currAirMove != 0)
+                {
+                    if (currNode.currAirMove <= airMoveSpeed)
+                    {
+                        Vector2Int pos = new Vector2Int(currNode.position.x - 1, currNode.position.y);
+                        if (!nodes.ContainsKey(pos) || nodes[pos].currCost > currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight)
+                        {
+                            if (currNode.currAirMove == airMoveSpeed)
+                            {
+                                nodeToGo.Add(new Node(currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight, pos, pathfrom, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1, true));
+                            }
+                            else
+                            {
+                                nodeToGo.Add(new Node(currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight, pos, pathfrom, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1, false));
+                            }
+
+                        }
+
+                    }
+                }
+                //si il est sur le sol
+                else
+                {
+                    Vector2Int pos = new Vector2Int(currNode.position.x - 1, currNode.position.y);
+                    if (!nodes.ContainsKey(pos) || nodes[pos].currCost > currNode.currCost + 1)
+                    {
+                        nodeToGo.Add(new Node(currNode.currCost + 1, pos, pathfrom, 0, 0, 0, false));
+                    }
+
+                }
+            }
+
+            //si il peut aller au bot
+            if (goBot)
+            {
+                //ajoute un node en bas
+                Vector2Int pos = new Vector2Int(currNode.position.x, currNode.position.y - 1);
+                if (!nodes.ContainsKey(pos) || nodes[pos].currCost > currNode.currCost + 1)
+                {
+                    nodeToGo.Add(new Node(currNode.currCost + 5, pos, pathfrom, 0, currNode.currDropHeight + 1, 0, true));
+                }
+
+            }
+
+            //si il peut aller au top
+            if (goTop)
+            {
+                //si il peut monter
+                if (currNode.currJumpHeight < jumpHeight && currNode.currDropHeight == 0)
+                {
+                    //ajoute un node
+                    Vector2Int pos = new Vector2Int(currNode.position.x, currNode.position.y + 1);
+                    if (!nodes.ContainsKey(pos) || nodes[pos].currCost > currNode.currCost + 4)
+                    {
+                        nodeToGo.Add(new Node(currNode.currCost + 5, pos, pathfrom, currNode.currJumpHeight + 1, 0, 0, true));
+                    }
+                }
+            }
+
+
+
+            if (currNode.deleteAfter)
+            {
+                nodes.Remove(currNode.position);
             }
         }
 

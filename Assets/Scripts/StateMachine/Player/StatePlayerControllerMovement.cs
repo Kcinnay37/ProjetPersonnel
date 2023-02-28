@@ -27,6 +27,14 @@ public class StatePlayerControllerMovement : State
         UpdateJump();
         UpdateAnimator();
 
+        if (Input.GetKeyDown(KeyCode.Mouse3))
+        {
+            m_StateMachine.StartCoroutine(testo());
+        }
+    }
+
+    IEnumerator testo()
+    {
         Vector3 mousePos = Input.mousePosition;
         Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
         Vector2Int localMousePos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldMousePos);
@@ -35,25 +43,25 @@ public class StatePlayerControllerMovement : State
         playerWorldPos.y += 0.1f;
         Vector2Int localPlayerPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(playerWorldPos);
 
-        if(Input.GetKeyDown(KeyCode.Mouse3))
+        
+        Dictionary<Vector2Int, MapPathfinding.Node> posiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPlayerPos, new Vector2Int(1, 2), 1, 2);
+
+
+        if (posiblePath.ContainsKey(localMousePos))
         {
-            Dictionary<Vector2Int, MapPathfinding.Node> posiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPlayerPos, new Vector2Int(1, 2), 1, 1);
-            
-
-            if(posiblePath.ContainsKey(localMousePos))
+            Debug.Log("test");
+            MapPathfinding.Node node = posiblePath[localMousePos];
+            while (!node.position.Equals(localPlayerPos))
             {
-                Debug.Log("test");
-                MapPathfinding.Node node = posiblePath[localMousePos];
-                while (!node.position.Equals(localPlayerPos))
-                {
-                    Vector3 pos = new Vector3(node.position.x, node.position.y, 0);
-                    Map.m_Instance.GetGrid().AddBlockAt(pos, EnumBlocks.rockFire);
-                    node = posiblePath[node.pathfrom];
-
-                }
+                Vector3 pos = new Vector3(node.position.x, node.position.y, 0);
+                Map.m_Instance.GetGrid().AddBlockAt(pos, EnumBlocks.rockFire);
+                node = posiblePath[node.pathfrom];
+                yield return new WaitForSeconds(0.5f);
 
             }
+
         }
+        
     }
 
     private void UpdateMove()
