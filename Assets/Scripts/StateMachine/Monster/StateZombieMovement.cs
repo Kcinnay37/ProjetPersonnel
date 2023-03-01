@@ -107,7 +107,7 @@ public class StateZombieMovement : State
     {
         if(dir.y > 0 && m_Rigidbody.velocity.y == 0)
         {
-            m_Rigidbody.AddForce(new Vector2(0, dir.y * m_GlobalDataMonster.jumpForce));
+            m_Rigidbody.AddForce(new Vector2(0, m_GlobalDataMonster.jumpForce));
         }
 
         float timer = 0;
@@ -122,7 +122,7 @@ public class StateZombieMovement : State
             }
 
             Vector2 velo = m_Rigidbody.velocity;
-            velo.x = dir.x * m_GlobalDataMonster.moveSpeed;
+            velo.x = (int)Mathf.Sign(dir.x) * m_GlobalDataMonster.moveSpeed;
             m_Rigidbody.velocity = velo;
 
             m_ZombieDir = (int)Mathf.Sign(dir.x) * 1;
