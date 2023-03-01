@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8880d3b65f828724890fd0528aaea39c, type: 3}
   m_Name: DataZombie
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 325
+  moveSpeed: 2
+  jumpForce: 3500

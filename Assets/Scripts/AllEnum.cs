@@ -91,7 +91,8 @@ public enum EnumStatesMap
 public enum EnumStatesMonster
 {
     brain,
-    movement
+    movement,
+    patrol
 }
 
 public enum EnumStatesPlayer

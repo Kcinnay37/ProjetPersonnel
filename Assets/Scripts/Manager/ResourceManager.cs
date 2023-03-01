@@ -110,7 +110,6 @@ public class ResourceManager : MonoBehaviour
         objectResource.SetActive(true);
 
         m_InstanciateResource.Add(objectResource, objectResource.GetComponent<ResourceInWorld>());
-        m_CoroutineTimeToLive.Add(objectResource.GetComponent<ResourceInWorld>(), StartCoroutine(CoroutineLive(objectResource.GetComponent<ResourceInWorld>())));
     }
 
     public void RemoveResource(ResourceInWorld resource)
@@ -140,6 +139,8 @@ public class ResourceManager : MonoBehaviour
         m_InstanciateResource.Remove(resource.gameObject);
         m_UnInstanciateResource.Add(resource.gameObject, resource.GetComponent<ResourceInWorld>());
 
+        m_CoroutineTimeToLive.Add(resource, StartCoroutine(CoroutineLive(resource)));
+
         resource.gameObject.SetActive(false);
     }
 
@@ -147,6 +148,15 @@ public class ResourceManager : MonoBehaviour
     {
         m_UnInstanciateResource.Remove(resource.gameObject);
         m_InstanciateResource.Add(resource.gameObject, resource.GetComponent<ResourceInWorld>());
+
+        if (m_CoroutineTimeToLive.ContainsKey(resource))
+        {
+            if (m_CoroutineTimeToLive[resource] != null)
+            {
+                StopCoroutine(m_CoroutineTimeToLive[resource]);
+            }
+            m_CoroutineTimeToLive.Remove(resource);
+        }
 
         resource.gameObject.SetActive(true);
     }

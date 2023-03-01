@@ -162,7 +162,7 @@ public class StatePlayerMeleeWeapon : StateRessource
             if (hit.transform.CompareTag("Enemie"))
             {
                 //attack enemie
-                Debug.Log("smash");
+                MonsterManager.m_Instance.DispawnMonster(hit.transform.gameObject);
                 break;
             }
         }

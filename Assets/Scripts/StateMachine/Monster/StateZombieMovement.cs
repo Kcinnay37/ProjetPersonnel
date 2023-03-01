@@ -10,6 +10,17 @@ public class StateZombieMovement : State
     private List<Vector2Int> m_Path;
 
     private Rigidbody2D m_Rigidbody;
+    private Animator m_Animator;
+
+    private bool m_IsArrived;
+
+    private Vector2Int m_LastDir;
+
+    private Coroutine m_CoroutineMoving;
+
+    private int m_Try;
+
+    private int m_ZombieDir = 1;
 
     public StateZombieMovement(StateMachine stateMachine) : base(stateMachine)
     {
@@ -20,23 +31,166 @@ public class StateZombieMovement : State
         m_GlobalDataMonster = (DataZombie)m_StateMachine.GetData();
 
         m_Rigidbody = m_StateMachine.GetComponent<Rigidbody2D>();
+        m_Animator = m_StateMachine.GetComponent<Animator>();
+
+        m_IsArrived = true;
+        m_PointToGo = new Vector2Int();
+        m_Path = new List<Vector2Int>();
+        m_LastDir = Vector2Int.zero;
+        m_CoroutineMoving = null;
+        m_Try = 0;
     }
 
     public override void Update()
     {
+        UpdateMove();
+
+        UpdateAnimator();
+        
         
     }
 
-    public void Move(int dir)
-    {
-        Vector2 currVelo = m_Rigidbody.velocity;
-        currVelo.x = m_GlobalDataMonster.moveSpeed * dir;
 
-        m_Rigidbody.velocity = currVelo;
+    private void UpdateMove()
+    {
+        if (!m_IsArrived)
+        {
+            if (m_Path.Count == 0 || m_Try == 2)
+            {
+                m_Try = 0;
+                m_IsArrived = true;
+                return;
+            }
+            m_PointToGo = m_Path[0];
+
+            if (m_CoroutineMoving == null)
+            {
+                Vector3 pos = m_StateMachine.transform.position;
+                Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(pos);
+                Vector2Int dir = m_PointToGo - localPos;
+
+                if (dir.Equals(Vector2Int.zero))
+                {
+                    m_Try = 0;
+                    m_Path.RemoveAt(0);
+                }
+                else
+                {
+                    m_Try++;
+                    m_CoroutineMoving = m_StateMachine.StartCoroutine(MoveAtDir(dir));
+                }
+
+            }
+        }
     }
 
-    public void Jump()
+    private void UpdateAnimator()
     {
-        m_Rigidbody.AddForce(new Vector2(0, m_GlobalDataMonster.jumpForce));
+        //rotationne le player dans la bonne direction
+        Vector3 rota = m_StateMachine.transform.localScale;
+        rota.x = m_ZombieDir;
+        m_StateMachine.transform.localScale = rota;
+
+        m_Animator.SetFloat("MoveSpeed", Mathf.Abs(m_Rigidbody.velocity.x));
+    }
+
+    private void MoveAtPoint()
+    {
+        Vector3 pos = m_StateMachine.transform.position;
+        Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(pos);
+        Vector2Int dir = m_PointToGo - localPos;
+
+        
+    }
+
+    private IEnumerator MoveAtDir(Vector2Int dir)
+    {
+        if(dir.y > 0 && m_Rigidbody.velocity.y == 0)
+        {
+            m_Rigidbody.AddForce(new Vector2(0, dir.y * m_GlobalDataMonster.jumpForce));
+        }
+
+        float timer = 0;
+        float maxTime = 1 / m_GlobalDataMonster.moveSpeed;
+
+        while(true)
+        {
+            timer += Time.deltaTime;
+            if(timer >= maxTime)
+            {
+                break;
+            }
+
+            Vector2 velo = m_Rigidbody.velocity;
+            velo.x = dir.x * m_GlobalDataMonster.moveSpeed;
+            m_Rigidbody.velocity = velo;
+
+            m_ZombieDir = (int)Mathf.Sign(dir.x) * 1;
+
+            yield return null;
+        }
+
+
+        m_CoroutineMoving = null;
+    }
+
+    public bool StartMoveRandomPath()
+    {
+        m_IsArrived = false;
+        m_Path.Clear();
+
+        //Prend un nouveau chemin
+
+        // va chercher tout les moves possible relatif a la position
+        Vector3 worldPos = m_StateMachine.transform.position;
+        worldPos.y += 0.2f;
+        Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldPos);
+
+        Dictionary<Vector2Int, MapPathfinding.Node> m_AllPossiblePath;
+        m_AllPossiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPos, new Vector2Int(1, 2), 1, 2);
+
+        //si il a assez de move possible
+        if (m_AllPossiblePath.Count > 2)
+        {
+            //va chercher une position aleatoir a aller
+            List<Vector2Int> allPos = new List<Vector2Int>(m_AllPossiblePath.Keys);
+            int index = Random.Range(0, allPos.Count);
+            Dictionary<EnumBlocks, EnumBlocks> valueCanGo = Map.m_Instance.GetGrid().GetBackGroundDict();
+            EnumBlocks[,] grid = Map.m_Instance.GetGrid().GetGrid();
+            Vector2Int dest = allPos[index];
+
+            while (valueCanGo.ContainsKey(grid[dest.x, dest.y - 1]))
+            {
+                index = Random.Range(0, allPos.Count);
+                dest = allPos[index];
+            }
+
+            if (dest.Equals(localPos))
+            {
+                return false;
+            }
+
+            //set le path
+            MapPathfinding.Node node = m_AllPossiblePath[dest];
+            while (!node.position.Equals(localPos))
+            {
+                if (!m_AllPossiblePath.ContainsKey(node.pathfrom))
+                {
+                    break;
+                }
+                m_Path.Add(node.position);
+                node = m_AllPossiblePath[node.pathfrom];
+            }
+
+            m_Path.Reverse();
+
+            return true;
+        }
+        return false;
+    }
+
+    public bool GetIsArrived()
+    {
+        return m_IsArrived;
     }
 }

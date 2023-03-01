@@ -16,6 +16,7 @@ public class StateMachineZombie : StateMachine
     {
         AddNewState(EnumStatesMonster.brain, new StateZombieBrain(this));
         AddNewState(EnumStatesMonster.movement, new StateZombieMovement(this));
+        AddNewState(EnumStatesMonster.patrol, new StateZombiePatrol(this));
     }
 
     public override ScriptableObject GetData()

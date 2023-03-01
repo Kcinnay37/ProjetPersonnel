@@ -672,7 +672,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   biomeDifficulties:
   - biome: 0
-    maxStrength: 0
+    maxStrength: 4
+    offsetStrength: 4
     monsterSpawn:
     - monster: 0
       typeSpawn: 0
@@ -680,6 +681,7 @@ MonoBehaviour:
       rarity: 1000
   - biome: 1
     maxStrength: 6
+    offsetStrength: 6
     monsterSpawn:
     - monster: 0
       typeSpawn: 0
@@ -687,6 +689,7 @@ MonoBehaviour:
       rarity: 1000
   - biome: 4
     maxStrength: 8
+    offsetStrength: 8
     monsterSpawn:
     - monster: 0
       typeSpawn: 0
@@ -694,6 +697,7 @@ MonoBehaviour:
       rarity: 1000
   - biome: 5
     maxStrength: 10
+    offsetStrength: 10
     monsterSpawn:
     - monster: 0
       typeSpawn: 0
@@ -701,6 +705,7 @@ MonoBehaviour:
       rarity: 1000
   - biome: 6
     maxStrength: 10
+    offsetStrength: 10
     monsterSpawn:
     - monster: 0
       typeSpawn: 0
@@ -708,6 +713,7 @@ MonoBehaviour:
       rarity: 1000
   - biome: 2
     maxStrength: 12
+    offsetStrength: 12
     monsterSpawn:
     - monster: 0
       typeSpawn: 0
@@ -715,6 +721,7 @@ MonoBehaviour:
       rarity: 1000
   - biome: 3
     maxStrength: 12
+    offsetStrength: 12
     monsterSpawn:
     - monster: 0
       typeSpawn: 0

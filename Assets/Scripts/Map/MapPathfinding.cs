@@ -158,8 +158,6 @@ public class MapPathfinding
                 nodes[currNode.position] = currNode;
             }
 
-
-
             //si il peut aller a droit
             if (goRight)
             {
@@ -177,7 +175,10 @@ public class MapPathfinding
                             }
                             else
                             {
-                                nodeToGo.Add(new Node(currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight, pos, pathfrom, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1, false));
+                                if(currNode.currDropHeight == 0)
+                                {
+                                    nodeToGo.Add(new Node(currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight, pos, pathfrom, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1, false));
+                                }
                             }
                         }
                     }
@@ -190,7 +191,6 @@ public class MapPathfinding
                     {
                         nodeToGo.Add(new Node(currNode.currCost + 1, pos, pathfrom, 0, 0, 0, false));
                     }
-
                 }
             }
 
@@ -211,11 +211,13 @@ public class MapPathfinding
                             }
                             else
                             {
-                                nodeToGo.Add(new Node(currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight, pos, pathfrom, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1, false));
+                                if(currNode.currDropHeight == 0)
+                                {
+                                    nodeToGo.Add(new Node(currNode.currCost + 1 + currNode.currJumpHeight + currNode.currDropHeight, pos, pathfrom, currNode.currJumpHeight, currNode.currDropHeight, currNode.currAirMove + 1, false));
+                                }
+                                    
                             }
-
                         }
-
                     }
                 }
                 //si il est sur le sol
@@ -226,7 +228,6 @@ public class MapPathfinding
                     {
                         nodeToGo.Add(new Node(currNode.currCost + 1, pos, pathfrom, 0, 0, 0, false));
                     }
-
                 }
             }
 
@@ -239,7 +240,6 @@ public class MapPathfinding
                 {
                     nodeToGo.Add(new Node(currNode.currCost + 5, pos, pathfrom, 0, currNode.currDropHeight + 1, 0, true));
                 }
-
             }
 
             //si il peut aller au top
@@ -256,7 +256,6 @@ public class MapPathfinding
                     }
                 }
             }
-
 
 
             if (currNode.deleteAfter)

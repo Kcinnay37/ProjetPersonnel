@@ -19,12 +19,14 @@ public class MonsterManager : MonoBehaviour
     {
         public EnumBiomes biome;
         public int maxStrength;
+        public int offsetStrength;
         public List<MonsterSpawn> monsterSpawn;
     }
 
     public struct BiomeDictValue
     {
         public int maxStrength;
+        public int offsetStrength;
         public List<MonsterSpawn> monsterSpawn;
     }
 
@@ -34,12 +36,6 @@ public class MonsterManager : MonoBehaviour
         spawnAir,
         bigSpawnGround,
         bigSpawnAir
-    }
-
-    public struct SpawnPoint
-    {
-        Vector2Int pos;
-        TypeSpawn type;
     }
 
     [SerializeField] List<BiomeDifficulties> biomeDifficulties = new List<BiomeDifficulties>();
@@ -85,6 +81,7 @@ public class MonsterManager : MonoBehaviour
             BiomeDictValue biomeDictValue = new BiomeDictValue();
             biomeDictValue.maxStrength = currBiome.maxStrength;
             biomeDictValue.monsterSpawn = currBiome.monsterSpawn;
+            biomeDictValue.offsetStrength = currBiome.offsetStrength;
 
             m_DictBiome.Add(biome, biomeDictValue);
         }
@@ -216,13 +213,14 @@ public class MonsterManager : MonoBehaviour
         objectMonster.SetActive(true);
     }
 
-    private void DispawnMonster(GameObject monster)
+    public void DispawnMonster(GameObject monster)
     {
         EnumMonster type = EnumMonster.zombie;
         bool typeIsInit = false;
         if(m_EnableMonster.ContainsKey(monster))
         {
             type = m_EnableMonster[monster].monster;
+            m_CurrStrength -= m_EnableMonster[monster].strength;
             typeIsInit = true;
             m_EnableMonster.Remove(monster);
         }
@@ -249,6 +247,14 @@ public class MonsterManager : MonoBehaviour
 
     private void EnableMonster(GameObject monster)
     {
+        EnumBiomes currBiomes = Map.m_Instance.GetGrid().GetBiomeAtCurrPoint();
+
+        if (m_CurrStrength >= m_DictBiome[currBiomes].maxStrength + m_DictBiome[currBiomes].offsetStrength)
+        {
+            DispawnMonster(monster);
+            return;
+        }
+
         m_EnableMonster.Add(monster, m_DisableMonster[monster]);
         m_DisableMonster.Remove(monster);
         

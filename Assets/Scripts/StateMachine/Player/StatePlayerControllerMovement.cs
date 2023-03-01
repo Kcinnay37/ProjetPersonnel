@@ -40,7 +40,7 @@ public class StatePlayerControllerMovement : State
         Vector2Int localMousePos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldMousePos);
 
         Vector3 playerWorldPos = m_StateMachine.transform.position;
-        playerWorldPos.y += 0.1f;
+        playerWorldPos.y += 0.2f;
         Vector2Int localPlayerPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(playerWorldPos);
 
         
@@ -55,8 +55,12 @@ public class StatePlayerControllerMovement : State
             {
                 Vector3 pos = new Vector3(node.position.x, node.position.y, 0);
                 Map.m_Instance.GetGrid().AddBlockAt(pos, EnumBlocks.rockFire);
+                if (!posiblePath.ContainsKey(node.pathfrom))
+                {
+                    break;
+                }
                 node = posiblePath[node.pathfrom];
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f);
 
             }
 

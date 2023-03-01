@@ -16,8 +16,8 @@ MonoBehaviour:
   state: 5
   maxStack: 1
   distance: 2
-  damage: 100
-  intervalAttack: 0.1
+  damage: 40
+  intervalAttack: 0.4
   coneRadius: 90
   instanceType: 1
   dataType: 1

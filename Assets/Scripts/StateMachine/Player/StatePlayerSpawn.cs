@@ -12,7 +12,7 @@ public class StatePlayerSpawn : State
         Vector3 pos = Map.m_Instance.GetGrid().GetPointToWorld();
         pos.z = -1;
         pos.x += offset;
-        pos.y += 1;
+        pos.y += 0.1f;
 
         m_StateMachine.transform.position = pos;
     }
@@ -25,7 +25,7 @@ public class StatePlayerSpawn : State
         Vector3 pos = Map.m_Instance.GetGrid().GetPointToWorld();
         pos.z = -1;
         pos.x += offset;
-        pos.y += 0.5f;
+        pos.y += 0.1f;
 
         m_StateMachine.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         m_StateMachine.transform.position = pos;

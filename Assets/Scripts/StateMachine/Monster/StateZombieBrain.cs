@@ -9,5 +9,14 @@ public class StateZombieBrain : State
 
     }
 
+    public override void OnInit()
+    {
+        m_StateMachine.StartCoroutine(WaitForStart(1));
+    }
 
+    public IEnumerator WaitForStart(float time)
+    {
+        yield return new WaitForSeconds(time);
+        m_StateMachine.AddCurrState(EnumStatesMonster.patrol);
+    }
 }
