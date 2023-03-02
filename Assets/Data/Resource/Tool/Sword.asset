@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sword
   m_EditorClassIdentifier: 
   image: {fileID: 21300004, guid: b217a154a8231e54bbb50405bdfafbaf, type: 3}
-  state: 6
+  state: 7
   maxStack: 1
   distance: 2
   damage: 50

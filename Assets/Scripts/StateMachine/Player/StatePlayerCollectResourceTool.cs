@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatePlayerMeleeWeapon : StateRessource
+public class StatePlayerCollectResourceTool : StateRessource
 {
     private DataTool m_DataTool;
     private GameObject m_Object;
@@ -14,7 +14,7 @@ public class StatePlayerMeleeWeapon : StateRessource
 
     private Coroutine m_CoroutineAttack;
 
-    public StatePlayerMeleeWeapon(StateMachine stateMachine) : base(stateMachine)
+    public StatePlayerCollectResourceTool(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
@@ -81,7 +81,7 @@ public class StatePlayerMeleeWeapon : StateRessource
 
     public override void End()
     {
-        if(m_CoroutineAttack != null)
+        if (m_CoroutineAttack != null)
         {
             switch (m_DataTool.attackType)
             {
@@ -103,7 +103,7 @@ public class StatePlayerMeleeWeapon : StateRessource
 
     public override void ActionKeyDown()
     {
-        if(m_CoroutineAttack != null)
+        if (m_CoroutineAttack != null)
         {
             return;
         }
@@ -121,6 +121,9 @@ public class StatePlayerMeleeWeapon : StateRessource
         float radAngle = Mathf.Acos(cosAngle);
         float degAngle = radAngle * Mathf.Rad2Deg;
 
+
+
+
         if (degAngle > m_DataTool.coneRadius)
         {
             return;
@@ -129,6 +132,8 @@ public class StatePlayerMeleeWeapon : StateRessource
         RaycastHit2D[] hits = Physics2D.RaycastAll(firstPos, dir, m_DataTool.distance);
 
         m_CoroutineAttack = m_StateMachine.StartCoroutine(Attack(hits));
+
+
     }
 
     private IEnumerator Attack(RaycastHit2D[] hits)
@@ -149,17 +154,11 @@ public class StatePlayerMeleeWeapon : StateRessource
 
         foreach (RaycastHit2D hit in hits)
         {
-            if(hit.transform.CompareTag("Environement"))
+            if (hit.transform.CompareTag("Environement"))
             {
                 break;
             }
 
-            if (hit.transform.CompareTag("Enemie"))
-            {
-                //attack enemie
-                MonsterManager.m_Instance.DispawnMonster(hit.transform.gameObject);
-                break;
-            }
         }
 
         yield return new WaitForSeconds((1 * m_DataTool.intervalAttack) / 2);

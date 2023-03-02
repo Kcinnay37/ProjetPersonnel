@@ -99,6 +99,7 @@ public enum EnumStatesPlayer
 {
     backpack,
     build,
+    collectResource,
     controllerInventory,
     controllerMovement,
     equip,

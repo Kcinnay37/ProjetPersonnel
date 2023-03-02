@@ -63,6 +63,10 @@ public class StatePlayerControllerInventory : State
         {
             CollectResource(EnumTools.sword);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            CollectResource(EnumTools.axe);
+        }
 
         if (Input.GetKeyDown(m_GlobalDataPlayer.dropResourceEquipKey))
         {

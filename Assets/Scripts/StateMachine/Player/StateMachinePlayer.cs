@@ -23,6 +23,7 @@ public class StateMachinePlayer : StateMachine
         AddNewState(EnumStatesPlayer.build, new StatePlayerBuild(this));
         AddNewState(EnumStatesPlayer.controllerInventory, new StatePlayerControllerInventory(this));
         AddNewState(EnumStatesPlayer.meleeWeapon, new StatePlayerMeleeWeapon(this));
+        AddNewState(EnumStatesPlayer.collectResource, new StatePlayerCollectResourceTool(this));
     }
 
     public override ScriptableObject GetData()

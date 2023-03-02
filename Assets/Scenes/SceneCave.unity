@@ -607,11 +607,15 @@ MonoBehaviour:
     value: {fileID: 8384671595252760698, guid: 9b8a78a2b15fffc4fb7e026b579730bb, type: 3}
   - type: 2
     value: {fileID: 1049203296283054317, guid: d7a06836a66020540b83b81778a7ca15, type: 3}
+  - type: 0
+    value: {fileID: 6693675890660716178, guid: ccc46aec50b13fe4caaed034726fdf61, type: 3}
   m_DataTool:
   - type: 1
     value: {fileID: 11400000, guid: 25d699bea0cd7b144ab50f302b0a64fa, type: 2}
   - type: 2
     value: {fileID: 11400000, guid: 36810af257f872145ac09223c09fd7e1, type: 2}
+  - type: 0
+    value: {fileID: 11400000, guid: d46ddcde96ce76e47bfa828218022030, type: 2}
   m_InstanceConsumable: []
   m_DataConsumable: []
   m_InstanceEquipement: []
