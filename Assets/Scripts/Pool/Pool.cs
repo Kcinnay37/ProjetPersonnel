@@ -83,6 +83,13 @@ public class Pool : MonoBehaviour
     }
 
     [System.Serializable]
+    public struct Collectible
+    {
+        public EnumCollectibles type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
     public struct SpecialResource
     {
         public EnumSpecialResources type;
@@ -146,6 +153,10 @@ public class Pool : MonoBehaviour
     [Header("Equipement")]
     [SerializeField] List<Equipement> m_InstanceEquipement;
     [SerializeField] List<Equipement> m_DataEquipement;
+
+    [Header("Collectible")]
+    [SerializeField] List<Collectible> m_InstanceCollectible;
+    [SerializeField] List<Collectible> m_DataCollectible;
 
     [Header("SpecialResource")]
     [SerializeField] List<SpecialResource> m_InstanceSpecialResource;
@@ -255,6 +266,11 @@ public class Pool : MonoBehaviour
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
 
+        foreach (Collectible value in m_InstanceCollectible)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
         foreach (SpecialResource value in m_InstanceSpecialResource)
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
@@ -335,6 +351,11 @@ public class Pool : MonoBehaviour
             m_InstancePool.Add(value.type, (GameObject)value.value);
         }
 
+        foreach (Collectible value in m_InstanceCollectible)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
         foreach (SpecialResource value in m_InstanceSpecialResource)
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
@@ -410,6 +431,11 @@ public class Pool : MonoBehaviour
         }
 
         foreach (Equipement value in m_DataEquipement)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Collectible value in m_DataCollectible)
         {
             m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }

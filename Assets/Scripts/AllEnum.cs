@@ -1,3 +1,9 @@
+public enum EnumCollectibles
+{
+    geode,
+    tree
+}
+
 public enum EnumAudios
 {
 

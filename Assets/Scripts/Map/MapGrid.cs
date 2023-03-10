@@ -8,6 +8,7 @@ public class MapGrid
 
     private EnumBlocks[,] m_GridBlock;
     private EnumBiomes[,] m_GridBiomes;
+    private Dictionary<Vector2Int, EnumCollectibles> m_CollectiblePos;
     private Vector2Int m_CurrPoint;
 
     public MapGrid(Map map)
@@ -21,6 +22,7 @@ public class MapGrid
     {
         m_GridBlock = new EnumBlocks[m_Map.GetData().nbChunkRight * m_Map.GetData().chunkWidth, m_Map.GetData().nbChunkDown * m_Map.GetData().chunkHeight];
         m_GridBiomes = new EnumBiomes[m_Map.GetData().nbChunkRight, m_Map.GetData().nbChunkDown];
+        m_CollectiblePos = new Dictionary<Vector2Int, EnumCollectibles>();
     }
 
     public void InitInitialPoint()
@@ -37,6 +39,11 @@ public class MapGrid
     {
         DataBlock block = (DataBlock)Pool.m_Instance.GetData(m_GridBlock[x, y]);
         return block;
+    }
+
+    public Dictionary<Vector2Int, EnumCollectibles> GetCollectible()
+    {
+        return m_CollectiblePos;
     }
 
     private void FindInitialPoint(int offSet)
@@ -103,7 +110,6 @@ public class MapGrid
         return backGroundBlockDictionary;
     }
 
-
     public Vector3 GetPointToWorld()
     {
         DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_GridBlock[0, 0]);
@@ -113,8 +119,8 @@ public class MapGrid
 
     public void UpdatePoint()
     {
-       Vector3 pos = PlayerManager.m_Instance.GetCurrPlayerPos();
-        if(pos != Vector3.zero)
+        Vector3 pos = PlayerManager.m_Instance.GetCurrPlayerPos();
+        if (pos != Vector3.zero)
         {
             SetPoint(pos);
         }
@@ -149,7 +155,7 @@ public class MapGrid
         EnumBlocks blockBackground = dataBiom.biomeBlocks[dataBiom.biomeBlocks.Count - 1].block;
         EnumBlocks oldBlock = m_GridBlock[localPos.x, localPos.y];
 
-        if(oldBlock != blockBackground)
+        if (oldBlock != blockBackground)
         {
             return false;
         }

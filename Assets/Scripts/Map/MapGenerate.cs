@@ -84,11 +84,14 @@ public class MapGenerate
         //float[,] noiseMap = Procedural.GenerateNoiseMap(m_DataMap.chunkWidth, m_DataMap.chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next());
         float[,] noiseMap = Procedural.GenerateNoiseMap(m_Map.GetData().chunkWidth, m_Map.GetData().chunkHeight, m_Scale, m_Octaves, m_Persistence, m_Lacunarity, rand.Next(), m_Offset, m_HeightCurve);
 
+        Dictionary<EnumBlocks, EnumBlocks> blockCanGo = m_Map.GetGrid().GetBackGroundDict();
+
         // Parcour tout les element de la grid et defini il est de quelle type selon le bruit de perlin et les valeur de la cave
         for (int x = 0; x < m_Map.GetData().chunkWidth; x++)
         {
             for (int y = 0; y < m_Map.GetData().chunkHeight; y++)
             {
+                //regarde pour placer le block a l'emplacement
                 foreach (DataBiome.Block block in m_DataCurrBiome.biomeBlocks)
                 {
                     if (noiseMap[x, y] >= block.minValue && noiseMap[x, y] <= block.maxValue)
@@ -102,7 +105,78 @@ public class MapGenerate
                         }
                     }
                 }
+
+                //regarde pour placer un resource à l'emplacement
+                foreach (DataBiome.Collectible collectible in m_DataCurrBiome.biomeCollectibles)
+                {
+                    if (noiseMap[x, y] >= collectible.minValue && noiseMap[x, y] <= collectible.maxValue)
+                    {
+                        int checkRarity = Random.Range(1, 1001);
+                        if (checkRarity <= collectible.rarity)
+                        {
+                            Vector2Int pos = new Vector2Int(x + (m_Map.GetData().chunkWidth * m_CurrGridChunkX), y + (m_Map.GetData().chunkHeight * m_CurrGridChunkY));
+                            m_Map.GetGrid().GetCollectible().Add(pos, collectible.collectibles);
+                            break;
+                        }
+                    }
+                }
             }
+        }
+
+        //defini les resource qui doivent etre enlevée
+        List<Vector2Int> collectibleToDelete = new List<Vector2Int>();
+        foreach (KeyValuePair<Vector2Int, EnumCollectibles> keyValue in m_Map.GetGrid().GetCollectible())
+        {
+            if (keyValue.Key.y <= 0)
+            {
+                collectibleToDelete.Add(keyValue.Key);
+                continue;
+            }
+
+            if (!blockCanGo.ContainsKey(m_Map.GetGrid().GetGrid()[keyValue.Key.x, keyValue.Key.y]) || blockCanGo.ContainsKey(m_Map.GetGrid().GetGrid()[keyValue.Key.x, keyValue.Key.y - 1]))
+            {
+                collectibleToDelete.Add(keyValue.Key);
+                continue;
+            }
+
+            DataCollectible dataCollectible = (DataCollectible)Pool.m_Instance.GetData(keyValue.Value);
+            if (dataCollectible.gridSpawn == null)
+            {
+                continue;
+            }
+
+            for (int x = 0; x <= dataCollectible.gridSpawnSideAndHeightSize.x; x++)
+            {
+                for (int y = 0; y < dataCollectible.gridSpawnSideAndHeightSize.y; y++)
+                {
+                    if (keyValue.Key.x - x < 0 || keyValue.Key.x + x >= m_Map.GetGrid().GetGrid().GetLength(0))
+                    {
+                        collectibleToDelete.Add(keyValue.Key);
+                        continue;
+                    }
+                    else if (keyValue.Key.y <= 0 || keyValue.Key.y + y >= m_Map.GetGrid().GetGrid().GetLength(1))
+                    {
+                        collectibleToDelete.Add(keyValue.Key);
+                        continue;
+                    }
+
+                    if (!blockCanGo.ContainsKey(m_Map.GetGrid().GetGrid()[keyValue.Key.x + x, keyValue.Key.y + y]) && dataCollectible.gridSpawn[dataCollectible.gridSpawnSideAndHeightSize.x + x, y])
+                    {
+                        collectibleToDelete.Add(keyValue.Key);
+                        continue;
+                    }
+                    else if (!blockCanGo.ContainsKey(m_Map.GetGrid().GetGrid()[keyValue.Key.x - x, keyValue.Key.y + y]) && dataCollectible.gridSpawn[dataCollectible.gridSpawnSideAndHeightSize.x + x, keyValue.Key.y + y])
+                    {
+                        collectibleToDelete.Add(keyValue.Key);
+                        continue;
+                    }
+                }
+            }
+        }
+
+        foreach (Vector2Int pos in collectibleToDelete)
+        {
+            m_Map.GetGrid().GetCollectible().Remove(pos);
         }
     }
 
