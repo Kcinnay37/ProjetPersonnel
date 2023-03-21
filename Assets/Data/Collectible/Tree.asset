@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f3d23db0d6ee014fb63a96dc361bc77, type: 3}
   m_Name: Tree
   m_EditorClassIdentifier: 
-  instanceType: 0
-  health: 0
-  gridSpawnSideAndHeightSize: {x: 0, y: 0}
+  instanceType: 1
+  health: 100
+  offsetSpawn: {x: 0.5, y: 2.15}
+  drop:
+    offsetDrop: {x: 0, y: 0}
+    dropConsumables: []
+    dropEquipements: []
+    dropTools:
+    - type: 1
+      stack: 10
+      rarity: 1000
+    dropMaterials: []
+  m_ToolsCanInteract: 00000000
+  gridSpawnSideAndHeightSize: {x: 1, y: 3}

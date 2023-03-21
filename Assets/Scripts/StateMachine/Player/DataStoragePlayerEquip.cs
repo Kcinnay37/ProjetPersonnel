@@ -180,6 +180,26 @@ public class DataStoragePlayerEquip : DataStorage
         return false;
     }
 
+    public bool IncrementRessource(object resource)
+    {
+        int index = m_InventoryEquip.IncrementResource(resource);
+
+        if (index != -1)
+        {
+            UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(index, m_InventoryEquip.GetCase(index));
+            return true;
+        }
+
+        index = m_InventoryEquipSecondary.IncrementResource(resource);
+
+        if (index != -1)
+        {
+            UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(index + 2, m_InventoryEquipSecondary.GetCase(index));
+            return true;
+        }
+        return false;
+    }
+
     private void UnEquip()
     {
         if (m_IndexEquip == -1)

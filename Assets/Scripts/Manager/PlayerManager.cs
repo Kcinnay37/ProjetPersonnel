@@ -26,12 +26,6 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         m_CurrPlayer = Pool.m_Instance.GetObject(m_Player);
         m_CurrPlayer.SetActive(true);
-
-        Dictionary<Vector2Int, EnumCollectibles> test = Map.m_Instance.GetGrid().GetCollectible();
-        foreach (KeyValuePair<Vector2Int, EnumCollectibles> lol in test)
-        {
-            Map.m_Instance.GetGrid().AddBlockAt(new Vector3(lol.Key.x, lol.Key.y, 0), EnumBlocks.rockIce);
-        }
     }
 
     public Vector3 GetCurrPlayerPos()

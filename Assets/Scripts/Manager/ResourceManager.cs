@@ -112,6 +112,65 @@ public class ResourceManager : MonoBehaviour
         m_InstanciateResource.Add(objectResource, objectResource.GetComponent<ResourceInWorld>());
     }
 
+    public void Drops(Drops drops, Vector3 pos)
+    {
+        foreach(DropConsumable value in drops.dropConsumables)
+        {
+            int rarity = Random.Range(1, 1001);
+            if(rarity <= value.rarity)
+            {
+                int nb = Random.Range(1, value.stack + 1);
+                for(int i = 0; i < nb; i++)
+                {
+                    Vector2 velo = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    InstanciateResourceInWorldAt(value.type, pos, velo * 100, 1);
+                }
+            }
+        }
+
+        foreach (DropEquipement value in drops.dropEquipements)
+        {
+            int rarity = Random.Range(1, 1001);
+            if (rarity <= value.rarity)
+            {
+                int nb = Random.Range(1, value.stack + 1);
+                for (int i = 0; i < nb; i++)
+                {
+                    Vector2 velo = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    InstanciateResourceInWorldAt(value.type, pos, velo * 100, 1);
+                }
+            }
+        }
+
+        foreach (DropTool value in drops.dropTools)
+        {
+            int rarity = Random.Range(1, 1001);
+            if (rarity <= value.rarity)
+            {
+                int nb = Random.Range(1, value.stack + 1);
+                for (int i = 0; i < nb; i++)
+                {
+                    Vector2 velo = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    InstanciateResourceInWorldAt(value.type, pos, velo * 100, 1);
+                }
+            }
+        }
+
+        foreach (DropMaterial value in drops.dropMaterials)
+        {
+            int rarity = Random.Range(1, 1001);
+            if (rarity <= value.rarity)
+            {
+                int nb = Random.Range(1, value.stack + 1);
+                for (int i = 0; i < nb; i++)
+                {
+                    Vector2 velo = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    InstanciateResourceInWorldAt(value.type, pos, velo * 100, 1);
+                }
+            }
+        }
+    }
+
     public void RemoveResource(ResourceInWorld resource)
     {
         if (m_InstanciateResource.ContainsKey(resource.gameObject))

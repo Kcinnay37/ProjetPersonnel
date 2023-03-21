@@ -19,6 +19,7 @@ MonoBehaviour:
   primarySlotKey: 323
   secondarySlotKey: 324
   dropResourceEquipKey: 101
+  openBackpackKey: 9
   baseWalkSpeed: 5
   baseRunSpeed: 10
   baseJumpForce: 325

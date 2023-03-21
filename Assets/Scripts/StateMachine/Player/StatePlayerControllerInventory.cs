@@ -67,6 +67,15 @@ public class StatePlayerControllerInventory : State
         {
             CollectResource(EnumTools.axe);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            CollectResource(EnumTools.hammer);
+        }
+
+        if(Input.GetKeyDown(m_GlobalDataPlayer.openBackpackKey))
+        {
+            UI.m_Instance.GetUIBackpack().ChangeUIState();
+        }
 
         if (Input.GetKeyDown(m_GlobalDataPlayer.dropResourceEquipKey))
         {
@@ -321,7 +330,13 @@ public class StatePlayerControllerInventory : State
     private MouseItem GetMouseClickInInventoryUI(Vector2 localPoint, bool primaryKey, bool pop)
     {
         MouseItem mouseItem = GetMouseClickInEquipUI(localPoint, primaryKey, pop);
-        if(m_CurrMouseItem.setRoot != null && m_CurrMouseItem.inventoryCase.currNb != 0)
+        if (mouseItem.setRoot != null || mouseItem.inventoryCase.currNb != 0)
+        {
+            return mouseItem;
+        }
+
+        mouseItem = GetMouseClickInBackpackUI(localPoint, primaryKey, pop);
+        if (mouseItem.setRoot != null || mouseItem.inventoryCase.currNb != 0)
         {
             return mouseItem;
         }
@@ -383,6 +398,64 @@ public class StatePlayerControllerInventory : State
         return mouseItem;
     }
 
+    private MouseItem GetMouseClickInBackpackUI(Vector2 mousePoint, bool primaryKey, bool pop)
+    {
+        //prend le transform de tout les slot de l'inventaire equip
+        List<Transform> slotsEquip = UI.m_Instance.GetUIBackpack().GetAllSlots();
+
+        // initialise les valeurs par default
+        InventoryCase inventoryCase = new InventoryCase();
+        inventoryCase.resource = EnumSpecialResources.none;
+        inventoryCase.currNb = 0;
+
+        MouseItem mouseItem = new MouseItem();
+        mouseItem.inventoryCase = inventoryCase;
+        mouseItem.setRoot = null;
+
+        if(!UI.m_Instance.GetUIBackpack().GetBackpackActive())
+        {
+            return mouseItem;
+        }
+
+        //regarde la position sur l'inventaire equip
+        int index = 0;
+        foreach (Transform currSlot in slotsEquip)
+        {
+            RectTransform currTransform = currSlot.GetComponent<RectTransform>();
+            Vector2 localPosition = currTransform.localPosition;
+            Rect localRect = new Rect(localPosition.x - (currTransform.rect.width / 2), localPosition.y - (currTransform.rect.height / 2), currTransform.rect.width, currTransform.rect.height);
+            if (localRect.Contains(mousePoint))
+            {
+                int paramIndex = index;
+                Action<InventoryCase> setCaseAction = (caseItem) => m_DataStoragePlayerBackpack.SetCase(paramIndex, caseItem);
+                Func<InventoryCase> getCaseFunc = () => m_DataStoragePlayerBackpack.GetCase(paramIndex);
+                if (pop)
+                {
+                    if (primaryKey)
+                    {
+                        mouseItem.inventoryCase = m_DataStoragePlayerBackpack.PopCase(index);
+                    }
+                    else
+                    {
+                        mouseItem.inventoryCase = m_DataStoragePlayerBackpack.PopHalfCase(index);
+                    }
+                }
+                else
+                {
+                    mouseItem.inventoryCase = m_DataStoragePlayerBackpack.GetCase(index);
+                }
+
+
+                mouseItem.setRoot = setCaseAction;
+                mouseItem.getRoot = getCaseFunc;
+                return mouseItem;
+            }
+            index++;
+        }
+
+        return mouseItem;
+    }
+
     private void DropResource(object dataResource)
     {
         StatePlayerControllerMovement statePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
@@ -397,10 +470,28 @@ public class StatePlayerControllerInventory : State
 
     public bool CollectResource(object resource)
     {
-        if(m_DataStoragePlayerEquip.AddRessource(resource))
+        if (m_DataStoragePlayerEquip.IncrementRessource(resource))
         {
             return true;
         }
+
+        if (m_DataStoragePlayerBackpack.IncrementRessource(resource))
+        {
+
+            return true;
+        }
+
+        if (m_DataStoragePlayerEquip.AddRessource(resource))
+        {
+            return true;
+        }
+        
+        if (m_DataStoragePlayerBackpack.AddRessource(resource))
+        {
+            
+            return true;
+        }
+
         return false;
     }
 

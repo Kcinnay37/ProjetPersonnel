@@ -142,14 +142,14 @@ public class MapGenerate
             DataCollectible dataCollectible = (DataCollectible)Pool.m_Instance.GetData(keyValue.Value);
             if (dataCollectible.gridSpawn == null)
             {
-                continue;
+                dataCollectible.LoadData();
             }
 
             for (int x = 0; x <= dataCollectible.gridSpawnSideAndHeightSize.x; x++)
             {
-                for (int y = 0; y < dataCollectible.gridSpawnSideAndHeightSize.y; y++)
+                for (int y = 0; y <= dataCollectible.gridSpawnSideAndHeightSize.y; y++)
                 {
-                    if (keyValue.Key.x - x < 0 || keyValue.Key.x + x >= m_Map.GetGrid().GetGrid().GetLength(0))
+                    if (keyValue.Key.x - x <= 0 || keyValue.Key.x + x >= m_Map.GetGrid().GetGrid().GetLength(0))
                     {
                         collectibleToDelete.Add(keyValue.Key);
                         continue;
@@ -160,12 +160,12 @@ public class MapGenerate
                         continue;
                     }
 
-                    if (!blockCanGo.ContainsKey(m_Map.GetGrid().GetGrid()[keyValue.Key.x + x, keyValue.Key.y + y]) && dataCollectible.gridSpawn[dataCollectible.gridSpawnSideAndHeightSize.x + x, y])
+                    if (!blockCanGo.ContainsKey(m_Map.GetGrid().GetGrid()[keyValue.Key.x + x, keyValue.Key.y + y]) && dataCollectible.gridSpawn[dataCollectible.gridSpawnSideAndHeightSize.x + x, dataCollectible.gridSpawnSideAndHeightSize.y - y])
                     {
                         collectibleToDelete.Add(keyValue.Key);
                         continue;
                     }
-                    else if (!blockCanGo.ContainsKey(m_Map.GetGrid().GetGrid()[keyValue.Key.x - x, keyValue.Key.y + y]) && dataCollectible.gridSpawn[dataCollectible.gridSpawnSideAndHeightSize.x + x, keyValue.Key.y + y])
+                    if (!blockCanGo.ContainsKey(m_Map.GetGrid().GetGrid()[keyValue.Key.x - x, keyValue.Key.y + y]) && dataCollectible.gridSpawn[dataCollectible.gridSpawnSideAndHeightSize.x - x, dataCollectible.gridSpawnSideAndHeightSize.y - y])
                     {
                         collectibleToDelete.Add(keyValue.Key);
                         continue;

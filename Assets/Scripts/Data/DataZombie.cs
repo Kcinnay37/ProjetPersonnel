@@ -7,4 +7,6 @@ public class DataZombie : ScriptableObject
 {
     public float moveSpeed;
     public float jumpForce;
+
+    public Drops drop;
 }

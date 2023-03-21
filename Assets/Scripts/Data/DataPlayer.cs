@@ -17,6 +17,8 @@ public class DataPlayer : ScriptableObject
 
     public KeyCode dropResourceEquipKey;
 
+    public KeyCode openBackpackKey;
+
     [Header("Stat")]
     public float baseWalkSpeed;
     public float baseRunSpeed;

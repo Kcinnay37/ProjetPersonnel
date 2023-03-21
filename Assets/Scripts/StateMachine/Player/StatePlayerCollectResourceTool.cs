@@ -159,6 +159,16 @@ public class StatePlayerCollectResourceTool : StateRessource
                 break;
             }
 
+            if (hit.transform.CompareTag("Collectible"))
+            {
+                Collectible collectible = hit.transform.GetComponent<Collectible>();
+                if(collectible.GetToolsCanInteract().Contains(m_DataTool.dataType))
+                {
+                    collectible.TakeDamage(m_DataTool.damage);
+                }
+
+                break;
+            }
         }
 
         yield return new WaitForSeconds((1 * m_DataTool.intervalAttack) / 2);

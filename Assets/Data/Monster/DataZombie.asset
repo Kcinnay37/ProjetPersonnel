@@ -14,3 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   jumpForce: 3500
+  drop:
+    offsetDrop: {x: 0, y: 0}
+    dropConsumables: []
+    dropEquipements: []
+    dropTools:
+    - type: 1
+      stack: 1
+      rarity: 1000
+    dropMaterials: []

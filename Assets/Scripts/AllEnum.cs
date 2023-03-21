@@ -58,6 +58,11 @@ public enum EnumMaps
     mapColonie,
 }
 
+public enum EnumMaterial
+{
+
+}
+
 public enum EnumMonster
 {
     zombie
@@ -128,6 +133,7 @@ public enum EnumStatesUI
 public enum EnumTools
 {
     axe,
+    hammer,
     pickaxe,
     sword,
 }

@@ -9,6 +9,7 @@ public class UI : MonoBehaviour
     private UIWorld m_UIWorld;
     private UIMouse m_UIMouse;
     private UIPlayerEquip m_UIPlayerEquip;
+    private UIBackpack m_UIBackpack;
 
     public static UI m_Instance;
 
@@ -19,6 +20,7 @@ public class UI : MonoBehaviour
         m_UIWorld = new UIWorld(this);
         m_UIMouse = new UIMouse(this);
         m_UIPlayerEquip = new UIPlayerEquip(this);
+        m_UIBackpack = new UIBackpack(this);
     }
 
     public DataUI GetData()
@@ -39,5 +41,10 @@ public class UI : MonoBehaviour
     public UIPlayerEquip GetUIPlayerEquip()
     {
         return m_UIPlayerEquip;
+    }
+
+    public UIBackpack GetUIBackpack()
+    {
+        return m_UIBackpack;
     }
 }

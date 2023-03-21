@@ -33,6 +33,11 @@ MonoBehaviour:
     minValue: 0
     maxValue: 1
     rarity: 1000
+  biomeCollectibles:
+  - collectibles: 0
+    minValue: 0
+    maxValue: 0.4
+    rarity: 400
   scale: 10
   useRandomScale: 0
   minScale: 0
