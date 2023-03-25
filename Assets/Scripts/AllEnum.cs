@@ -44,7 +44,7 @@ public enum EnumConsumables
 
 public enum EnumEquipements
 {
-
+    firstHat
 }
 
 public enum EnumManagers

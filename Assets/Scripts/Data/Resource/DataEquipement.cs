@@ -5,12 +5,22 @@ using UnityEngine;
 [CreateAssetMenu]
 public class DataEquipement : DataResource
 {
-    public struct EquipementBuffs
+    public struct BonusStat
     {
 
     }
 
-    public EquipementBuffs buffs;
-    public Sprite image;
+    public BonusStat bonusStat;
     public Material playerMaterial;
+    public EnumTypeEquipement typeEquipement;
+    public string componentForMaterial;
+}
+
+public enum EnumTypeEquipement
+{
+    cloth,
+    hat,
+    pants,
+    shoes,
+    socks
 }
