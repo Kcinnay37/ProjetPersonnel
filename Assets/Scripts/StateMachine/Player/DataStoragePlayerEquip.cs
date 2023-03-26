@@ -5,6 +5,7 @@ using UnityEngine;
 public class DataStoragePlayerEquip : DataStorage
 {
     private DataStoragePlayerStat m_DataStoragePlayerStat;
+    private DataPlayer m_DataPlayer;
 
     private Inventory m_InventoryEquip;
     private Inventory m_InventoryEquipSecondary;
@@ -20,6 +21,7 @@ public class DataStoragePlayerEquip : DataStorage
     {
         // va chercher le data local du player
         m_DataStoragePlayerStat = (DataStoragePlayerStat)m_StateMachine.GetDataStorage(EnumStatesPlayer.stat);
+        m_DataPlayer = (DataPlayer)m_StateMachine.GetData();
 
         //initialise les inventaire avec la bonne grandeur
         m_InventoryEquip = new Inventory(2);
@@ -28,6 +30,8 @@ public class DataStoragePlayerEquip : DataStorage
         m_IndexEquip = -1;
 
         InitUI();
+
+        UpdateEquipement();
     }
 
     public override void End()
@@ -261,5 +265,110 @@ public class DataStoragePlayerEquip : DataStorage
         DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
         StateRessource stateRessource = (StateRessource)m_StateMachine.GetState(resource.state);
         stateRessource?.ActionKeyUp();
+    }
+
+    public bool CheckHasEquipementType(object resource)
+    {
+        if(resource is EnumEquipements)
+        {
+            EnumEquipements equipement = (EnumEquipements)resource;
+
+            foreach(InventoryCase currCase in m_InventoryEquip.GetInventory())
+            {
+                if(currCase.resource is EnumEquipements)
+                {
+                    EnumEquipements currEquipement = (EnumEquipements)currCase.resource;
+
+                    DataEquipement equipement1 = (DataEquipement)Pool.m_Instance.GetData(equipement);
+                    DataEquipement equipement2 = (DataEquipement)Pool.m_Instance.GetData(currEquipement);
+
+                    if(equipement1.typeEquipement == equipement2.typeEquipement)
+                    {
+                        return true;
+                    }
+                }
+            }
+            foreach (InventoryCase currCase in m_InventoryEquipSecondary.GetInventory())
+            {
+                if (currCase.resource is EnumEquipements)
+                {
+                    EnumEquipements currEquipement = (EnumEquipements)currCase.resource;
+
+                    DataEquipement equipement1 = (DataEquipement)Pool.m_Instance.GetData(equipement);
+                    DataEquipement equipement2 = (DataEquipement)Pool.m_Instance.GetData(currEquipement);
+
+                    if (equipement1.typeEquipement == equipement2.typeEquipement)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void UpdateEquipement()
+    {
+        ResetEquipement();
+
+        foreach (InventoryCase currCase in m_InventoryEquip.GetInventory())
+        {
+            if (currCase.resource is EnumEquipements)
+            {
+                EnumEquipements currEquipement = (EnumEquipements)currCase.resource;
+                DataEquipement equipement = (DataEquipement)Pool.m_Instance.GetData(currEquipement);
+                EquipEquipement(equipement);
+            }
+        }
+        foreach (InventoryCase currCase in m_InventoryEquipSecondary.GetInventory())
+        {
+            if (currCase.resource is EnumEquipements)
+            {
+                EnumEquipements currEquipement = (EnumEquipements)currCase.resource;
+                DataEquipement equipement = (DataEquipement)Pool.m_Instance.GetData(currEquipement);
+                EquipEquipement(equipement);
+            }
+        }
+    }
+
+    private void EquipEquipement(DataEquipement equipement)
+    {
+        Transform component = m_StateMachine.transform.FindChild("Component");
+        SkinnedMeshRenderer renderer = component.FindChild(equipement.componentForMaterial).GetComponent<SkinnedMeshRenderer>();
+        renderer.material = equipement.playerMaterial;
+
+        if(equipement.typeEquipement == EnumTypeEquipement.hat && equipement.playerMaterial == m_DataPlayer.hatNone)
+        {
+            component.FindChild("Hair").gameObject.SetActive(true);
+        }
+        else if(equipement.typeEquipement == EnumTypeEquipement.hat && equipement.playerMaterial != m_DataPlayer.hatNone)
+        {
+            component.FindChild("Hair").gameObject.SetActive(false);
+        }
+
+        m_DataStoragePlayerStat.AddStats(equipement.bonusStat);
+    }
+
+    private void ResetEquipement()
+    {
+        Transform component = m_StateMachine.transform.FindChild("Component");
+
+        if(component != null)
+        {
+            SkinnedMeshRenderer clothRenderer = component.FindChild("Cloth").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer pantsRenderer = component.FindChild("Pants").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer hatRenderer = component.FindChild("Hat").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer shoesRenderer = component.FindChild("Shoes").GetComponent<SkinnedMeshRenderer>();
+
+            clothRenderer.material = m_DataPlayer.baseCloth;
+            pantsRenderer.material = m_DataPlayer.basePants;
+            hatRenderer.material = m_DataPlayer.baseHat;
+            shoesRenderer.material = m_DataPlayer.baseShoes;
+
+            component.FindChild("Hair").gameObject.SetActive(true);
+        }
+
+        m_DataStoragePlayerStat.ResetStats();
     }
 }

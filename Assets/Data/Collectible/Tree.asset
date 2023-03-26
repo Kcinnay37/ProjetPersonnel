@@ -24,5 +24,5 @@ MonoBehaviour:
       stack: 10
       rarity: 1000
     dropMaterials: []
-  m_ToolsCanInteract: 00000000
+  m_ToolsCanInteract: 01000000
   gridSpawnSideAndHeightSize: {x: 1, y: 3}

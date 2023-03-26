@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6365025774151048135}
   - component: {fileID: 2766091349181111255}
   - component: {fileID: -8104426341706181330}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Hammer
   m_TagString: ResourceInWorld
   m_Icon: {fileID: 0}

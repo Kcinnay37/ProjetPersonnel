@@ -121,9 +121,6 @@ public class StatePlayerCollectResourceTool : StateRessource
         float radAngle = Mathf.Acos(cosAngle);
         float degAngle = radAngle * Mathf.Rad2Deg;
 
-
-
-
         if (degAngle > m_DataTool.coneRadius)
         {
             return;
@@ -132,8 +129,6 @@ public class StatePlayerCollectResourceTool : StateRessource
         RaycastHit2D[] hits = Physics2D.RaycastAll(firstPos, dir, m_DataTool.distance);
 
         m_CoroutineAttack = m_StateMachine.StartCoroutine(Attack(hits));
-
-
     }
 
     private IEnumerator Attack(RaycastHit2D[] hits)

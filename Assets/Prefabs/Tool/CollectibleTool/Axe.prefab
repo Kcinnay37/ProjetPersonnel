@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2653591835398533842}
   - component: {fileID: 170834405165755665}
   - component: {fileID: 6415373533549719464}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Axe
   m_TagString: ResourceInWorld
   m_Icon: {fileID: 0}

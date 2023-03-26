@@ -21,6 +21,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public List<InventoryCase> GetInventory()
+    {
+        return m_Inventory;
+    }
+
     //ajoute une nouvelle case a la list
     public void AddNewCase()
     {

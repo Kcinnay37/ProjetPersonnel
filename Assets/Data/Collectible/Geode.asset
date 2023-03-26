@@ -20,9 +20,9 @@ MonoBehaviour:
     dropConsumables: []
     dropEquipements: []
     dropTools:
-    - type: 0
+    - type: 4
       stack: 10
       rarity: 1000
     dropMaterials: []
-  m_ToolsCanInteract: 01000000
+  m_ToolsCanInteract: 02000000
   gridSpawnSideAndHeightSize: {x: 0, y: 0}

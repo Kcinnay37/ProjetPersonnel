@@ -33,7 +33,12 @@ public class DataPlayer : ScriptableObject
     public int baseMaxEnergy;
     public int baseDamage;
     public int baseAttackSpeed;
-    public int baseDamageBlock;
 
     public float blockDropDistance;
+
+    public Material baseHat;
+    public Material baseCloth;
+    public Material basePants;
+    public Material baseShoes;
+    public Material hatNone;
 }

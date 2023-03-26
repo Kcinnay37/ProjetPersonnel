@@ -39,11 +39,12 @@ public enum EnumBlocks
 
 public enum EnumConsumables
 {
-
+    instance
 }
 
 public enum EnumEquipements
 {
+    instance,
     firstHat
 }
 
@@ -60,7 +61,7 @@ public enum EnumMaps
 
 public enum EnumMaterial
 {
-
+    instance
 }
 
 public enum EnumMonster
@@ -132,6 +133,7 @@ public enum EnumStatesUI
 
 public enum EnumTools
 {
+    instance,
     axe,
     hammer,
     pickaxe,

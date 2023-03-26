@@ -19,6 +19,6 @@ MonoBehaviour:
   damage: 50
   intervalAttack: 0.3
   coneRadius: 60
-  instanceType: 3
-  dataType: 3
+  instanceType: 0
+  dataType: 4
   attackType: 0

@@ -20,5 +20,5 @@ MonoBehaviour:
   intervalAttack: 0.3
   coneRadius: 90
   instanceType: 0
-  dataType: 0
+  dataType: 1
   attackType: 0

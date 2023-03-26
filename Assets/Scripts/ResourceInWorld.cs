@@ -71,6 +71,7 @@ public class ResourceInWorld : MonoBehaviour
         {
             DataResource dataResource = (DataResource)Pool.m_Instance.GetData(m_DataType);
             GetComponent<SpriteRenderer>().sprite = dataResource.image;
+            UpdateCollider();
         }
         gameObject.layer = LayerMask.NameToLayer("ResourceCantTake");
     }
@@ -97,6 +98,23 @@ public class ResourceInWorld : MonoBehaviour
             {
                 ResourceManager.m_Instance.RemoveResource(this);
             }
+        }
+    }
+
+    private void UpdateCollider()
+    {
+        DataResource dataResource = (DataResource)Pool.m_Instance.GetData(m_DataType);
+
+        Vector2[] pointsDuContour = new Vector2[dataResource.image.vertices.Length];
+        for (int i = 0; i < dataResource.image.vertices.Length; i++)
+        {
+            pointsDuContour[i] = dataResource.image.vertices[i];
+        }
+        PolygonCollider2D polygoneCollider = GetComponent<PolygonCollider2D>();
+
+        if(polygoneCollider != null)
+        {
+            polygoneCollider.SetPath(0, pointsDuContour);
         }
     }
 

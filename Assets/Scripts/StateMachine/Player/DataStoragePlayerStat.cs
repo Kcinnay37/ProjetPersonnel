@@ -23,9 +23,8 @@ public class DataStoragePlayerStat : DataStorage
     private int m_MaxEnergy;
     private int m_CurrEnergy;
 
-    private int damage;
-    private int attackSpeed;
-    private int damageBlock;
+    private int m_Damage;
+    private int m_AttackSpeed;
 
     public DataStoragePlayerStat(StateMachine stateMachine) : base(stateMachine)
     {
@@ -58,9 +57,17 @@ public class DataStoragePlayerStat : DataStorage
         m_MaxEnergy = m_GlobalDataPlayer.baseMaxEnergy;
         m_CurrEnergy = m_GlobalDataPlayer.baseMaxEnergy;
 
-        damage = m_GlobalDataPlayer.baseDamage;
-        attackSpeed = m_GlobalDataPlayer.baseDamage;
-        damageBlock = m_GlobalDataPlayer.baseDamageBlock;
+        m_Damage = m_GlobalDataPlayer.baseDamage;
+        m_AttackSpeed = m_GlobalDataPlayer.baseDamage;
+    }
+
+    public void AddStats(DataEquipement.BonusStat stat)
+    {
+        m_MaxHealth += stat.health;
+        m_MaxArmor += stat.armor;
+        m_MaxEnergy += stat.energy;
+        m_Damage += stat.damage;
+        m_AttackSpeed += stat.attackSpeed;
     }
 
     public int GetSizeInventoryEquip()

@@ -11,6 +11,7 @@ public class StatePlayerControllerInventory : State
         public InventoryCase inventoryCase;
         public Action<InventoryCase> setRoot;
         public Func<InventoryCase> getRoot;
+        public bool onInventoryEquip;
     }
 
     DataPlayer m_GlobalDataPlayer;
@@ -71,8 +72,12 @@ public class StatePlayerControllerInventory : State
         {
             CollectResource(EnumTools.hammer);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            CollectResource(EnumEquipements.firstHat);
+        }
 
-        if(Input.GetKeyDown(m_GlobalDataPlayer.openBackpackKey))
+        if (Input.GetKeyDown(m_GlobalDataPlayer.openBackpackKey))
         {
             UI.m_Instance.GetUIBackpack().ChangeUIState();
         }
@@ -219,6 +224,14 @@ public class StatePlayerControllerInventory : State
         DataResource currMouseResource = (DataResource)Pool.m_Instance.GetData(m_CurrMouseItem.inventoryCase.resource);
         DataResource currSlotResource = (DataResource)Pool.m_Instance.GetData(slot.inventoryCase.resource);
 
+        if(m_DataStoragePlayerEquip.CheckHasEquipementType(m_CurrMouseItem.inventoryCase.resource) && slot.onInventoryEquip)
+        {
+            SetCurrMouseItemRoot(m_CurrMouseItem.inventoryCase);
+            UI.m_Instance.GetUIMouse().SetActiveMouseContent(false);
+            return;
+        }
+
+
         if (justOne)
         {
             if ((m_CurrMouseItem.inventoryCase.currNb > 0) &&
@@ -269,6 +282,11 @@ public class StatePlayerControllerInventory : State
                 SetCurrMouseItemRoot(slot.inventoryCase);  
             }
             UI.m_Instance.GetUIMouse().SetActiveMouseContent(false);
+        }
+
+        if(m_CurrMouseItem.inventoryCase.resource is EnumEquipements || slot.inventoryCase.resource is EnumEquipements)
+        {
+            m_DataStoragePlayerEquip.UpdateEquipement();
         }
     }
 
@@ -358,6 +376,7 @@ public class StatePlayerControllerInventory : State
         MouseItem mouseItem = new MouseItem();
         mouseItem.inventoryCase = inventoryCase;
         mouseItem.setRoot = null;
+        mouseItem.onInventoryEquip = true;
 
         //regarde la position sur l'inventaire equip
         int index = 0;
@@ -411,8 +430,9 @@ public class StatePlayerControllerInventory : State
         MouseItem mouseItem = new MouseItem();
         mouseItem.inventoryCase = inventoryCase;
         mouseItem.setRoot = null;
+        mouseItem.onInventoryEquip = false;
 
-        if(!UI.m_Instance.GetUIBackpack().GetBackpackActive())
+        if (!UI.m_Instance.GetUIBackpack().GetBackpackActive())
         {
             return mouseItem;
         }
@@ -466,6 +486,8 @@ public class StatePlayerControllerInventory : State
         pos.z -= 1;
 
         ResourceManager.m_Instance.InstanciateResourceInWorldAt(dataResource, pos, Vector2.right * dirPlayer * 100, dirPlayer);
+
+        m_DataStoragePlayerEquip.UpdateEquipement();
     }
 
     public bool CollectResource(object resource)
@@ -481,9 +503,13 @@ public class StatePlayerControllerInventory : State
             return true;
         }
 
-        if (m_DataStoragePlayerEquip.AddRessource(resource))
+        if(!m_DataStoragePlayerEquip.CheckHasEquipementType(resource))
         {
-            return true;
+            if (m_DataStoragePlayerEquip.AddRessource(resource))
+            {
+                m_DataStoragePlayerEquip.UpdateEquipement();
+                return true;
+            }
         }
         
         if (m_DataStoragePlayerBackpack.AddRessource(resource))
