@@ -334,17 +334,17 @@ public class DataStoragePlayerEquip : DataStorage
 
     private void EquipEquipement(DataEquipement equipement)
     {
-        Transform component = m_StateMachine.transform.FindChild("Component");
-        SkinnedMeshRenderer renderer = component.FindChild(equipement.componentForMaterial).GetComponent<SkinnedMeshRenderer>();
+        Transform component = m_StateMachine.transform.Find("Component");
+        SkinnedMeshRenderer renderer = component.Find(equipement.componentForMaterial).GetComponent<SkinnedMeshRenderer>();
         renderer.material = equipement.playerMaterial;
 
         if(equipement.typeEquipement == EnumTypeEquipement.hat && equipement.playerMaterial == m_DataPlayer.hatNone)
         {
-            component.FindChild("Hair").gameObject.SetActive(true);
+            component.Find("Hair").gameObject.SetActive(true);
         }
         else if(equipement.typeEquipement == EnumTypeEquipement.hat && equipement.playerMaterial != m_DataPlayer.hatNone)
         {
-            component.FindChild("Hair").gameObject.SetActive(false);
+            component.Find("Hair").gameObject.SetActive(false);
         }
 
         m_DataStoragePlayerStat.AddStats(equipement.bonusStat);
@@ -352,21 +352,21 @@ public class DataStoragePlayerEquip : DataStorage
 
     private void ResetEquipement()
     {
-        Transform component = m_StateMachine.transform.FindChild("Component");
+        Transform component = m_StateMachine.transform.Find("Component");
 
         if(component != null)
         {
-            SkinnedMeshRenderer clothRenderer = component.FindChild("Cloth").GetComponent<SkinnedMeshRenderer>();
-            SkinnedMeshRenderer pantsRenderer = component.FindChild("Pants").GetComponent<SkinnedMeshRenderer>();
-            SkinnedMeshRenderer hatRenderer = component.FindChild("Hat").GetComponent<SkinnedMeshRenderer>();
-            SkinnedMeshRenderer shoesRenderer = component.FindChild("Shoes").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer clothRenderer = component.Find("Cloth").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer pantsRenderer = component.Find("Pants").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer hatRenderer = component.Find("Hat").GetComponent<SkinnedMeshRenderer>();
+            SkinnedMeshRenderer shoesRenderer = component.Find("Shoes").GetComponent<SkinnedMeshRenderer>();
 
             clothRenderer.material = m_DataPlayer.baseCloth;
             pantsRenderer.material = m_DataPlayer.basePants;
             hatRenderer.material = m_DataPlayer.baseHat;
             shoesRenderer.material = m_DataPlayer.baseShoes;
 
-            component.FindChild("Hair").gameObject.SetActive(true);
+            component.Find("Hair").gameObject.SetActive(true);
         }
 
         m_DataStoragePlayerStat.ResetStats();

@@ -1,7 +1,8 @@
-public enum EnumCollectibles
+public enum EnumAddInWorld
 {
     geode,
-    tree
+    tree,
+    shop
 }
 
 public enum EnumAudios

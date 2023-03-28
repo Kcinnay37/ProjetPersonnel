@@ -40,4 +40,16 @@ public class PlayerManager : MonoBehaviour
         StatePlayerControllerInventory statePlayerControllerInventory = (StatePlayerControllerInventory)stateMachinePlayer.GetState(EnumStatesPlayer.controllerInventory);
         return statePlayerControllerInventory.CollectResource(resource);
     }
+
+    public void CurrPlayerAddState(EnumStatesPlayer state)
+    {
+        StateMachinePlayer stateMachinePlayer = m_CurrPlayer.GetComponent<StateMachinePlayer>();
+        stateMachinePlayer.AddCurrState(state);
+    }
+
+    public void CurrPlayerRemoveState(EnumStatesPlayer state)
+    {
+        StateMachinePlayer stateMachinePlayer = m_CurrPlayer.GetComponent<StateMachinePlayer>();
+        stateMachinePlayer.PopCurrState(state);
+    }
 }

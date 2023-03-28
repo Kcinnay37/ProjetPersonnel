@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    [SerializeField] private EnumCollectibles m_DataType;
+    [SerializeField] private EnumAddInWorld m_DataType;
 
     private DataCollectible m_Data;
     private int m_CurrHealth;
@@ -31,7 +31,7 @@ public class Collectible : MonoBehaviour
         if(m_CurrHealth == 0)
         {
             ResourceManager.m_Instance.Drops(m_Data.drop, transform.position + new Vector3(m_Data.drop.offsetDrop.x, m_Data.drop.offsetDrop.y, 0));
-            CollectibleManager.m_Instance.DestroyCollectible(gameObject);
+            AddInWorldManager.m_Instance.DestroyCollectible(gameObject);
         }
     }
 

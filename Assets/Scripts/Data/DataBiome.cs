@@ -16,17 +16,18 @@ public class DataBiome : ScriptableObject
     }
 
     [System.Serializable]
-    public struct Collectible
+    public struct AddInWorld
     {
-        public EnumCollectibles collectibles;
+        public EnumAddInWorld collectibles;
         public float minValue;
         public float maxValue;
         [Range(0, 1000)]
         public int rarity;
+        public bool cantGoOverIt;
     }
 
     public List<Block> biomeBlocks = new List<Block>();
-    public List<Collectible> biomeCollectibles = new List<Collectible>();
+    public List<AddInWorld> biomeAdd = new List<AddInWorld>();
 
     [Header("")]
     [Tooltip("une valeur comprise entre 0,1 et 10 est généralement raisonnable")]

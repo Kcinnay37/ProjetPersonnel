@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectibleManager : MonoBehaviour
+public class AddInWorldManager : MonoBehaviour
 {
     [SerializeField] private float m_TimeToStart;
     [SerializeField] private float m_DelayCheckSpawn;
@@ -18,7 +18,7 @@ public class CollectibleManager : MonoBehaviour
     private Dictionary<Vector2Int, GameObject> m_ActiveCollectiblesPosKey;
     private Dictionary<GameObject, Vector2Int> m_ActiveCollectiblesObjectKey;
 
-    public static CollectibleManager m_Instance;
+    public static AddInWorldManager m_Instance;
 
 
     private void Awake()
@@ -49,7 +49,7 @@ public class CollectibleManager : MonoBehaviour
         {
             yield return new WaitForSeconds(m_TimeToStart);
 
-            Dictionary<Vector2Int, EnumCollectibles> dictCollectibles = Map.m_Instance.GetGrid().GetCollectible();
+            Dictionary<Vector2Int, EnumAddInWorld> dictCollectibles = Map.m_Instance.GetGrid().GetCollectible();
             Vector2Int point = Map.m_Instance.GetGrid().GetPoint();
 
             for(int x = point.x - (int)m_DistanceSpawn; x <= point.x + (int)m_DistanceSpawn; x++)
@@ -105,12 +105,18 @@ public class CollectibleManager : MonoBehaviour
 
             foreach (KeyValuePair<Vector2Int, GameObject> value in m_ActiveCollectiblesPosKey)
             {
-                Vector2Int belowPos = value.Key;
-                belowPos.y -= 1;
+                DataAddInWorld dataValue = (DataAddInWorld)Pool.m_Instance.GetData(Map.m_Instance.GetGrid().GetCollectible()[value.Key]);
 
-                if(dictBackGround.ContainsKey(grid[belowPos.x, belowPos.y]))
+                for (int x = 0; x <= dataValue.gridSpawnSideAndHeightSize.x; x++)
                 {
-                    listToDisable.Add(value.Value);
+                    Vector2Int belowPos1 = new Vector2Int(value.Key.x + x, value.Key.y - 1);
+                    Vector2Int belowPos2 = new Vector2Int(value.Key.x - x, value.Key.y - 1);
+
+                    if ((dictBackGround.ContainsKey(grid[belowPos1.x, belowPos1.y]) && dataValue.gridSpawn[dataValue.gridSpawnSideAndHeightSize.x + x, dataValue.gridSpawnSideAndHeightSize.y])
+                        || (dictBackGround.ContainsKey(grid[belowPos2.x, belowPos2.y]) && dataValue.gridSpawn[dataValue.gridSpawnSideAndHeightSize.x - x, dataValue.gridSpawnSideAndHeightSize.y]))
+                    {
+                        listToDisable.Add(value.Value);
+                    }
                 }
             }
 
@@ -128,15 +134,15 @@ public class CollectibleManager : MonoBehaviour
             return;
         }
 
-        Dictionary<Vector2Int, EnumCollectibles> dictCollectibles = Map.m_Instance.GetGrid().GetCollectible();
+        Dictionary<Vector2Int, EnumAddInWorld> dictCollectibles = Map.m_Instance.GetGrid().GetCollectible();
 
         GameObject collectible = Pool.m_Instance.GetObject(dictCollectibles[pos]);
-        DataCollectible dataCollectible = (DataCollectible)Pool.m_Instance.GetData(dictCollectibles[pos]);
+        DataAddInWorld dataCollectible = (DataAddInWorld)Pool.m_Instance.GetData(dictCollectibles[pos]);
 
         m_ActiveCollectiblesPosKey.Add(pos, collectible);
         m_ActiveCollectiblesObjectKey.Add(collectible, pos);
 
-        collectible.transform.position = new Vector3((float)pos.x + dataCollectible.offsetSpawn.x, (float)pos.y + dataCollectible.offsetSpawn.y, -0.1f);
+        collectible.transform.position = new Vector3((float)pos.x + dataCollectible.offsetSpawn.x, (float)pos.y + dataCollectible.offsetSpawn.y, -1f);
         collectible.SetActive(true);
     }
 
@@ -147,7 +153,7 @@ public class CollectibleManager : MonoBehaviour
             return;
         }
 
-        Dictionary<Vector2Int, EnumCollectibles> dictCollectibles = Map.m_Instance.GetGrid().GetCollectible();
+        Dictionary<Vector2Int, EnumAddInWorld> dictCollectibles = Map.m_Instance.GetGrid().GetCollectible();
 
         GameObject collectible = m_ActiveCollectiblesPosKey[pos];
         m_ActiveCollectiblesPosKey.Remove(pos);
@@ -163,7 +169,7 @@ public class CollectibleManager : MonoBehaviour
             return;
         }
 
-        Dictionary<Vector2Int, EnumCollectibles> dictCollectibles = Map.m_Instance.GetGrid().GetCollectible();
+        Dictionary<Vector2Int, EnumAddInWorld> dictCollectibles = Map.m_Instance.GetGrid().GetCollectible();
 
         Vector2Int pos = m_ActiveCollectiblesObjectKey[collectible];
         m_ActiveCollectiblesPosKey.Remove(pos);

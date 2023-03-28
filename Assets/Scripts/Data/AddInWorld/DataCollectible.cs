@@ -7,47 +7,11 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 
 [CreateAssetMenu]
-public class DataCollectible : ScriptableObject
+public class DataCollectible : DataAddInWorld
 {
-    public EnumCollectibles instanceType;
     public int health;
-    public Vector2 offsetSpawn;
     public Drops drop;
     public List<EnumTools> m_ToolsCanInteract;
-
-    public Vector2Int gridSpawnSideAndHeightSize;
-    public bool[,] gridSpawn;
-
-    public void LoadData()
-    {
-        string name = this.name;
-        string saveFilePath = Path.Combine(Application.persistentDataPath, "SaveObject", name + ".json");
-
-        if (File.Exists(saveFilePath))
-        {
-            string json = File.ReadAllText(saveFilePath);
-            this.gridSpawn = JsonConvert.DeserializeObject<bool[,]>(json);
-        }
-        else if (this.gridSpawn == null)
-        {
-            CreateGrid();
-            SaveData();
-        }
-    }
-
-    public void SaveData()
-    {
-        string name = this.name;
-        string saveFilePath = Application.persistentDataPath + "/SaveObject/" + name + ".json";
-
-        string json = JsonConvert.SerializeObject(this.gridSpawn);
-        File.WriteAllText(saveFilePath, json);
-    }
-
-    public void CreateGrid()
-    {
-        gridSpawn = new bool[1 + (gridSpawnSideAndHeightSize.x * 2), 1 + gridSpawnSideAndHeightSize.y];
-    }
 }
 
 [CustomEditor(typeof(DataCollectible))]

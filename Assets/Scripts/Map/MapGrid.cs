@@ -8,7 +8,7 @@ public class MapGrid
 
     private EnumBlocks[,] m_GridBlock;
     private EnumBiomes[,] m_GridBiomes;
-    private Dictionary<Vector2Int, EnumCollectibles> m_CollectiblePos;
+    private Dictionary<Vector2Int, EnumAddInWorld> m_ResourceInWorldPos;
     private Vector2Int m_CurrPoint;
 
     public MapGrid(Map map)
@@ -22,7 +22,7 @@ public class MapGrid
     {
         m_GridBlock = new EnumBlocks[m_Map.GetData().nbChunkRight * m_Map.GetData().chunkWidth, m_Map.GetData().nbChunkDown * m_Map.GetData().chunkHeight];
         m_GridBiomes = new EnumBiomes[m_Map.GetData().nbChunkRight, m_Map.GetData().nbChunkDown];
-        m_CollectiblePos = new Dictionary<Vector2Int, EnumCollectibles>();
+        m_ResourceInWorldPos = new Dictionary<Vector2Int, EnumAddInWorld>();
     }
 
     public void InitInitialPoint()
@@ -41,9 +41,9 @@ public class MapGrid
         return block;
     }
 
-    public Dictionary<Vector2Int, EnumCollectibles> GetCollectible()
+    public Dictionary<Vector2Int, EnumAddInWorld> GetCollectible()
     {
-        return m_CollectiblePos;
+        return m_ResourceInWorldPos;
     }
 
     private void FindInitialPoint(int offSet)

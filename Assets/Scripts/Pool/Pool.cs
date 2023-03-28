@@ -85,7 +85,7 @@ public class Pool : MonoBehaviour
     [System.Serializable]
     public struct Collectible
     {
-        public EnumCollectibles type;
+        public EnumAddInWorld type;
         public UnityEngine.Object value;
     }
 

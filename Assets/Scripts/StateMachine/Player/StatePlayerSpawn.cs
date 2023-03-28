@@ -10,7 +10,7 @@ public class StatePlayerSpawn : State
     public StatePlayerSpawn(StateMachine stateMachine) : base(stateMachine)
     {
         Vector3 pos = Map.m_Instance.GetGrid().GetPointToWorld();
-        pos.z = -1;
+        pos.z = -2;
         pos.x += offset;
         pos.y += 0.1f;
 
@@ -23,7 +23,7 @@ public class StatePlayerSpawn : State
         virtualCamera.Follow = GameObject.Find("FollowCam").transform;
         
         Vector3 pos = Map.m_Instance.GetGrid().GetPointToWorld();
-        pos.z = -1;
+        pos.z = -2;
         pos.x += offset;
         pos.y += 0.1f;
 

@@ -203,7 +203,7 @@ public class MonsterManager : MonoBehaviour
 
         int index = Random.Range(0, spawnPoint[monsterSpawn.typeSpawn].Count);
         Vector2Int localPos = spawnPoint[monsterSpawn.typeSpawn][index];
-        Vector3 worldPos = new Vector3(localPos.x + 0.5f, localPos.y, -1.0f);
+        Vector3 worldPos = new Vector3(localPos.x + 0.5f, localPos.y, -2.0f);
         objectMonster.transform.position = worldPos;
 
         m_EnableMonster.Add(objectMonster, monsterSpawn);
