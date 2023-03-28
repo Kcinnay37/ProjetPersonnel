@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.transform.CompareTag("Player"))
-        {
-            Debug.Log("EnterShop");
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
-            Debug.Log("ExitShop");
+            UI.m_Instance.GetUIShop().InitUI();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            UI.m_Instance.GetUIShop().CloseUI();
         }
     }
 }

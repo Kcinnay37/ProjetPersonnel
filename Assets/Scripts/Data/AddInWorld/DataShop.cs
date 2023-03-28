@@ -9,7 +9,43 @@ using System.Collections.Generic;
 [CreateAssetMenu]
 public class DataShop : DataAddInWorld
 {
+    public struct ItemShop
+    {
 
+    }
+
+    public struct Recipe
+    {
+
+    }
+
+    public struct ConsumableInShop
+    {
+        public EnumConsumables type;
+        public int nb;
+        public Recipe recipe;
+    }
+
+    public struct EquipementInShop
+    {
+        public EnumEquipements type;
+        public int nb;
+        public Recipe recipe;
+    }
+
+    public struct MaterialInShop
+    {
+        public EnumMaterial type;
+        public int nb;
+        public Recipe recipe;
+    }
+
+    public struct ToolInShop
+    {
+        public EnumTools type;
+        public int nb;
+        public Recipe recipe;
+    }
 }
 
 [CustomEditor(typeof(DataShop))]
