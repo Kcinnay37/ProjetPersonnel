@@ -15,3 +15,8 @@ MonoBehaviour:
   instanceType: 2
   offsetSpawn: {x: -7, y: 0}
   gridSpawnSideAndHeightSize: {x: 4, y: 8}
+  itemShop:
+    consumableInShop: []
+    equipementInShop: []
+    materialInShop: []
+    toolInShop: []

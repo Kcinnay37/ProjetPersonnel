@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    [SerializeField] private EnumAddInWorld m_Data;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.CompareTag("Player"))
         {
-            UI.m_Instance.GetUIShop().InitUI();
+            DataShop dataShop = (DataShop)Pool.m_Instance.GetData(m_Data);
+            UI.m_Instance.GetUIShop().InitUI(dataShop.itemShop);
         }
     }
 

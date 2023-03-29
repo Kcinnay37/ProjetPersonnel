@@ -12,7 +12,7 @@ public class UIShop
         m_UI = ui;
     }
 
-    public void InitUI()
+    public void InitUI(DataShop.ItemShop itemShop)
     {
         if(m_UIView == null)
         {

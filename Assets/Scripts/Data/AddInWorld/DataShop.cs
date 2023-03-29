@@ -9,43 +9,72 @@ using System.Collections.Generic;
 [CreateAssetMenu]
 public class DataShop : DataAddInWorld
 {
-    public struct ItemShop
-    {
-
-    }
-
-    public struct Recipe
-    {
-
-    }
-
+    [System.Serializable]
     public struct ConsumableInShop
     {
         public EnumConsumables type;
-        public int nb;
         public Recipe recipe;
     }
-
+    [System.Serializable]
     public struct EquipementInShop
     {
         public EnumEquipements type;
-        public int nb;
         public Recipe recipe;
     }
-
+    [System.Serializable]
     public struct MaterialInShop
     {
         public EnumMaterial type;
-        public int nb;
         public Recipe recipe;
     }
-
+    [System.Serializable]
     public struct ToolInShop
     {
         public EnumTools type;
-        public int nb;
         public Recipe recipe;
     }
+    [System.Serializable]
+    public struct ConsumableInRecipe
+    {
+        public EnumConsumables type;
+        public int nb;
+    }
+    [System.Serializable]
+    public struct EquipementInRecipe
+    {
+        public EnumEquipements type;
+        public int nb;
+    }
+    [System.Serializable]
+    public struct MaterialInRecipe
+    {
+        public EnumMaterial type;
+        public int nb;
+    }
+    [System.Serializable]
+    public struct ToolInRecipe
+    {
+        public EnumTools type;
+        public int nb;
+    }
+    [System.Serializable]
+    public struct ItemShop
+    {
+        public List<ConsumableInShop> consumableInShop;
+        public List<EquipementInShop> equipementInShop;
+        public List<MaterialInShop> materialInShop;
+        public List<ToolInShop> toolInShop;
+    }
+    [System.Serializable]
+    public struct Recipe
+    {
+        public List<ConsumableInRecipe> consumableInRecipe;
+        public List<EquipementInRecipe> equipementInRecipe;
+        public List<MaterialInRecipe> materialInRecipe;
+        public List<ToolInRecipe> toolInRecipe;
+    }
+
+    public ItemShop itemShop;
 }
 
 [CustomEditor(typeof(DataShop))]
