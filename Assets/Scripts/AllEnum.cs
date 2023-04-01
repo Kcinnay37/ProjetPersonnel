@@ -62,12 +62,19 @@ public enum EnumMaps
 
 public enum EnumMaterial
 {
-    instance
+    instance,
+    treeBranch
 }
 
 public enum EnumMonster
 {
     zombie
+}
+
+public enum EnumMount
+{
+    inctance,
+    broom
 }
 
 public enum EnumNPCs
@@ -121,6 +128,8 @@ public enum EnumStatesPlayer
     none,
     spawn,
     stat,
+    controllerMount,
+    material
 }
 
 public enum EnumStatesUI

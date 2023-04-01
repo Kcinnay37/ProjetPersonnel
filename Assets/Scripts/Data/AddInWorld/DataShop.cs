@@ -34,6 +34,12 @@ public class DataShop : DataAddInWorld
         public Recipe recipe;
     }
     [System.Serializable]
+    public struct MountInShop
+    {
+        public EnumMount type;
+        public Recipe recipe;
+    }
+    [System.Serializable]
     public struct ConsumableInRecipe
     {
         public EnumConsumables type;
@@ -58,12 +64,25 @@ public class DataShop : DataAddInWorld
         public int nb;
     }
     [System.Serializable]
+    public struct MountInRecipe
+    {
+        public EnumMount type;
+        public int nb;
+    }
+    [System.Serializable]
+    public struct BlockInRecipe
+    {
+        public EnumBlocks type;
+        public int nb;
+    }
+    [System.Serializable]
     public struct ItemShop
     {
         public List<ConsumableInShop> consumableInShop;
         public List<EquipementInShop> equipementInShop;
         public List<MaterialInShop> materialInShop;
         public List<ToolInShop> toolInShop;
+        public List<MountInShop> mountInShop;
     }
     [System.Serializable]
     public struct Recipe
@@ -72,9 +91,12 @@ public class DataShop : DataAddInWorld
         public List<EquipementInRecipe> equipementInRecipe;
         public List<MaterialInRecipe> materialInRecipe;
         public List<ToolInRecipe> toolInRecipe;
+        public List<MountInRecipe> mountInRecipe;
+        public List<BlockInRecipe> blockInRecipe;
     }
 
     public ItemShop itemShop;
+    public int nbItem;
 }
 
 [CustomEditor(typeof(DataShop))]

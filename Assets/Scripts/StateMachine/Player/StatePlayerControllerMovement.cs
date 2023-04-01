@@ -21,6 +21,14 @@ public class StatePlayerControllerMovement : State
         m_Animator = m_StateMachine.GetComponent<Animator>();
     }
 
+    public override void End()
+    {
+        Vector3 velo = m_RigidBody.velocity;
+        velo.x = 0;
+        m_RigidBody.velocity = velo;
+        UpdateAnimator();
+    }
+
     public override void Update()
     {
         UpdateMove();

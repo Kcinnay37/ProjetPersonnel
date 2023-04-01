@@ -20,6 +20,11 @@ public class StatePlayerCollectResourceTool : StateRessource
 
     public override void Update()
     {
+        if (m_StatePlayerControllerMovement == null)
+        {
+            m_StatePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
+        }
+
         Vector2 mousePosition = Input.mousePosition;
         Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
         Vector2 firstPos = m_RayFirstPos.position;
@@ -106,6 +111,11 @@ public class StatePlayerCollectResourceTool : StateRessource
         if (m_CoroutineAttack != null)
         {
             return;
+        }
+
+        if (m_StatePlayerControllerMovement == null)
+        {
+            m_StatePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
         }
 
         Vector2 mousePosition = Input.mousePosition;

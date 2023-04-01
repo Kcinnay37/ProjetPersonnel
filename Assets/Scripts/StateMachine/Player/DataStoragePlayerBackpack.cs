@@ -101,4 +101,27 @@ public class DataStoragePlayerBackpack : DataStorage
 
         return false;
     }
+
+    public bool DecrementRessource(object resource)
+    {
+        int index = m_Inventory.DecrementResource(resource);
+
+        if (index != -1)
+        {
+            UI.m_Instance.GetUIBackpack().UpdateSlotAt(index, m_Inventory.GetCase(index));
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool ContainResource(object type, int nb)
+    {
+        if (m_Inventory.ContainResource(type, nb))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

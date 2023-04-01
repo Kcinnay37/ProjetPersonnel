@@ -76,6 +76,10 @@ public class StatePlayerControllerInventory : State
         {
             CollectResource(EnumEquipements.firstHat);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            CollectResource(EnumMount.broom);
+        }
 
         if (Input.GetKeyDown(m_GlobalDataPlayer.openBackpackKey))
         {
@@ -527,6 +531,35 @@ public class StatePlayerControllerInventory : State
         if(resource != null)
         {
             DropResource(resource);
+        }
+    }
+
+    public bool ContainResource(object type, int nb)
+    {
+        if(m_DataStoragePlayerEquip.ContainResource(type, nb))
+        {
+            return true;
+        }
+        if(m_DataStoragePlayerBackpack.ContainResource(type, nb))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void RemoveResource(object type, int nb)
+    {
+        for(int i = 0; i < nb; i++)
+        {
+            if(m_DataStoragePlayerEquip.DecrementRessource(type))
+            {
+                continue;
+            }
+            if(m_DataStoragePlayerBackpack.DecrementRessource(type))
+            {
+                continue;
+            }
         }
     }
 }

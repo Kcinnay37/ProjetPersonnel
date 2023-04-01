@@ -19,4 +19,26 @@ MonoBehaviour:
     consumableInShop: []
     equipementInShop: []
     materialInShop: []
-    toolInShop: []
+    toolInShop:
+    - type: 3
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe:
+        - type: 1
+          nb: 5
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 1
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe:
+        - type: 1
+          nb: 3
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    mountInShop: []
+  nbItem: 2

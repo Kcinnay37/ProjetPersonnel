@@ -97,6 +97,13 @@ public class Pool : MonoBehaviour
     }
 
     [System.Serializable]
+    public struct Mount
+    {
+        public EnumMount type;
+        public UnityEngine.Object value;
+    }
+
+    [System.Serializable]
     public struct SpecialResource
     {
         public EnumSpecialResources type;
@@ -168,6 +175,10 @@ public class Pool : MonoBehaviour
     [Header("Material")]
     [SerializeField] List<Material> m_InstanceMaterial;
     [SerializeField] List<Material> m_DataMaterial;
+
+    [Header("Mount")]
+    [SerializeField] List<Mount> m_InstanceMount;
+    [SerializeField] List<Mount> m_DataMount;
 
     [Header("SpecialResource")]
     [SerializeField] List<SpecialResource> m_InstanceSpecialResource;
@@ -287,6 +298,11 @@ public class Pool : MonoBehaviour
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
         }
 
+        foreach (Mount value in m_InstanceMount)
+        {
+            m_AvailableInstancePool.Add(value.type, new List<GameObject>());
+        }
+
         foreach (SpecialResource value in m_InstanceSpecialResource)
         {
             m_AvailableInstancePool.Add(value.type, new List<GameObject>());
@@ -377,6 +393,11 @@ public class Pool : MonoBehaviour
             m_InstancePool.Add(value.type, (GameObject)value.value);
         }
 
+        foreach (Mount value in m_InstanceMount)
+        {
+            m_InstancePool.Add(value.type, (GameObject)value.value);
+        }
+
         foreach (SpecialResource value in m_InstanceSpecialResource)
         {
             m_InstancePool.Add(value.type, (GameObject)value.value);
@@ -462,6 +483,11 @@ public class Pool : MonoBehaviour
         }
 
         foreach (Material value in m_DataMaterial)
+        {
+            m_DataPool.Add(value.type, (ScriptableObject)value.value);
+        }
+
+        foreach (Mount value in m_DataMount)
         {
             m_DataPool.Add(value.type, (ScriptableObject)value.value);
         }

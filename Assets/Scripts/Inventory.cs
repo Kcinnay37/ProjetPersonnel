@@ -111,6 +111,32 @@ public class Inventory : MonoBehaviour
         return -1;
     }
 
+    public int DecrementResource(object dataResource)
+    {
+        for (int i = 0; i < GetInventorySize(); i++)
+        {
+            if (m_Inventory[i].resource.Equals(dataResource))
+            {
+                DataResource resource = (DataResource)Pool.m_Instance.GetData(dataResource);
+                if (m_Inventory[i].currNb > 0)
+                {
+                    InventoryCase temp = m_Inventory[i];
+                    temp.currNb--;
+                    m_Inventory[i] = temp;
+
+                    if(temp.currNb == 0)
+                    {
+                        ClearCase(i);
+                    }
+
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+    }
+
     public bool IncrementCountAt(int index)
     {
         InventoryCase temp = m_Inventory[index];
@@ -156,5 +182,27 @@ public class Inventory : MonoBehaviour
     public int GetInventorySize()
     {
         return m_Inventory.Count;
+    }
+
+    public bool ContainResource(object type, int nb)
+    {
+        int currNb = nb;
+
+        for (int i = 0; i < GetInventorySize(); i++)
+        {
+            if (m_Inventory[i].resource.Equals(type))
+            {
+                currNb -= m_Inventory[i].currNb;
+            }
+        }
+
+        if(currNb <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

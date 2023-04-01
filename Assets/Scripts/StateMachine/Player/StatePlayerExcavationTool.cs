@@ -84,6 +84,11 @@ public class StatePlayerExcavationTool : StateRessource
             ResetValue();
         }
 
+        if(m_StatePlayerControllerMovement == null)
+        {
+            m_StatePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
+        }
+
         Vector2 mousePosition = Input.mousePosition;
         Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
         Vector2 firstPos = m_RayFirstPos.position;

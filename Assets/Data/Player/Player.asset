@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftKey: 97
   rightKey: 100
+  upKey: 119
+  downKey: 115
   runKey: 304
   jumpKeyCode: 32
   primarySlotKey: 323
@@ -23,7 +25,7 @@ MonoBehaviour:
   baseWalkSpeed: 5
   baseRunSpeed: 10
   baseJumpForce: 325
-  baseSizeEquip: 4
+  baseSizeEquip: 6
   baseSizeBackPack: 0
   baseMaxHealth: 0
   baseMaxArmor: 0
@@ -31,6 +33,7 @@ MonoBehaviour:
   baseDamage: 0
   baseAttackSpeed: 0
   blockDropDistance: 3
+  gravityScale: 1.7
   baseHat: {fileID: 2100000, guid: 25e0dc1e357f2a54ab7ff1d29f592f6b, type: 2}
   baseCloth: {fileID: 2100000, guid: cb3e2bcc2dd054e4baf73051a2788525, type: 2}
   basePants: {fileID: 2100000, guid: 86ac9b22572aa484483598d8e5f65f11, type: 2}

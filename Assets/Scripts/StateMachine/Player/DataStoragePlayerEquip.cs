@@ -204,6 +204,26 @@ public class DataStoragePlayerEquip : DataStorage
         return false;
     }
 
+    public bool DecrementRessource(object resource)
+    {
+        int index = m_InventoryEquip.DecrementResource(resource);
+
+        if (index != -1)
+        {
+            UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(index, m_InventoryEquip.GetCase(index));
+            return true;
+        }
+
+        index = m_InventoryEquipSecondary.DecrementResource(resource);
+
+        if (index != -1)
+        {
+            UI.m_Instance.GetUIPlayerEquip().UpdateSlotAt(index + 2, m_InventoryEquipSecondary.GetCase(index));
+            return true;
+        }
+        return false;
+    }
+
     private void UnEquip()
     {
         if (m_IndexEquip == -1)
@@ -221,7 +241,9 @@ public class DataStoragePlayerEquip : DataStorage
 
     public void Equip(int index)
     {
-        if(m_IndexEquip == index)
+        if (UI.m_Instance.GetUIShop().GetShopIsOpen()) return;
+
+        if (m_IndexEquip == index)
         {
             ActionKeyDown();
         }
@@ -240,6 +262,7 @@ public class DataStoragePlayerEquip : DataStorage
     public void ActionKeyDown()
     {
         if (m_IndexEquip == -1) return;
+        if (UI.m_Instance.GetUIShop().GetShopIsOpen()) return;
 
         InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
         DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
@@ -250,6 +273,7 @@ public class DataStoragePlayerEquip : DataStorage
     public void ActionOldKey()
     {
         if (m_IndexEquip == -1) return;
+        if (UI.m_Instance.GetUIShop().GetShopIsOpen()) return;
 
         InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
         DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
@@ -260,6 +284,7 @@ public class DataStoragePlayerEquip : DataStorage
     public void ActionKeyUp()
     {
         if (m_IndexEquip == -1) return;
+        if (UI.m_Instance.GetUIShop().GetShopIsOpen()) return;
 
         InventoryCase currCase = m_InventoryEquip.GetCase(m_IndexEquip);
         DataResource resource = (DataResource)Pool.m_Instance.GetData(currCase.resource);
@@ -370,5 +395,19 @@ public class DataStoragePlayerEquip : DataStorage
         }
 
         m_DataStoragePlayerStat.ResetStats();
+    }
+
+    public bool ContainResource(object type, int nb)
+    {
+        if(m_InventoryEquip.ContainResource(type, nb))
+        {
+            return true;
+        }
+        if(m_InventoryEquipSecondary.ContainResource(type, nb))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -54,4 +54,20 @@ public class UI : MonoBehaviour
     {
         return m_UIShop;
     }
+
+    public void Buy()
+    {
+        if(m_UIShop != null)
+        {
+            m_UIShop.Buy();
+        }
+    }
+
+    public void CheckClick()
+    {
+        if(m_UIShop != null)
+        {
+            m_UIShop.CheckClick();
+        }
+    }
 }

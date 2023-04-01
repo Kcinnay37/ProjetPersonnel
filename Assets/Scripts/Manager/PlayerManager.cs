@@ -52,4 +52,11 @@ public class PlayerManager : MonoBehaviour
         StateMachinePlayer stateMachinePlayer = m_CurrPlayer.GetComponent<StateMachinePlayer>();
         stateMachinePlayer.PopCurrState(state);
     }
+
+    public State CurrPlayerGetState(EnumStatesPlayer state)
+    {
+        StateMachinePlayer stateMachinePlayer = m_CurrPlayer.GetComponent<StateMachinePlayer>();
+        State currState = stateMachinePlayer.GetState(state);
+        return currState;
+    }
 }

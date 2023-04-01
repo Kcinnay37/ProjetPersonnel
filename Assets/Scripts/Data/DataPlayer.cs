@@ -8,6 +8,8 @@ public class DataPlayer : ScriptableObject
     [Header("Key")]
     public KeyCode leftKey;
     public KeyCode rightKey;
+    public KeyCode upKey;
+    public KeyCode downKey;
     public KeyCode runKey;
 
     public KeyCode jumpKeyCode;
@@ -35,6 +37,8 @@ public class DataPlayer : ScriptableObject
     public int baseAttackSpeed;
 
     public float blockDropDistance;
+
+    public float gravityScale;
 
     public Material baseHat;
     public Material baseCloth;
