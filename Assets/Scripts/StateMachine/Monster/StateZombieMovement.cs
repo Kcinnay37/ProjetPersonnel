@@ -159,10 +159,20 @@ public class StateZombieMovement : State
             EnumBlocks[,] grid = Map.m_Instance.GetGrid().GetGrid();
             Vector2Int dest = allPos[index];
 
+            if (dest.y - 1 < 0)
+            {
+                return false;
+            }
+
             while (valueCanGo.ContainsKey(grid[dest.x, dest.y - 1]))
             {
                 index = Random.Range(0, allPos.Count);
                 dest = allPos[index];
+
+                if(dest.y - 1 < 0)
+                {
+                    return false;
+                }
             }
 
             if (dest.Equals(localPos))

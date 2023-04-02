@@ -92,6 +92,13 @@ public class MapPathfinding
             bool goBot = true;
             for (int x = currNode.position.x; x < currNode.position.x + sizeObject.x; x++)
             {
+                if(x < 0 || x >= grid.GetLength(0) || currNode.position.y - 1 < 0)
+                {
+                    goBot = false;
+                    break;
+                }
+
+
                 if (!typeBlockCanGo.ContainsKey(grid[x, currNode.position.y - 1]))
                 {
                     goBot = false;
@@ -102,6 +109,12 @@ public class MapPathfinding
             bool goTop = true;
             for (int x = currNode.position.x; x < currNode.position.x + sizeObject.x; x++)
             {
+                if(x < 0 || x >= grid.GetLength(0) || currNode.position.y + sizeObject.y >= grid.GetLength(1))
+                {
+                    goTop = false;
+                    break;
+                }
+
                 if (!typeBlockCanGo.ContainsKey(grid[x, currNode.position.y + sizeObject.y]))
                 {
                     goTop = false;
@@ -112,6 +125,12 @@ public class MapPathfinding
             bool goRight = true;
             for (int y = currNode.position.y; y < currNode.position.y + sizeObject.y; y++)
             {
+                if (y < 0 || y >= grid.GetLength(1) || currNode.position.x + sizeObject.x >= grid.GetLength(0))
+                {
+                    goRight = false;
+                    break;
+                }
+
                 if (!typeBlockCanGo.ContainsKey(grid[currNode.position.x + sizeObject.x, y]))
                 {
                     goRight = false;
@@ -122,6 +141,12 @@ public class MapPathfinding
             bool goLeft = true;
             for (int y = currNode.position.y; y < currNode.position.y + sizeObject.y; y++)
             {
+                if (y < 0 || y >= grid.GetLength(1) || currNode.position.x - 1 < 0)
+                {
+                    goRight = false;
+                    break;
+                }
+
                 if (!typeBlockCanGo.ContainsKey(grid[currNode.position.x - 1, y]))
                 {
                     goLeft = false;

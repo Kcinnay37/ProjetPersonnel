@@ -18,6 +18,7 @@ public class StatePlayerSpawn : State
         virtualCamera.Follow = GameObject.Find("FollowCam").transform;
         
         Vector3 pos = Map.m_Instance.GetGrid().GetPointToWorld();
+
         pos.z = -3;
         pos.x += offset;
         pos.y += 0.1f;

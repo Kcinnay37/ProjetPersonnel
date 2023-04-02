@@ -1,5 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
@@ -99,6 +101,7 @@ public class DataShop : DataAddInWorld
     public int nbItem;
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(DataShop))]
 public class DataShopEditor : Editor
 {
@@ -140,3 +143,4 @@ public class DataShopEditor : Editor
         }
     }
 }
+#endif

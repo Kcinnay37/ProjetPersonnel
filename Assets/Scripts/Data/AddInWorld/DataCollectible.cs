@@ -1,5 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
@@ -14,6 +16,7 @@ public class DataCollectible : DataAddInWorld
     public List<EnumTools> m_ToolsCanInteract;
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(DataCollectible))]
 public class DataCollectibleEditor : Editor
 {
@@ -55,3 +58,4 @@ public class DataCollectibleEditor : Editor
         }
     }
 }
+#endif

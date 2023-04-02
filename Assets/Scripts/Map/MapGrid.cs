@@ -81,7 +81,7 @@ public class MapGrid
 
     public void SetPoint(Vector3 worldPos)
     {
-        if (worldPos == Vector3.zero) return;
+        if ((Vector2)worldPos == Vector2.zero) return;
 
         DataBlock dataBlock = (DataBlock)Pool.m_Instance.GetData(m_GridBlock[0, 0]);
         Vector3Int localPos = dataBlock.map.WorldToCell(worldPos);

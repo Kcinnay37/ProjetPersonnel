@@ -16,11 +16,11 @@ public class DataAddInWorld : ScriptableObject
     public void LoadData()
     {
         string name = this.name;
-        string saveFilePath = Path.Combine(Application.persistentDataPath, "SaveObject", name + ".json");
+        TextAsset jsonFile = Resources.Load<TextAsset>("SaveObject/" + name);
 
-        if (File.Exists(saveFilePath))
+        if (jsonFile != null)
         {
-            string json = File.ReadAllText(saveFilePath);
+            string json = jsonFile.text;
             this.gridSpawn = JsonConvert.DeserializeObject<bool[,]>(json);
         }
         else if (this.gridSpawn == null)
@@ -33,9 +33,17 @@ public class DataAddInWorld : ScriptableObject
     public void SaveData()
     {
         string name = this.name;
-        string saveFilePath = Application.persistentDataPath + "/SaveObject/" + name + ".json";
 
         string json = JsonConvert.SerializeObject(this.gridSpawn);
+
+        // Créez le dossier "Resources/SaveObject" s'il n'existe pas
+        string saveFolderPath = Path.Combine(Application.dataPath, "Resources", "SaveObject");
+        if (!Directory.Exists(saveFolderPath))
+        {
+            Directory.CreateDirectory(saveFolderPath);
+        }
+
+        string saveFilePath = Path.Combine(saveFolderPath, name + ".json");
         File.WriteAllText(saveFilePath, json);
     }
 
