@@ -74,7 +74,8 @@ public class StateZombieMovement : State
 
             if (m_CoroutineMoving == null)
             {
-                Vector3 pos = m_StateMachine.transform.position;
+                //Vector3 pos = m_StateMachine.transform.position;
+                Vector3 pos = m_StateMachine.transform.Find("BotLeftPosition").position;
                 Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(pos);
                 Vector2Int dir = m_PointToGo - localPos;
 
@@ -119,13 +120,16 @@ public class StateZombieMovement : State
             {
                 break;
             }
+            
+            if(dir.x != 0)
+            {
+                Vector2 velo = m_Rigidbody.velocity;
+                velo.x = (int)Mathf.Sign(dir.x) * m_GlobalDataMonster.moveSpeed;
+                m_Rigidbody.velocity = velo;
 
-            Vector2 velo = m_Rigidbody.velocity;
-            velo.x = (int)Mathf.Sign(dir.x) * m_GlobalDataMonster.moveSpeed;
-            m_Rigidbody.velocity = velo;
-
-            m_ZombieDir = (int)Mathf.Sign(dir.x) * 1;
-
+                m_ZombieDir = (int)Mathf.Sign(dir.x) * 1;
+            }
+           
             yield return null;
         }
 
@@ -141,8 +145,9 @@ public class StateZombieMovement : State
         //Prend un nouveau chemin
 
         // va chercher tout les moves possible relatif a la position
-        Vector3 worldPos = m_StateMachine.transform.position;
-        worldPos.y += 0.2f;
+        //Vector3 worldPos = m_StateMachine.transform.position;
+        //worldPos.y += 0.2f;
+        Vector3 worldPos = m_StateMachine.transform.Find("BotLeftPosition").position;
         Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldPos);
 
         Dictionary<Vector2Int, MapPathfinding.Node> m_AllPossiblePath;
@@ -206,8 +211,9 @@ public class StateZombieMovement : State
         //Prend un nouveau chemin
 
         // va chercher tout les moves possible relatif a la position
-        Vector3 worldPos = m_StateMachine.transform.position;
-        worldPos.y += 0.2f;
+        //Vector3 worldPos = m_StateMachine.transform.position;
+        //worldPos.y += 0.2f;
+        Vector3 worldPos = m_StateMachine.transform.Find("BotLeftPosition").position;
         Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldPos);
 
         Dictionary<Vector2Int, MapPathfinding.Node> m_AllPossiblePath;
@@ -248,7 +254,6 @@ public class StateZombieMovement : State
                 return true;
             }
         }
-
 
         return false;
     }

@@ -22,7 +22,7 @@ MonoBehaviour:
   maxHealth: 100
   waitForDispawn: 2
   delayStopAttackPlayer: 2
-  sizeInAstar: {x: 3, y: 3}
+  sizeInAstar: {x: 2, y: 3}
   jumpHeightInAstar: 1
   airMoveSpeedInAstar: 2
   drop:

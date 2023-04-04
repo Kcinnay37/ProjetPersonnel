@@ -35,7 +35,7 @@ public class StatePlayerControllerMovement : State
         UpdateJump();
         UpdateAnimator();
 
-        if (Input.GetKeyDown(KeyCode.Mouse3))
+        if (Input.GetKeyDown(KeyCode.Mouse2))
         {
             m_StateMachine.StartCoroutine(testo());
         }
@@ -52,12 +52,11 @@ public class StatePlayerControllerMovement : State
         Vector2Int localPlayerPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(playerWorldPos);
 
         
-        Dictionary<Vector2Int, MapPathfinding.Node> posiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPlayerPos, new Vector2Int(3, 3), 1, 2);
+        Dictionary<Vector2Int, MapPathfinding.Node> posiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPlayerPos, new Vector2Int(2, 3), 1, 2);
 
 
         if (posiblePath.ContainsKey(localMousePos))
         {
-            Debug.Log("test");
             MapPathfinding.Node node = posiblePath[localMousePos];
             while (!node.position.Equals(localPlayerPos))
             {

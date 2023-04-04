@@ -7631,7 +7631,7 @@ MonoBehaviour:
     maxStrength: 2
     offsetStrength: 0
     monsterSpawn:
-    - monster: 0
+    - monster: 1
       typeSpawn: 2
       strength: 2
       rarity: 1000
