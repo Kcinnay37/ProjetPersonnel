@@ -394,7 +394,7 @@ public class DataStoragePlayerEquip : DataStorage
             component.Find("Hair").gameObject.SetActive(true);
         }
 
-        m_DataStoragePlayerStat.ResetStats();
+        m_DataStoragePlayerStat.ResetMaxStats();
     }
 
     public bool ContainResource(object type, int nb)

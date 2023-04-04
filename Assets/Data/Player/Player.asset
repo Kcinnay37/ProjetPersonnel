@@ -26,12 +26,16 @@ MonoBehaviour:
   baseRunSpeed: 10
   baseJumpForce: 325
   baseSizeEquip: 6
-  baseSizeBackPack: 0
-  baseMaxHealth: 0
-  baseMaxArmor: 0
-  baseMaxEnergy: 0
-  baseDamage: 0
-  baseAttackSpeed: 0
+  baseSizeBackPack: 1
+  baseMaxHealth: 100
+  baseMaxArmor: 50
+  baseMaxEnergy: 100
+  baseDamage: 30
+  baseAttackSpeed: 1
+  regeneArmor: 5
+  regeneEnergy: 5
+  waitForRegeneArmor: 1
+  waitForRegeneEnergy: 1
   blockDropDistance: 3
   gravityScale: 1.7
   baseHat: {fileID: 2100000, guid: 25e0dc1e357f2a54ab7ff1d29f592f6b, type: 2}

@@ -59,4 +59,11 @@ public class PlayerManager : MonoBehaviour
         State currState = stateMachinePlayer.GetState(state);
         return currState;
     }
+
+    public void CurrPlayerTakeDamage(float damage)
+    {
+        StateMachinePlayer stateMachinePlayer = m_CurrPlayer.GetComponent<StateMachinePlayer>();
+        DataStoragePlayerStat stat = (DataStoragePlayerStat)stateMachinePlayer.GetDataStorage(EnumStatesPlayer.stat);
+        stat.TakeDamage(damage);
+    }
 }

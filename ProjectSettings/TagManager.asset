@@ -8,6 +8,7 @@ TagManager:
   - ResourceInWorld
   - Enemie
   - Collectible
+  - EnemieDead
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - ResourceCantTake
   - ResourceCanTake
   - Enemie
-  - 
+  - EnemieDead
   - 
   - 
   - 

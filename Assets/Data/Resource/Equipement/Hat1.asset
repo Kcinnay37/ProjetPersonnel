@@ -16,7 +16,7 @@ MonoBehaviour:
   state: 8
   maxStack: 1
   bonusStat:
-    health: 0
+    health: 100
     armor: 0
     energy: 0
     damage: 0

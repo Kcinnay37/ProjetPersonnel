@@ -36,6 +36,11 @@ public class DataPlayer : ScriptableObject
     public int baseDamage;
     public int baseAttackSpeed;
 
+    public float regeneArmor;
+    public float regeneEnergy;
+    public float waitForRegeneArmor;
+    public float waitForRegeneEnergy;
+
     public float blockDropDistance;
 
     public float gravityScale;

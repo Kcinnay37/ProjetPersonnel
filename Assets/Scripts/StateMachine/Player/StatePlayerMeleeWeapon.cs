@@ -167,7 +167,9 @@ public class StatePlayerMeleeWeapon : StateRessource
             if (hit.transform.CompareTag("Enemie"))
             {
                 //attack enemie
-                MonsterManager.m_Instance.DispawnMonster(hit.transform.gameObject);
+                DataStorageZombieStat dataStorageZombieStat = (DataStorageZombieStat)hit.transform.GetComponent<StateMachineZombie>().GetDataStorage(EnumStatesMonster.stat);
+                dataStorageZombieStat.TakeDamage(m_DataTool.damage);
+
                 break;
             }
         }

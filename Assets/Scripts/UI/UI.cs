@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class UI : MonoBehaviour
     private UIPlayerEquip m_UIPlayerEquip;
     private UIBackpack m_UIBackpack;
     private UIShop m_UIShop;
+    private UIPlayerStat m_UIPlayerStat;
 
     public static UI m_Instance;
 
@@ -23,6 +25,7 @@ public class UI : MonoBehaviour
         m_UIPlayerEquip = new UIPlayerEquip(this);
         m_UIBackpack = new UIBackpack(this);
         m_UIShop = new UIShop(this);
+        m_UIPlayerStat = new UIPlayerStat(this);
     }
 
     public DataUI GetData()
@@ -55,6 +58,11 @@ public class UI : MonoBehaviour
         return m_UIShop;
     }
 
+    public UIPlayerStat GetUIPlayerStat()
+    {
+        return m_UIPlayerStat;
+    }
+
     public void Buy()
     {
         if(m_UIShop != null)
@@ -69,5 +77,11 @@ public class UI : MonoBehaviour
         {
             m_UIShop.CheckClick();
         }
+    }
+
+    public void ReloadScene()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.name);
     }
 }

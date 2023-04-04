@@ -52,7 +52,7 @@ public class StatePlayerControllerMovement : State
         Vector2Int localPlayerPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(playerWorldPos);
 
         
-        Dictionary<Vector2Int, MapPathfinding.Node> posiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPlayerPos, new Vector2Int(1, 2), 1, 2);
+        Dictionary<Vector2Int, MapPathfinding.Node> posiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPlayerPos, new Vector2Int(3, 3), 1, 2);
 
 
         if (posiblePath.ContainsKey(localMousePos))

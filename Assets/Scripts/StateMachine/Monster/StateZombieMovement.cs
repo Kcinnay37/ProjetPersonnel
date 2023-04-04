@@ -46,8 +46,17 @@ public class StateZombieMovement : State
         UpdateMove();
 
         UpdateAnimator();
-        
-        
+    }
+
+    public override void End()
+    {
+        StopMoving();
+        if(m_CoroutineMoving != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineMoving);
+            m_CoroutineMoving = null;
+        }
+        UpdateAnimator();
     }
 
 
@@ -55,7 +64,7 @@ public class StateZombieMovement : State
     {
         if (!m_IsArrived)
         {
-            if (m_Path.Count == 0 || m_Try == 2)
+            if (m_Path.Count == 0 || m_Try == 1)
             {
                 m_Try = 0;
                 m_IsArrived = true;
@@ -94,18 +103,9 @@ public class StateZombieMovement : State
         m_Animator.SetFloat("MoveSpeed", Mathf.Abs(m_Rigidbody.velocity.x));
     }
 
-    private void MoveAtPoint()
-    {
-        Vector3 pos = m_StateMachine.transform.position;
-        Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(pos);
-        Vector2Int dir = m_PointToGo - localPos;
-
-        
-    }
-
     private IEnumerator MoveAtDir(Vector2Int dir)
     {
-        if(dir.y > 0 && m_Rigidbody.velocity.y == 0)
+        if(dir.y > 0 && m_Rigidbody.velocity.y <= 0.1 && m_Rigidbody.velocity.y >= -0.1)
         {
             m_Rigidbody.AddForce(new Vector2(0, m_GlobalDataMonster.jumpForce));
         }
@@ -147,7 +147,7 @@ public class StateZombieMovement : State
         Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldPos);
 
         Dictionary<Vector2Int, MapPathfinding.Node> m_AllPossiblePath;
-        m_AllPossiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPos, new Vector2Int(1, 2), 1, 2);
+        m_AllPossiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPos, m_GlobalDataMonster.sizeInAstar, m_GlobalDataMonster.jumpHeightInAstar, m_GlobalDataMonster.airMoveSpeedInAstar);
 
         //si il a assez de move possible
         if (m_AllPossiblePath.Count > 2)
@@ -197,6 +197,93 @@ public class StateZombieMovement : State
             return true;
         }
         return false;
+    }
+
+    public bool MoveToPlayer()
+    {
+        m_IsArrived = false;
+        m_Path.Clear();
+
+        //Prend un nouveau chemin
+
+        // va chercher tout les moves possible relatif a la position
+        Vector3 worldPos = m_StateMachine.transform.position;
+        worldPos.y += 0.2f;
+        Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldPos);
+
+        Dictionary<Vector2Int, MapPathfinding.Node> m_AllPossiblePath;
+        m_AllPossiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPos, new Vector2Int(1, 2), 1, 2);
+
+        Vector3 playerPos = PlayerManager.m_Instance.GetCurrPlayerPos();
+        Vector2Int localPlayerPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(playerPos);
+
+        Dictionary<EnumBlocks, EnumBlocks> valueCanGo = Map.m_Instance.GetGrid().GetBackGroundDict();
+        EnumBlocks[,] grid = Map.m_Instance.GetGrid().GetGrid();
+
+        while (!valueCanGo.ContainsKey(grid[localPlayerPos.x, localPlayerPos.y]) && valueCanGo.ContainsKey(grid[localPlayerPos.x, localPlayerPos.y - 1]))
+        {
+            localPlayerPos.y--;
+        }
+
+        if(m_AllPossiblePath.ContainsKey(localPlayerPos))
+        {
+            //set le path
+            MapPathfinding.Node node = m_AllPossiblePath[localPlayerPos];
+            while (!node.position.Equals(localPos))
+            {
+                if (!m_AllPossiblePath.ContainsKey(node.pathfrom))
+                {
+                    break;
+                }
+                m_Path.Add(node.position);
+                node = m_AllPossiblePath[node.pathfrom];
+            }
+
+            m_Path.Reverse();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public void StopMoving()
+    {
+        if(m_CoroutineMoving != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineMoving);
+            m_CoroutineMoving = null;
+        }
+        m_Path.Clear();
+
+        m_Try = 0;
+        m_IsArrived = true;
+
+        Vector2 velo = m_Rigidbody.velocity;
+        velo.x = 0;
+        m_Rigidbody.velocity = velo;
+    }
+
+    public void CheckIsPlayerChangedPos()
+    {
+        Vector3 playerPos = PlayerManager.m_Instance.GetCurrPlayerPos();
+        Vector2Int localPlayerPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(playerPos);
+
+        Dictionary<EnumBlocks, EnumBlocks> valueCanGo = Map.m_Instance.GetGrid().GetBackGroundDict();
+        EnumBlocks[,] grid = Map.m_Instance.GetGrid().GetGrid();
+
+        while (!valueCanGo.ContainsKey(grid[localPlayerPos.x, localPlayerPos.y]) && valueCanGo.ContainsKey(grid[localPlayerPos.x, localPlayerPos.y - 1]))
+        {
+            localPlayerPos.y--;
+        }
+
+        if(m_Path.Count != 0)
+        {
+            if (!m_Path[m_Path.Count - 1].Equals(localPlayerPos))
+            {
+                MoveToPlayer();
+            }
+        }
     }
 
     public bool GetIsArrived()

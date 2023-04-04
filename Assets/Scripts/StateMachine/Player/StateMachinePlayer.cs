@@ -26,6 +26,7 @@ public class StateMachinePlayer : StateMachine
         AddNewState(EnumStatesPlayer.collectResource, new StatePlayerCollectResourceTool(this));
         AddNewState(EnumStatesPlayer.controllerMount, new StatePlayerControllerMount(this));
         AddNewState(EnumStatesPlayer.material, new StatePlayerMaterial(this));
+        AddNewState(EnumStatesPlayer.dead, new StatePlayerDead(this));
     }
 
     public override ScriptableObject GetData()

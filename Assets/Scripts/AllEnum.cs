@@ -68,7 +68,9 @@ public enum EnumMaterial
 
 public enum EnumMonster
 {
-    zombie
+    zombie,
+    orc,
+    knight
 }
 
 public enum EnumMount
@@ -112,7 +114,10 @@ public enum EnumStatesMonster
 {
     brain,
     movement,
-    patrol
+    patrol,
+    attack,
+    dead,
+    stat
 }
 
 public enum EnumStatesPlayer
@@ -129,7 +134,8 @@ public enum EnumStatesPlayer
     spawn,
     stat,
     controllerMount,
-    material
+    material,
+    dead
 }
 
 public enum EnumStatesUI

@@ -12,6 +12,7 @@ public class StateZombiePatrol : State
     private List<Vector2Int> m_CurrPath;
 
     private StateZombieMovement m_StateZombieMovement;
+    private StateZombieBrain m_StateZombieBrain;
 
     public StateZombiePatrol(StateMachine stateMachine) : base(stateMachine)
     {
@@ -28,10 +29,18 @@ public class StateZombiePatrol : State
         m_IsArrived = true;
 
         m_StateZombieMovement = (StateZombieMovement)m_StateMachine.GetState(EnumStatesMonster.movement);
+        m_StateZombieBrain = (StateZombieBrain)m_StateMachine.GetState(EnumStatesMonster.brain);
     }
 
     public override void Update()
     {
+        if(m_StateZombieBrain.GetSeePlayer())
+        {
+            m_StateMachine.PopCurrState(EnumStatesMonster.patrol);
+            m_StateMachine.AddCurrState(EnumStatesMonster.attack);
+            return;
+        }
+
         if(m_StateZombieMovement.GetIsArrived())
         {
             m_StateZombieMovement.StartMoveRandomPath();
