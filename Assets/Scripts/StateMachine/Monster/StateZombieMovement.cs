@@ -88,7 +88,6 @@ public class StateZombieMovement : State
                     m_Try++;
                     m_CoroutineMoving = m_StateMachine.StartCoroutine(MoveAtDir(dir));
                 }
-
             }
         }
     }
@@ -224,25 +223,32 @@ public class StateZombieMovement : State
         {
             localPlayerPos.y--;
         }
-
-        if(m_AllPossiblePath.ContainsKey(localPlayerPos))
+        
+        for(int i = 0; i < m_GlobalDataMonster.sizeInAstar.x; i++)
         {
-            //set le path
-            MapPathfinding.Node node = m_AllPossiblePath[localPlayerPos];
-            while (!node.position.Equals(localPos))
+            Vector2Int currentPos = localPlayerPos;
+            currentPos.x -= i;
+
+            if (m_AllPossiblePath.ContainsKey(currentPos))
             {
-                if (!m_AllPossiblePath.ContainsKey(node.pathfrom))
+                //set le path
+                MapPathfinding.Node node = m_AllPossiblePath[currentPos];
+                while (!node.position.Equals(localPos))
                 {
-                    break;
+                    if (!m_AllPossiblePath.ContainsKey(node.pathfrom))
+                    {
+                        break;
+                    }
+                    m_Path.Add(node.position);
+                    node = m_AllPossiblePath[node.pathfrom];
                 }
-                m_Path.Add(node.position);
-                node = m_AllPossiblePath[node.pathfrom];
+
+                m_Path.Reverse();
+
+                return true;
             }
-
-            m_Path.Reverse();
-
-            return true;
         }
+
 
         return false;
     }
