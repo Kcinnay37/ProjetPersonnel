@@ -100,6 +100,7 @@ public class ResourceManager : MonoBehaviour
         objectResource.transform.rotation = Quaternion.identity;
         objectResource.transform.position = pos;
 
+        objectResource.transform.localScale = data.sizeInWorld;
         Vector3 scale = objectResource.transform.localScale;
         if ((dir < 0 && scale.x > 0) || (dir > 0 && scale.x < 0))
         {

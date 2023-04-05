@@ -128,7 +128,9 @@ public class ResourceInWorld : MonoBehaviour
     {
         Dictionary<EnumBlocks, EnumBlocks> backGroundBlockDictionary = (Dictionary<EnumBlocks, EnumBlocks>)parametres["dictBlockBackGround"];
 
-        Vector2Int currPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(transform.position);
+        DataResource data = (DataResource)Pool.m_Instance.GetData(m_DataType);
+
+        Vector2Int currPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(transform.position + new Vector3(data.offsetCheckInGround.x, data.offsetCheckInGround.y, 0));
         EnumBlocks currBlock = Map.m_Instance.GetGrid().GetGrid()[currPos.x, currPos.y];
 
         if(!backGroundBlockDictionary.ContainsKey(currBlock))

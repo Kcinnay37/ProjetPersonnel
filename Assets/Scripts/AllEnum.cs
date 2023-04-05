@@ -63,7 +63,10 @@ public enum EnumMaps
 public enum EnumMaterial
 {
     instance,
-    treeBranch
+    treeBranch,
+    stone,
+    zombieGravestone,
+    orcGravestrone
 }
 
 public enum EnumMonster

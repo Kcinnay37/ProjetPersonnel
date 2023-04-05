@@ -206,12 +206,13 @@ public class UIShop
                     }
                 }
 
-                foreach (UIItemInRecipe itemInRecipe in m_CurrRecipe)
+                if(PlayerManager.m_Instance.CurrPlayerCollectResource(m_SelectedItem.item.GetDataType()))
                 {
-                    statePlayerControllerInventory.RemoveResource(itemInRecipe.item.GetDataType(), itemInRecipe.nb);
+                    foreach (UIItemInRecipe itemInRecipe in m_CurrRecipe)
+                    {
+                        statePlayerControllerInventory.RemoveResource(itemInRecipe.item.GetDataType(), itemInRecipe.nb);
+                    }
                 }
-
-                PlayerManager.m_Instance.CurrPlayerCollectResource(m_SelectedItem.item.GetDataType());
             }
         }
     } 

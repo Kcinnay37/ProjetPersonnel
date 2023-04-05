@@ -6199,6 +6199,12 @@ MonoBehaviour:
   m_DataMaterial:
   - type: 1
     value: {fileID: 11400000, guid: aa5cb244bcbb7d242a6b279cb0bdd4bd, type: 2}
+  - type: 2
+    value: {fileID: 11400000, guid: 3a0fd7cc44c19ea40bc5012e2d146214, type: 2}
+  - type: 3
+    value: {fileID: 11400000, guid: 7f380608b1bc4774d82b2fbc52af218e, type: 2}
+  - type: 4
+    value: {fileID: 11400000, guid: 4aefc8e4bb3486f41881b8475baac616, type: 2}
   m_InstanceMount:
   - type: 0
     value: {fileID: 3487051069329513596, guid: 987e4e225333bcc4cbe8665206e6aad7, type: 3}
@@ -7631,58 +7637,82 @@ MonoBehaviour:
     maxStrength: 2
     offsetStrength: 0
     monsterSpawn:
-    - monster: 1
+    - monster: 0
       typeSpawn: 2
       strength: 2
       rarity: 1000
   - biome: 1
-    maxStrength: 6
-    offsetStrength: 6
+    maxStrength: 2
+    offsetStrength: 0
     monsterSpawn:
     - monster: 0
       typeSpawn: 0
       strength: 2
       rarity: 1000
   - biome: 4
-    maxStrength: 8
-    offsetStrength: 8
+    maxStrength: 4
+    offsetStrength: 0
     monsterSpawn:
+    - monster: 1
+      typeSpawn: 2
+      strength: 4
+      rarity: 300
+    - monster: 2
+      typeSpawn: 2
+      strength: 4
+      rarity: 300
     - monster: 0
       typeSpawn: 0
       strength: 2
-      rarity: 1000
+      rarity: 700
   - biome: 5
-    maxStrength: 10
-    offsetStrength: 10
+    maxStrength: 4
+    offsetStrength: 0
     monsterSpawn:
+    - monster: 2
+      typeSpawn: 2
+      strength: 4
+      rarity: 600
     - monster: 0
       typeSpawn: 0
       strength: 2
-      rarity: 1000
+      rarity: 700
   - biome: 6
-    maxStrength: 10
-    offsetStrength: 10
+    maxStrength: 4
+    offsetStrength: 0
     monsterSpawn:
+    - monster: 1
+      typeSpawn: 2
+      strength: 4
+      rarity: 600
     - monster: 0
       typeSpawn: 0
       strength: 2
-      rarity: 1000
+      rarity: 700
   - biome: 2
-    maxStrength: 12
-    offsetStrength: 12
+    maxStrength: 6
+    offsetStrength: 0
     monsterSpawn:
+    - monster: 2
+      typeSpawn: 0
+      strength: 4
+      rarity: 700
     - monster: 0
       typeSpawn: 0
-      strength: 2
-      rarity: 1000
+      strength: 4
+      rarity: 800
   - biome: 3
-    maxStrength: 12
-    offsetStrength: 12
+    maxStrength: 6
+    offsetStrength: 0
     monsterSpawn:
+    - monster: 1
+      typeSpawn: 0
+      strength: 4
+      rarity: 700
     - monster: 0
       typeSpawn: 0
-      strength: 2
-      rarity: 1000
+      strength: 4
+      rarity: 800
   m_DistanceSpawn: 18
   m_OffsetViewPlayer: 10
   m_TimeCheckForSpawn: 0.2

@@ -74,8 +74,7 @@ public class StateZombieMovement : State
 
             if (m_CoroutineMoving == null)
             {
-                //Vector3 pos = m_StateMachine.transform.position;
-                Vector3 pos = m_StateMachine.transform.Find("BotLeftPosition").position;
+                Vector3 pos = m_StateMachine.transform.position + new Vector3(m_GlobalDataMonster.offsetPointBotLeft.x, m_GlobalDataMonster.offsetPointBotLeft.y, 0);
                 Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(pos);
                 Vector2Int dir = m_PointToGo - localPos;
 
@@ -95,7 +94,6 @@ public class StateZombieMovement : State
 
     private void UpdateAnimator()
     {
-        //rotationne le player dans la bonne direction
         Vector3 rota = m_StateMachine.transform.localScale;
         rota.x = m_ZombieDir;
         m_StateMachine.transform.localScale = rota;
@@ -145,9 +143,7 @@ public class StateZombieMovement : State
         //Prend un nouveau chemin
 
         // va chercher tout les moves possible relatif a la position
-        //Vector3 worldPos = m_StateMachine.transform.position;
-        //worldPos.y += 0.2f;
-        Vector3 worldPos = m_StateMachine.transform.Find("BotLeftPosition").position;
+        Vector3 worldPos = m_StateMachine.transform.position + new Vector3(m_GlobalDataMonster.offsetPointBotLeft.x, m_GlobalDataMonster.offsetPointBotLeft.y, 0);
         Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldPos);
 
         Dictionary<Vector2Int, MapPathfinding.Node> m_AllPossiblePath;
@@ -213,11 +209,11 @@ public class StateZombieMovement : State
         // va chercher tout les moves possible relatif a la position
         //Vector3 worldPos = m_StateMachine.transform.position;
         //worldPos.y += 0.2f;
-        Vector3 worldPos = m_StateMachine.transform.Find("BotLeftPosition").position;
+        Vector3 worldPos = m_StateMachine.transform.position + new Vector3(m_GlobalDataMonster.offsetPointBotLeft.x, m_GlobalDataMonster.offsetPointBotLeft.y, 0);
         Vector2Int localPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(worldPos);
 
         Dictionary<Vector2Int, MapPathfinding.Node> m_AllPossiblePath;
-        m_AllPossiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPos, new Vector2Int(1, 2), 1, 2);
+        m_AllPossiblePath = Map.m_Instance.GetPathfinding().GetAllMovePossibility(localPos, m_GlobalDataMonster.sizeInAstar, m_GlobalDataMonster.jumpHeightInAstar, m_GlobalDataMonster.airMoveSpeedInAstar);
 
         Vector3 playerPos = PlayerManager.m_Instance.GetCurrPlayerPos();
         Vector2Int localPlayerPos = (Vector2Int)Map.m_Instance.GetGrid().ConvertWorldToCell(playerPos);

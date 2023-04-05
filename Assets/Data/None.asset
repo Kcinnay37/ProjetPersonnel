@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 352827a6f65d44c4583818cece4177b2, type: 3}
   m_Name: None
   m_EditorClassIdentifier: 
-  type: 0
-  state: 0
+  image: {fileID: 0}
+  state: 8
+  maxStack: 0
+  offsetCheckInGround: {x: 0, y: 0}
+  sizeInWorld: {x: 0, y: 0, z: 0}

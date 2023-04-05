@@ -20,5 +20,7 @@ public class DataZombie : ScriptableObject
     public int jumpHeightInAstar;
     public int airMoveSpeedInAstar;
 
+    public Vector2 offsetPointBotLeft;
+
     public Drops drop;
 }

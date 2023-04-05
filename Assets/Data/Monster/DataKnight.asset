@@ -14,23 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   jumpForce: 3500
-  visionAngle: 70
+  visionAngle: 90
   visionDistance: 10
-  distanceToAttack: 2
-  attackRange: 3
+  distanceToAttack: 3
+  attackRange: 4
   intervalAttack: 1
-  maxHealth: 100
+  maxHealth: 200
   waitForDispawn: 2
   delayStopAttackPlayer: 2
   sizeInAstar: {x: 2, y: 3}
   jumpHeightInAstar: 1
   airMoveSpeedInAstar: 2
+  offsetPointBotLeft: {x: -0.2, y: 0.2}
   drop:
     offsetDrop: {x: 0, y: 0.5}
     dropConsumables: []
     dropEquipements: []
-    dropTools:
-    - type: 1
+    dropTools: []
+    dropMaterials:
+    - type: 4
       stack: 1
       rarity: 1000
-    dropMaterials: []

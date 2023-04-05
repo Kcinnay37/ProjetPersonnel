@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Geode
   m_EditorClassIdentifier: 
   instanceType: 0
-  health: 100
   offsetSpawn: {x: 0.5, y: 0}
+  gridSpawnSideAndHeightSize: {x: 0, y: 0}
+  health: 100
   drop:
     offsetDrop: {x: 0, y: 0.5}
     dropConsumables: []
     dropEquipements: []
-    dropTools:
-    - type: 4
-      stack: 10
+    dropTools: []
+    dropMaterials:
+    - type: 2
+      stack: 2
       rarity: 1000
-    dropMaterials: []
   m_ToolsCanInteract: 02000000
-  gridSpawnSideAndHeightSize: {x: 0, y: 0}

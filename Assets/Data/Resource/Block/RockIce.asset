@@ -15,6 +15,8 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 263edb92015d72141b5080555874bd06, type: 3}
   state: 1
   maxStack: 999
+  offsetCheckInGround: {x: 0, y: 0}
+  sizeInWorld: {x: 0.3, y: 0.3, z: 1}
   health: 100
   mapName: Environement
   tile: {fileID: 11400000, guid: a6e0c8461148f0e4ea1cbf1ee24b4c13, type: 2}

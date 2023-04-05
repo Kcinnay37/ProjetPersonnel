@@ -15,5 +15,7 @@ MonoBehaviour:
   image: {fileID: 21300042, guid: b217a154a8231e54bbb50405bdfafbaf, type: 3}
   state: 12
   maxStack: 999
+  offsetCheckInGround: {x: 0, y: 0}
+  sizeInWorld: {x: 1, y: 1, z: 1}
   instanceType: 0
   dataType: 1

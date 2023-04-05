@@ -25,12 +25,13 @@ MonoBehaviour:
   sizeInAstar: {x: 1, y: 2}
   jumpHeightInAstar: 1
   airMoveSpeedInAstar: 2
+  offsetPointBotLeft: {x: 0, y: 0.2}
   drop:
     offsetDrop: {x: 0, y: 0.5}
     dropConsumables: []
     dropEquipements: []
-    dropTools:
-    - type: 1
+    dropTools: []
+    dropMaterials:
+    - type: 3
       stack: 1
       rarity: 1000
-    dropMaterials: []
