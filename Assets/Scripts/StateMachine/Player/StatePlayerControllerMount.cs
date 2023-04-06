@@ -46,6 +46,7 @@ public class StatePlayerControllerMount : StateRessource
             scale.x = -scale.x;
         }
         m_Object.transform.localScale = scale;
+        m_Object.SetActive(true);
 
         EquipOnHand();
     }
