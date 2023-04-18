@@ -17,6 +17,7 @@ MonoBehaviour:
   maxStack: 999
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 0.3, y: 0.3, z: 1}
+  description: Block qui compose le monde
   health: 100
   mapName: Environement
   tile: {fileID: 11400000, guid: 34aeebee9bbaa6347a3159f518c7b9b5, type: 2}

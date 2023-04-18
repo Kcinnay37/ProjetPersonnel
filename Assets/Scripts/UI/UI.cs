@@ -13,6 +13,7 @@ public class UI : MonoBehaviour
     private UIBackpack m_UIBackpack;
     private UIShop m_UIShop;
     private UIPlayerStat m_UIPlayerStat;
+    private UIStatResource m_UIStatResource;
 
     public static UI m_Instance;
 
@@ -26,6 +27,7 @@ public class UI : MonoBehaviour
         m_UIBackpack = new UIBackpack(this);
         m_UIShop = new UIShop(this);
         m_UIPlayerStat = new UIPlayerStat(this);
+        m_UIStatResource = new UIStatResource(this);
     }
 
     public DataUI GetData()
@@ -61,6 +63,11 @@ public class UI : MonoBehaviour
     public UIPlayerStat GetUIPlayerStat()
     {
         return m_UIPlayerStat;
+    }
+
+    public UIStatResource GetUIStatResource()
+    {
+        return m_UIStatResource;
     }
 
     public void Buy()

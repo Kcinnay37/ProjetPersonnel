@@ -217,8 +217,22 @@ public class UIShop
         }
     } 
 
+    public List<Transform> GetAllSlots()
+    {
+        return m_SlotsShop;
+    }
+
     public bool GetShopIsOpen()
     {
         return m_ShopIsOpen;
+    }
+
+    public object GetItemAt(Transform slot)
+    {
+        if(m_DictItemInShop.ContainsKey(slot))
+        {
+            return m_DictItemInShop[slot].item.GetType();
+        }
+        return null;
     }
 }

@@ -17,5 +17,6 @@ MonoBehaviour:
   maxStack: 999
   offsetCheckInGround: {x: 0, y: 0.3}
   sizeInWorld: {x: 0.5, y: 0.5, z: 1}
+  description: Sert uniquement pour les recettes dans le shop
   instanceType: 0
   dataType: 3

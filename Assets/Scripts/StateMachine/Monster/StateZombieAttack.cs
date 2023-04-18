@@ -89,21 +89,20 @@ public class StateZombieAttack : State
     {
         if(m_CoroutineAttack == null)
         {
-            Vector2 dir = ((Vector2)PlayerManager.m_Instance.GetCurrPlayerPos() - (Vector2)m_StateMachine.transform.position).normalized;
-
-            RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)m_StateMachine.transform.position, dir, m_DataZombie.attackRange);
-
-            m_CoroutineAttack = m_StateMachine.StartCoroutine(CoroutineAttack(hits));
+            m_CoroutineAttack = m_StateMachine.StartCoroutine(CoroutineAttack());
         }
     }
 
-    private IEnumerator CoroutineAttack(RaycastHit2D[] hits)
+    private IEnumerator CoroutineAttack()
     {
         m_Animator.SetFloat("AttackSpeed", 1 / m_DataZombie.intervalAttack);
 
         m_Animator.SetBool("Attack", true);
 
         yield return new WaitForSeconds((1 * m_DataZombie.intervalAttack) / 2);
+
+        Vector2 dir = ((Vector2)PlayerManager.m_Instance.GetCurrPlayerPos() - (Vector2)m_StateMachine.transform.position).normalized;
+        RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)m_StateMachine.transform.position, dir, m_DataZombie.attackRange);
 
         foreach (RaycastHit2D hit in hits)
         {

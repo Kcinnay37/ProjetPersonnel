@@ -17,6 +17,7 @@ MonoBehaviour:
   maxStack: 1
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 1, y: 1, z: 1}
+  description: "Peut d\xE9truire les block"
   distance: 2
   damage: 100
   intervalAttack: 0.1

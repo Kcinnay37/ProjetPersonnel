@@ -120,6 +120,8 @@ public class StatePlayerControllerInventory : State
         {
             m_SecondaryKeyUse = false;
         }
+
+        CheckMouseOnResource(localPoint);
     }
 
     private void ActionKey()
@@ -478,6 +480,91 @@ public class StatePlayerControllerInventory : State
         }
 
         return mouseItem;
+    }
+
+    private void CheckMouseOnResource(Vector2 mousePoint)
+    {
+        int index = 0;
+
+        List<Transform> slots = UI.m_Instance.GetUIShop().GetAllSlots();
+
+        if (UI.m_Instance.GetUIShop().GetShopIsOpen())
+        {
+            foreach (Transform currSlot in slots)
+            {
+                RectTransform currTransform = currSlot.GetComponent<RectTransform>();
+                Vector2 localPosition = currTransform.localPosition;
+                Rect localRect = new Rect(localPosition.x - (currTransform.rect.width / 2), localPosition.y - (currTransform.rect.height / 2), currTransform.rect.width, currTransform.rect.height);
+                if (localRect.Contains(mousePoint))
+                {
+                    object resource = UI.m_Instance.GetUIShop().GetItemAt(currSlot);
+
+                    if (!(resource is EnumSpecialResources.none) && resource != null)
+                    {
+                        UI.m_Instance.GetUIStatResource().ShowResource(resource);
+                    }
+                    return;
+                }
+
+                index++;
+            }
+        }
+        index = 0;
+
+        if (m_PrimaryKeyUse || m_PrimaryKeyUse)
+        {
+            UI.m_Instance.GetUIStatResource().UnshowResource();
+            return;
+        }
+
+        slots = UI.m_Instance.GetUIPlayerEquip().GetAllSlots();
+
+        foreach (Transform currSlot in slots)
+        {
+            RectTransform currTransform = currSlot.GetComponent<RectTransform>();
+            Vector2 localPosition = currTransform.localPosition;
+            Rect localRect = new Rect(localPosition.x - (currTransform.rect.width / 2), localPosition.y - (currTransform.rect.height / 2), currTransform.rect.width, currTransform.rect.height);
+            if (localRect.Contains(mousePoint))
+            {
+                object resource = m_DataStoragePlayerEquip.GetCase(index).resource;
+
+                if(!(resource is EnumSpecialResources.none) && resource != null)
+                {
+                    UI.m_Instance.GetUIStatResource().ShowResource(resource);
+                }
+                return;
+            }
+
+            index++;
+        }
+        index = 0;
+
+        slots = UI.m_Instance.GetUIBackpack().GetAllSlots();
+
+        if(UI.m_Instance.GetUIBackpack().GetBackpackActive())
+        {
+            foreach (Transform currSlot in slots)
+            {
+                RectTransform currTransform = currSlot.GetComponent<RectTransform>();
+                Vector2 localPosition = currTransform.localPosition;
+                Rect localRect = new Rect(localPosition.x - (currTransform.rect.width / 2), localPosition.y - (currTransform.rect.height / 2), currTransform.rect.width, currTransform.rect.height);
+                if (localRect.Contains(mousePoint))
+                {
+                    object resource = m_DataStoragePlayerBackpack.GetCase(index).resource;
+
+                    if (!(resource is EnumSpecialResources.none) && resource != null)
+                    {
+                        UI.m_Instance.GetUIStatResource().ShowResource(resource);
+                    }
+                    return;
+                }
+
+                index++;
+            }
+        }
+        index = 0;
+
+        UI.m_Instance.GetUIStatResource().UnshowResource();
     }
 
     private void DropResource(object dataResource)

@@ -17,6 +17,7 @@ MonoBehaviour:
   maxStack: 1
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 1, y: 1, z: 1}
+  description: Permet de voler
   instanceType: 0
   dataType: 1
   mountSpeed: 10
