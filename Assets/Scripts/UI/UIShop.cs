@@ -231,7 +231,7 @@ public class UIShop
     {
         if(m_DictItemInShop.ContainsKey(slot))
         {
-            return m_DictItemInShop[slot].item.GetType();
+            return m_DictItemInShop[slot].item.GetDataType();
         }
         return null;
     }

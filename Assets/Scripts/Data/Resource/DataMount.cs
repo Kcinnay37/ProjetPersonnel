@@ -11,4 +11,9 @@ public class DataMount : DataResource
     public float mountSpeed;
     public override object GetInstanceType() { return instanceType; }
     public override object GetDataType() { return dataType; }
+
+    public override string GetText()
+    {
+        return base.GetText() + "MountSpeed: " + mountSpeed.ToString() + "\n\n";
+    }
 }

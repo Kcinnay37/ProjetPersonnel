@@ -22,4 +22,13 @@ public class DataTool : DataResource
 
     public override object GetInstanceType() { return instanceType; }
     public override object GetDataType() { return dataType; }
+
+    public override string GetText()
+    {
+        return base.GetText() +
+            "ActionType: " + attackType.ToString() + "\n" +
+            "Range: " + distance.ToString() + "\n" +
+            "UseInterval: " + intervalAttack.ToString() + "\n" +
+            "Radius: " + coneRadius.ToString() + "\n";
+    }
 }

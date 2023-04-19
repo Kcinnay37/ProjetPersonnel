@@ -28,4 +28,6 @@ public class DataBlock : DataResource
 
     public override object GetInstanceType() { return instanceType; }
     public override object GetDataType() { return dataType; }
+
+    public override string GetText() { return base.GetText() + "Health: " + health.ToString() + "\n\n"; }
 }

@@ -14,5 +14,5 @@ public class DataResource : ScriptableObject
     public virtual object GetInstanceType() { return null; }
     public virtual object GetDataType() { return null; }
 
-    public virtual object GetText() { return "Desription: " + description + "\n\n"; }
+    public virtual string GetText() { return "Desription: " + description + "\n\n"; }
 }
