@@ -31,7 +31,7 @@ public class UIStatResource : MonoBehaviour
 
         text.text = "";
 
-        text.text = "name: " + dataResource.GetDataType().ToString() + "\n\n";
+        text.text = "Name: " + dataResource.GetDataType().ToString() + "\n\n";
 
         text.text += dataResource.GetText();
 
