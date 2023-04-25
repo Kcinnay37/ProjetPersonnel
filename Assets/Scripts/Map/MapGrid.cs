@@ -41,6 +41,38 @@ public class MapGrid
         return block;
     }
 
+    public void FillBorder()
+    {
+        for(int x = 0; x < m_GridBlock.GetLength(0); x++)
+        {
+            EnumBiomes currBiomeTop = GetBiomeAtPoint(new Vector2Int(x, 0));
+            EnumBiomes currBiomeBot = GetBiomeAtPoint(new Vector2Int(x, m_GridBlock.GetLength(1) - 1));
+
+            DataBiome dataBiomeTop = (DataBiome)Pool.m_Instance.GetData(currBiomeTop);
+            DataBiome dataBiomeBot = (DataBiome)Pool.m_Instance.GetData(currBiomeBot);
+
+            EnumBlocks blockTop = dataBiomeTop.biomeBlocks[dataBiomeTop.biomeBlocks.Count - 2].block;
+            EnumBlocks blockBot = dataBiomeBot.biomeBlocks[dataBiomeBot.biomeBlocks.Count - 2].block;
+
+            m_GridBlock[x, 0] = blockTop;
+            m_GridBlock[x, m_GridBlock.GetLength(1) - 1] = blockBot;
+        }
+        for(int y = 0; y < m_GridBlock.GetLength(1); y++)
+        {
+            EnumBiomes currBiomeLeft = GetBiomeAtPoint(new Vector2Int(0, y));
+            EnumBiomes currBiomeRight = GetBiomeAtPoint(new Vector2Int(m_GridBlock.GetLength(0) - 1, y));
+
+            DataBiome dataBiomeLeft = (DataBiome)Pool.m_Instance.GetData(currBiomeLeft);
+            DataBiome dataBiomeRight = (DataBiome)Pool.m_Instance.GetData(currBiomeRight);
+
+            EnumBlocks blockLeft = dataBiomeLeft.biomeBlocks[dataBiomeLeft.biomeBlocks.Count - 2].block;
+            EnumBlocks blockRight = dataBiomeRight.biomeBlocks[dataBiomeLeft.biomeBlocks.Count - 2].block;
+
+            m_GridBlock[0, y] = blockLeft;
+            m_GridBlock[m_GridBlock.GetLength(0) - 1, y] = blockRight;
+        }
+    }
+
     public Dictionary<Vector2Int, EnumAddInWorld> GetCollectible()
     {
         return m_ResourceInWorldPos;
@@ -77,6 +109,11 @@ public class MapGrid
     public EnumBiomes GetBiomeAtCurrPoint()
     {
         return m_GridBiomes[m_CurrPoint.x / m_Map.GetData().chunkWidth, m_CurrPoint.y / m_Map.GetData().chunkHeight];
+    }
+
+    public EnumBiomes GetBiomeAtPoint(Vector2Int point)
+    {
+        return m_GridBiomes[point.x / m_Map.GetData().chunkWidth, point.y / m_Map.GetData().chunkHeight];
     }
 
     public void SetPoint(Vector3 worldPos)
@@ -322,6 +359,11 @@ public class MapGrid
                     }
                 }
             }
+        }
+
+        if(localPos.x == 0 || localPos.x == m_GridBlock.GetLength(0) - 1 || localPos.y == 0 || localPos.y == m_GridBlock.GetLength(1) - 1)
+        {
+            return false;
         }
 
         return true;

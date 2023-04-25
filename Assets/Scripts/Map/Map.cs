@@ -35,6 +35,7 @@ public class Map : MonoBehaviour
         //if nouvelle partie
         m_MapGrid.InitValue();
         m_MapGenerate.GenerateMap();
+        m_MapGrid.FillBorder();
         m_MapView.StartView();
         m_MapGrid.InitInitialPoint();
     }
