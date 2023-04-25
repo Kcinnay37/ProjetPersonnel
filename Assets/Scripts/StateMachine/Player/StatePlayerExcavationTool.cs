@@ -132,6 +132,16 @@ public class StatePlayerExcavationTool : StateRessource
             if(hit.transform.CompareTag("Environement"))
             {
                 Vector3Int cellPoint = Map.m_Instance.GetGrid().ConvertWorldToCell(hit.point + (new Vector2(0.01f, 0.01f) * dir));
+                if(!Map.m_Instance.GetGrid().CheckCanPopBlockAt(cellPoint))
+                {
+                    if (m_CoroutineDestroyBlock != null)
+                    {
+                        m_StateMachine.StopCoroutine(m_CoroutineDestroyBlock);
+                    }
+                    ResetValue();
+                    return;
+                }
+
                 if(!cellPoint.Equals(m_CurrCellPoint))
                 {
                     if (m_CoroutineDestroyBlock != null)

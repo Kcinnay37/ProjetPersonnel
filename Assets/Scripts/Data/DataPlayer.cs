@@ -45,6 +45,8 @@ public class DataPlayer : ScriptableObject
 
     public float gravityScale;
 
+    public Vector2 offsetBlock;
+
     public Material baseHat;
     public Material baseCloth;
     public Material basePants;

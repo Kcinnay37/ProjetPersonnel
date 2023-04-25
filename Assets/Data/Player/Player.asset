@@ -38,6 +38,7 @@ MonoBehaviour:
   waitForRegeneEnergy: 1
   blockDropDistance: 3
   gravityScale: 1.7
+  offsetBlock: {x: 0.3, y: 1}
   baseHat: {fileID: 2100000, guid: 25e0dc1e357f2a54ab7ff1d29f592f6b, type: 2}
   baseCloth: {fileID: 2100000, guid: cb3e2bcc2dd054e4baf73051a2788525, type: 2}
   basePants: {fileID: 2100000, guid: 86ac9b22572aa484483598d8e5f65f11, type: 2}

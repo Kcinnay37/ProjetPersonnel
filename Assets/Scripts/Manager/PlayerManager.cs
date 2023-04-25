@@ -66,4 +66,10 @@ public class PlayerManager : MonoBehaviour
         DataStoragePlayerStat stat = (DataStoragePlayerStat)stateMachinePlayer.GetDataStorage(EnumStatesPlayer.stat);
         stat.TakeDamage(damage);
     }
+
+    public DataPlayer GetPlayerData()
+    {
+        StateMachinePlayer stateMachinePlayer = m_CurrPlayer.GetComponent<StateMachinePlayer>();
+        return (DataPlayer)stateMachinePlayer.GetData();
+    }
 }

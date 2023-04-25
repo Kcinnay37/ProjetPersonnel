@@ -179,4 +179,9 @@ public class AddInWorldManager : MonoBehaviour
 
         Map.m_Instance.GetGrid().GetCollectible().Remove(pos);
     }
+
+    public Dictionary<Vector2Int, GameObject> GetAllResourceEnable()
+    {
+        return m_ActiveCollectiblesPosKey;
+    }
 }

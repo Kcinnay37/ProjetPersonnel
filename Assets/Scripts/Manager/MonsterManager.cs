@@ -372,4 +372,9 @@ public class MonsterManager : MonoBehaviour
 
         return spawnPoints;
     }
+
+    public Dictionary<GameObject, MonsterSpawn> GetAllEnableMonster()
+    {
+        return m_EnableMonster;
+    }
 }

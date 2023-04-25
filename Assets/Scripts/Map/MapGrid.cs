@@ -190,6 +190,144 @@ public class MapGrid
 
         return true;
     }
+
+    public bool CheckCanAddBlockAt(Vector3 pos)
+    {
+        Dictionary<EnumBlocks, EnumBlocks> BackGroundDict = GetBackGroundDict();
+
+        Vector2Int localPos = (Vector2Int)ConvertWorldToCell(pos);
+
+        //regarde si cest sur le player
+        Vector3 playerPos = PlayerManager.m_Instance.GetCurrPlayerPos();
+        playerPos.y += 0.1f;
+        Vector2 playerOffset = PlayerManager.m_Instance.GetPlayerData().offsetBlock;
+
+        Vector3 cornerBotLeft = new Vector3(playerPos.x - playerOffset.x, playerPos.y, 0);
+        Vector3 cornerBotRight = new Vector3(playerPos.x + playerOffset.x, playerPos.y, 0);
+        Vector3 cornerTopLeft = new Vector3(playerPos.x - playerOffset.x, playerPos.y + playerOffset.y, 0);
+        Vector3 cornerTopRight = new Vector3(playerPos.x + playerOffset.x, playerPos.y + playerOffset.y, 0);
+
+        Vector2Int localBotLeft = (Vector2Int)ConvertWorldToCell(cornerBotLeft);
+        Vector2Int localBotRight = (Vector2Int)ConvertWorldToCell(cornerBotRight);
+        Vector2Int localTopLeft = (Vector2Int)ConvertWorldToCell(cornerTopLeft);
+        Vector2Int localTopRight = (Vector2Int)ConvertWorldToCell(cornerTopRight);
+
+        for(int x = localBotLeft.x; x <= localBotRight.x; x++)
+        {
+            for(int y = localBotLeft.y; y <= localTopLeft.y; y++)
+            {
+                Vector2Int currPos = new Vector2Int(x, y);
+                if(localPos.Equals(currPos))
+                {
+                    return false;
+                }
+            }
+        }
+
+        //regarde si c'est sur un mobs
+        Dictionary<GameObject, MonsterManager.MonsterSpawn> monsterEnable = MonsterManager.m_Instance.GetAllEnableMonster();
+        foreach(KeyValuePair<GameObject, MonsterManager.MonsterSpawn> Value in monsterEnable)
+        {
+            Vector3 monsterPos = Value.Key.transform.position;
+            monsterPos.y += 0.1f;
+            DataZombie monsterData = (DataZombie)Value.Key.GetComponent<StateMachineZombie>().GetData();
+            Vector2 monsterOffset = monsterData.offsetBlock;
+
+            cornerBotLeft = new Vector3(monsterPos.x - monsterOffset.x, monsterPos.y, 0);
+            cornerBotRight = new Vector3(monsterPos.x + monsterOffset.x, monsterPos.y, 0);
+            cornerTopLeft = new Vector3(monsterPos.x - monsterOffset.x, monsterPos.y + monsterOffset.y, 0);
+            cornerTopRight = new Vector3(monsterPos.x + monsterOffset.x, monsterPos.y + monsterOffset.y, 0);
+
+            localBotLeft = (Vector2Int)ConvertWorldToCell(cornerBotLeft);
+            localBotRight = (Vector2Int)ConvertWorldToCell(cornerBotRight);
+            localTopLeft = (Vector2Int)ConvertWorldToCell(cornerTopLeft);
+            localTopRight = (Vector2Int)ConvertWorldToCell(cornerTopRight);
+
+            for (int x = localBotLeft.x; x <= localBotRight.x; x++)
+            {
+                for (int y = localBotLeft.y; y <= localTopLeft.y; y++)
+                {
+                    Vector2Int currPos = new Vector2Int(x, y);
+                    if (localPos.Equals(currPos))
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        //regarde si c'est sous une ressource
+        Dictionary<Vector2Int, GameObject> dictResourceEnable = AddInWorldManager.m_Instance.GetAllResourceEnable();
+        foreach(KeyValuePair<Vector2Int, GameObject> value in dictResourceEnable)
+        {
+            EnumAddInWorld enumData = m_ResourceInWorldPos[value.Key];
+            DataAddInWorld data = (DataAddInWorld)Pool.m_Instance.GetData(enumData);
+
+            for(int x = 0; x <= data.gridSpawnSideAndHeightSize.x; x++)
+            {
+                for(int y = 0; y <= data.gridSpawnSideAndHeightSize.y; y++)
+                {
+                    Vector2Int posRight = new Vector2Int(value.Key.x + x, value.Key.y + y);
+                    Vector2Int posLeft = new Vector2Int(value.Key.x - x, value.Key.y + y);
+
+                    if(localPos.Equals(posRight))
+                    {
+                        if(data.gridSpawn[data.gridSpawnSideAndHeightSize.x + x, data.gridSpawnSideAndHeightSize.y - y])
+                        {
+                            return false;
+                        }
+                    }
+                    else if(localPos.Equals(posLeft))
+                    {
+                        if (data.gridSpawn[data.gridSpawnSideAndHeightSize.x - x, data.gridSpawnSideAndHeightSize.y - y])
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public bool CheckCanPopBlockAt(Vector3 pos)
+    {
+        //regarde si il a une ressource en haut
+        Vector2Int localPos = (Vector2Int)ConvertWorldToCell(pos);
+
+        Dictionary<Vector2Int, GameObject> dictResourceEnable = AddInWorldManager.m_Instance.GetAllResourceEnable();
+        foreach (KeyValuePair<Vector2Int, GameObject> value in dictResourceEnable)
+        {
+            EnumAddInWorld enumData = m_ResourceInWorldPos[value.Key];
+            DataAddInWorld data = (DataAddInWorld)Pool.m_Instance.GetData(enumData);
+
+            for (int x = 0; x <= data.gridSpawnSideAndHeightSize.x; x++)
+            {
+                Vector2Int posRight = new Vector2Int(value.Key.x + x, value.Key.y - 1);
+                Vector2Int posLeft = new Vector2Int(value.Key.x - x, value.Key.y - 1);
+
+                if (localPos.Equals(posRight))
+                {
+                    if (data.gridSpawn[data.gridSpawnSideAndHeightSize.x + x, data.gridSpawnSideAndHeightSize.y])
+                    {
+                        return false;
+                    }
+                }
+                else if (localPos.Equals(posLeft))
+                {
+                    if (data.gridSpawn[data.gridSpawnSideAndHeightSize.x - x, data.gridSpawnSideAndHeightSize.y])
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 }
+
+
 
 

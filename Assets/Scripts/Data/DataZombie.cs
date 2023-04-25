@@ -23,4 +23,6 @@ public class DataZombie : ScriptableObject
     public Vector2 offsetPointBotLeft;
 
     public Drops drop;
+
+    public Vector2 offsetBlock;
 }
