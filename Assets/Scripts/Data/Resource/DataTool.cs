@@ -26,7 +26,7 @@ public class DataTool : DataResource
     public override string GetText()
     {
         return base.GetText() +
-            "ActionType: " + attackType.ToString() + "\n" +
+            "Damage: " + damage.ToString() + "\n" +
             "Range: " + distance.ToString() + "\n" +
             "UseInterval: " + intervalAttack.ToString() + "\n" +
             "Radius: " + coneRadius.ToString() + "\n";

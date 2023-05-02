@@ -1,8 +1,14 @@
 public enum EnumAddInWorld
 {
-    geode,
+    geodeRock,
     tree,
-    shop
+    shopEarth,
+    geodeIce,
+    geodeFire,
+    shopRock,
+    shopFire,
+    shopIce,
+    shopAll
 }
 
 public enum EnumAudios
@@ -46,7 +52,68 @@ public enum EnumConsumables
 public enum EnumEquipements
 {
     instance,
-    firstHat
+
+    clothAdventurer,
+    clothArcher,
+    clothBlacksmith,
+    clothCowboy,
+    clothCrusader,
+    clothGoldenArmor,
+    clothIronArmor,
+    clothLeatherArmor,
+    clothMiner,
+    clothPirate,
+    clothScholar,
+    clothSilverArmor,
+    clothSwordman,
+    clothTraveller,
+    clothViking,
+    clothWizard,
+    clothWoodenArmor,
+
+    hatArcher,
+    hatCowboy,
+    hatCrusader,
+    hatGoldenHelmet,
+    hatIronHelmet,
+    hatLeatherHelmet,
+    hatMinerHelmet,
+    hatPirate,
+    hatSilverHelmet,
+    hatStawHat,
+    hatVikingHelmet,
+    hatWizard,
+
+    pantsAdventurer,
+    pantsBlacksmith,
+    pantsCrusader,
+    pantsGoldenArmor,
+    pantsIronArmor,
+    pantsLeatherArmor,
+    pantsMiner,
+    pantsScholar,
+    pantsSilverArmor,
+    pantsSwordman,
+    pantsTraveller,
+    pantsViking,
+    pantsWizard,
+    pantsWoodenArmor,
+
+    shoesAdventurer,
+    shoesArcher,
+    shoesLeatherShoes,
+    shoesCrusader,
+    shoesGoldenArmor,
+    shoesIronBoot,
+    shoesIronShoes,
+    shoesLeatherBoot,
+    shoesLeatherLongBoot,
+    shoesPirate,
+    shoesScholar,
+    shoesSilverArmor,
+    shoesSwordman,
+    shoesViking,
+    shoesWizard
 }
 
 public enum EnumManagers
@@ -66,14 +133,19 @@ public enum EnumMaterial
     treeBranch,
     stone,
     zombieGravestone,
-    orcGravestrone
+    orcGravestrone,
+    knightGravestone,
+    skeletteGravestone,
+    stoneIce,
+    stoneFire
 }
 
 public enum EnumMonster
 {
     zombie,
     orc,
-    knight
+    knight,
+    skelette
 }
 
 public enum EnumMount
@@ -153,10 +225,38 @@ public enum EnumStatesUI
 public enum EnumTools
 {
     instance,
-    axe,
-    hammer,
-    pickaxe,
-    sword,
+
+    //axe
+    axeWood,
+    axeIron,
+    axeAmethyst,
+    axeEmerald,
+
+    //hammer
+    hammerWood,
+    hammerIron,
+    hammerAmethyst,
+    hammerEmerald,
+
+    //pickaxe
+    pickaxeWood,
+    pickaxeIron,
+    pickaxeAmethyst,
+    pickaxeEmerald,
+
+    //weapon
+    battleAxe,
+    fork,
+    goldenSword,
+    heavySword,
+    ironSword,
+    katana,
+    knife,
+    pirateSword,
+    shortSword,
+    silverSword,
+    spear,
+    woodenSword
 }
 
 public enum EnumUI

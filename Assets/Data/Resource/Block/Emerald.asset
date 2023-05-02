@@ -18,7 +18,7 @@ MonoBehaviour:
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 0.3, y: 0.3, z: 1}
   description: Block qui compose le monde
-  health: 100
+  health: 500
   mapName: Environement
   tile: {fileID: 11400000, guid: 9697e77deeaaa6444b2b0fa1cf170002, type: 2}
   instanceType: 5

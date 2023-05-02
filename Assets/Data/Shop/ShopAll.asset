@@ -1,0 +1,712 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae4614cfe16d3240a49fc56c2b6b994, type: 3}
+  m_Name: ShopAll
+  m_EditorClassIdentifier: 
+  instanceType: 8
+  offsetSpawn: {x: -7, y: 0}
+  gridSpawnSideAndHeightSize: {x: 4, y: 8}
+  itemShop:
+    consumableInShop: []
+    equipementInShop:
+    - type: 1
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 2
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 3
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 4
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 5
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 6
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 7
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 8
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 9
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 10
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 11
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 12
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 13
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 14
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 15
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 16
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 17
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 18
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 19
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 20
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 21
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 22
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 23
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 24
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 25
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 26
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 27
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 28
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 29
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 30
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 31
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 32
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 33
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 34
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 35
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 36
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 37
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 38
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 39
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 40
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 41
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 42
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 43
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 44
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 45
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 46
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 47
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 48
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 49
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 50
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 52
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 53
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 54
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 55
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 56
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 57
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 58
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    materialInShop:
+    - type: 2
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 7
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 8
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 1
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    toolInShop:
+    - type: 1
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 2
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 3
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 4
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 5
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 6
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 7
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 8
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 9
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 10
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 11
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 12
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 13
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 14
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 15
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 16
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 17
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 18
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 19
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 20
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 21
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 22
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 23
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    - type: 24
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+    mountInShop:
+    - type: 1
+      recipe:
+        consumableInRecipe: []
+        equipementInRecipe: []
+        materialInRecipe: []
+        toolInRecipe: []
+        mountInRecipe: []
+        blockInRecipe: []
+  nbItem: 35

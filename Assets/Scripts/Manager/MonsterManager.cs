@@ -123,11 +123,18 @@ public class MonsterManager : MonoBehaviour
 
             foreach(MonsterSpawn monsterSpawn in m_DictBiome[currBiomes].monsterSpawn)
             {
+                if(monsterSpawn.strength + m_CurrStrength > m_DictBiome[currBiomes].maxStrength)
+                {
+                    continue;
+                }
+
                 int rarity = Random.Range(0, 1001);
                 if(rarity <= monsterSpawn.rarity)
                 {
-                    SpawnMonster(monsterSpawn);
-                    break;
+                    if(SpawnMonster(monsterSpawn))
+                    {
+                        break;
+                    }
                 }
             }
         }
@@ -191,12 +198,12 @@ public class MonsterManager : MonoBehaviour
         DispawnMonster(monster);
     }
 
-    private void SpawnMonster(MonsterSpawn monsterSpawn)
+    private bool SpawnMonster(MonsterSpawn monsterSpawn)
     {
         Dictionary<TypeSpawn, List<Vector2Int>> spawnPoint = GetSpawnPoints();
         if(spawnPoint[monsterSpawn.typeSpawn].Count == 0)
         {
-            return;
+            return false;
         }
 
         GameObject objectMonster = Pool.m_Instance.GetObject(monsterSpawn.monster);
@@ -211,6 +218,7 @@ public class MonsterManager : MonoBehaviour
         m_CurrStrength += monsterSpawn.strength;
 
         objectMonster.SetActive(true);
+        return true;
     }
 
     public void DispawnMonster(GameObject monster)

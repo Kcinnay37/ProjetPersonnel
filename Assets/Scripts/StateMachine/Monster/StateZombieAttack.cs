@@ -102,14 +102,22 @@ public class StateZombieAttack : State
         yield return new WaitForSeconds((1 * m_DataZombie.intervalAttack) / 2);
 
         Vector2 dir = ((Vector2)PlayerManager.m_Instance.GetCurrPlayerPos() - (Vector2)m_StateMachine.transform.position).normalized;
-        RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)m_StateMachine.transform.position, dir, m_DataZombie.attackRange);
+        
+        Vector2 forward = Vector2.zero;
+        forward.x = m_StateMachine.transform.localScale.x;
+        float angle = Vector2.Angle(forward, dir);
 
-        foreach (RaycastHit2D hit in hits)
+        if (angle <= m_DataZombie.visionAngle)
         {
-            if (hit.transform.CompareTag("Player"))
+            RaycastHit2D[] hits = Physics2D.RaycastAll((Vector2)m_StateMachine.transform.position, dir, m_DataZombie.attackRange);
+
+            foreach (RaycastHit2D hit in hits)
             {
-                PlayerManager.m_Instance.CurrPlayerTakeDamage(20);
-                break;
+                if (hit.transform.CompareTag("Player"))
+                {
+                    PlayerManager.m_Instance.CurrPlayerTakeDamage(m_DataZombie.damage);
+                    break;
+                }
             }
         }
 

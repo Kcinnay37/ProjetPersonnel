@@ -10,9 +10,7 @@ public class DataEquipement : DataResource
     {
         public int health;
         public int armor;
-        public int energy;
-        public int damage;
-        public int attackSpeed;
+        public int armorRegene;
     }
 
     public BonusStat bonusStat;
@@ -23,6 +21,8 @@ public class DataEquipement : DataResource
     public EnumEquipements instanceType;
     public EnumEquipements dataType;
 
+    public bool removeHair;
+
     public override object GetInstanceType() { return instanceType; }
     public override object GetDataType() { return dataType; }
 
@@ -31,9 +31,7 @@ public class DataEquipement : DataResource
         return base.GetText() +
             "BonusHealth: " + bonusStat.health + "\n" +
             "BonusArmor: " + bonusStat.armor + "\n" +
-            "BonusEnergy: " + bonusStat.energy + "\n" +
-            "BonusDamage: " + bonusStat.damage + "\n" +
-            "BonusAttackSpeed: " + bonusStat.attackSpeed + "\n\n";
+            "BonusArmorRegene: " + bonusStat.armorRegene + "\n\n";
     }
 }
 

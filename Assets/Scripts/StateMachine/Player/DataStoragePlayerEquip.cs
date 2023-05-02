@@ -355,6 +355,8 @@ public class DataStoragePlayerEquip : DataStorage
                 EquipEquipement(equipement);
             }
         }
+
+        m_DataStoragePlayerStat.CheckStat();
     }
 
     private void EquipEquipement(DataEquipement equipement)
@@ -367,7 +369,7 @@ public class DataStoragePlayerEquip : DataStorage
         {
             component.Find("Hair").gameObject.SetActive(true);
         }
-        else if(equipement.typeEquipement == EnumTypeEquipement.hat && equipement.playerMaterial != m_DataPlayer.hatNone)
+        else if(equipement.typeEquipement == EnumTypeEquipement.hat && equipement.playerMaterial != m_DataPlayer.hatNone && equipement.removeHair)
         {
             component.Find("Hair").gameObject.SetActive(false);
         }

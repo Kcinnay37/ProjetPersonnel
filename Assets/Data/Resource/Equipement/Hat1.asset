@@ -19,11 +19,9 @@ MonoBehaviour:
   sizeInWorld: {x: 2, y: 2, z: 1}
   description: "Donne des bonus lorsque equip\xE9"
   bonusStat:
-    health: 100
-    armor: 0
-    energy: 0
-    damage: 0
-    attackSpeed: 0
+    health: 0
+    armor: 100
+    armorRegene: 100
   playerMaterial: {fileID: 2100000, guid: 25810117ec11c984fa932c5afc15eae7, type: 2}
   typeEquipement: 1
   componentForMaterial: Hat

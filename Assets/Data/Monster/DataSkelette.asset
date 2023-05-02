@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8880d3b65f828724890fd0528aaea39c, type: 3}
+  m_Name: DataSkelette
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  jumpForce: 3500
+  visionAngle: 80
+  visionDistance: 10
+  distanceToAttack: 2
+  attackRange: 2.5
+  intervalAttack: 1
+  maxHealth: 200
+  waitForDispawn: 2
+  delayStopAttackPlayer: 2
+  damage: 40
+  sizeInAstar: {x: 1, y: 2}
+  jumpHeightInAstar: 1
+  airMoveSpeedInAstar: 2
+  offsetPointBotLeft: {x: 0, y: 0.2}
+  drop:
+    offsetDrop: {x: 0, y: 0.5}
+    dropConsumables: []
+    dropEquipements: []
+    dropTools: []
+    dropMaterials:
+    - type: 6
+      stack: 1
+      rarity: 1000
+  offsetBlock: {x: 0.3, y: 1}

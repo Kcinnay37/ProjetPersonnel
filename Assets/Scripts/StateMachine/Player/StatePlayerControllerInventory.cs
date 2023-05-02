@@ -47,6 +47,12 @@ public class StatePlayerControllerInventory : State
 
         m_PrimaryKeyUse = false;
         m_SecondaryKeyUse = false;
+
+        CollectResource(EnumTools.woodenSword);
+        CollectResource(EnumTools.pickaxeWood);
+        CollectResource(EnumTools.axeWood);
+        CollectResource(EnumTools.hammerWood);
+        CollectResource(EnumMount.broom);
     }
 
     public override void End()
@@ -56,31 +62,6 @@ public class StatePlayerControllerInventory : State
 
     public override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            CollectResource(EnumTools.pickaxe);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            CollectResource(EnumTools.sword);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            CollectResource(EnumTools.axe);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            CollectResource(EnumTools.hammer);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            CollectResource(EnumEquipements.firstHat);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            CollectResource(EnumMount.broom);
-        }
-
         if (Input.GetKeyDown(m_GlobalDataPlayer.openBackpackKey))
         {
             UI.m_Instance.GetUIBackpack().ChangeUIState();
@@ -578,7 +559,10 @@ public class StatePlayerControllerInventory : State
 
         ResourceManager.m_Instance.InstanciateResourceInWorldAt(dataResource, pos, Vector2.right * dirPlayer * 100, dirPlayer);
 
-        m_DataStoragePlayerEquip.UpdateEquipement();
+        if(dataResource is EnumEquipements)
+        {
+            m_DataStoragePlayerEquip.UpdateEquipement();
+        }
     }
 
     public bool CollectResource(object resource)
@@ -598,7 +582,10 @@ public class StatePlayerControllerInventory : State
         {
             if (m_DataStoragePlayerEquip.AddRessource(resource))
             {
-                m_DataStoragePlayerEquip.UpdateEquipement();
+                if(resource is EnumEquipements)
+                {
+                    m_DataStoragePlayerEquip.UpdateEquipement();
+                }
                 return true;
             }
         }

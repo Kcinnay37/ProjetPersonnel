@@ -15,6 +15,7 @@ public class DataZombie : ScriptableObject
     public float maxHealth;
     public float waitForDispawn;
     public float delayStopAttackPlayer;
+    public float damage;
     
     public Vector2Int sizeInAstar;
     public int jumpHeightInAstar;
