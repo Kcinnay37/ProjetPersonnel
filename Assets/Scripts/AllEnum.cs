@@ -13,7 +13,11 @@ public enum EnumAddInWorld
 
 public enum EnumAudios
 {
+    instance,
 
+    melee1,
+    melee2,
+    melee3,
 }
 
 public enum EnumBiomes

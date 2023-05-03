@@ -36,6 +36,9 @@ public class DataPlayer : ScriptableObject
     public float regeneArmor;
     public float waitForRegeneArmor;
 
+    public float regeneHealth;
+    public float waitForRegeneHealth;
+
     public float blockDropDistance;
 
     public float gravityScale;

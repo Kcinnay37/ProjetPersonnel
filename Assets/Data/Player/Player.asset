@@ -29,13 +29,10 @@ MonoBehaviour:
   baseSizeBackPack: 1
   baseMaxHealth: 100
   baseMaxArmor: 50
-  baseMaxEnergy: 100
-  baseDamage: 30
-  baseAttackSpeed: 1
   regeneArmor: 5
-  regeneEnergy: 5
   waitForRegeneArmor: 1
-  waitForRegeneEnergy: 1
+  regeneHealth: 1
+  waitForRegeneHealth: 3
   blockDropDistance: 3
   gravityScale: 1.7
   offsetBlock: {x: 0.3, y: 1}

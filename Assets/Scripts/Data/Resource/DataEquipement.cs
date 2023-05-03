@@ -9,6 +9,7 @@ public class DataEquipement : DataResource
     public struct BonusStat
     {
         public int health;
+        public int healthRegene;
         public int armor;
         public int armorRegene;
     }
@@ -30,6 +31,7 @@ public class DataEquipement : DataResource
     {
         return base.GetText() +
             "BonusHealth: " + bonusStat.health + "\n" +
+            "BonusHealthRegene" + bonusStat.healthRegene + "\n" +
             "BonusArmor: " + bonusStat.armor + "\n" +
             "BonusArmorRegene: " + bonusStat.armorRegene + "\n\n";
     }

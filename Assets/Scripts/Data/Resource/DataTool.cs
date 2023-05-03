@@ -19,6 +19,7 @@ public class DataTool : DataResource
     public EnumTools instanceType;
     public EnumTools dataType;
     public AttackType attackType;
+    public EnumAudios audioUse;
 
     public override object GetInstanceType() { return instanceType; }
     public override object GetDataType() { return dataType; }

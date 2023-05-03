@@ -19,9 +19,10 @@ MonoBehaviour:
   sizeInWorld: {x: 1, y: 1, z: 1}
   description: "Peut d\xE9truire les block"
   distance: 2
-  damage: 1000
-  intervalAttack: 0.1
+  damage: 50
+  intervalAttack: 0.3
   coneRadius: 90
   instanceType: 0
   dataType: 9
   attackType: 0
+  audioUse: 0

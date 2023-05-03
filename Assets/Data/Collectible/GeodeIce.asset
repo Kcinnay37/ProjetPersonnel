@@ -25,4 +25,4 @@ MonoBehaviour:
     - type: 7
       stack: 2
       rarity: 1000
-  m_ToolsCanInteract: 02000000
+  m_ToolsCanInteract: 05000000060000000700000008000000

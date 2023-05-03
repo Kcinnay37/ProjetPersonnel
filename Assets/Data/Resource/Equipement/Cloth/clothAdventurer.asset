@@ -19,9 +19,10 @@ MonoBehaviour:
   sizeInWorld: {x: 2, y: 2, z: 1}
   description: "Donne des bonus lorsque equip\xE9"
   bonusStat:
-    health: 0
-    armor: 100
-    armorRegene: 100
+    health: 100
+    healthRegene: 0
+    armor: 0
+    armorRegene: 0
   playerMaterial: {fileID: 2100000, guid: e823100d42ad7944493f5c159f29ae20, type: 2}
   typeEquipement: 0
   componentForMaterial: Cloth

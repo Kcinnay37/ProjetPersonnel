@@ -10,6 +10,9 @@ public class DataStoragePlayerStat : DataStorage
 
     private float m_MaxHealth;
     private float m_CurrHealth;
+    private float m_HealthRegene;
+    private float m_WaitForRegeneHealth;
+    private Coroutine m_CoroutineHealth;
 
     private float m_MaxArmor;
     private float m_CurrArmor;
@@ -29,6 +32,21 @@ public class DataStoragePlayerStat : DataStorage
         InitStats();
     }
 
+    public override void End()
+    {
+        if(m_CoroutineArmor != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineArmor);
+            m_CoroutineArmor = null;
+        }
+
+        if (m_CoroutineHealth != null)
+        {
+            m_StateMachine.StopCoroutine(m_CoroutineHealth);
+            m_CoroutineHealth = null;
+        }
+    }
+
     public void InitStats()
     {
         m_SizeEquip = m_GlobalDataPlayer.baseSizeEquip;
@@ -42,12 +60,16 @@ public class DataStoragePlayerStat : DataStorage
         m_ArmorRegene = m_GlobalDataPlayer.regeneArmor;
         m_WaitForRegeneArmor = m_GlobalDataPlayer.waitForRegeneArmor;
 
+        m_HealthRegene = m_GlobalDataPlayer.regeneHealth;
+        m_WaitForRegeneHealth = m_GlobalDataPlayer.waitForRegeneHealth;
+
         UpdateSlider();
     }
 
     public void ResetMaxStats()
     {
         m_MaxHealth = m_GlobalDataPlayer.baseMaxHealth;
+        m_HealthRegene = m_GlobalDataPlayer.regeneHealth;
         m_MaxArmor = m_GlobalDataPlayer.baseMaxArmor;
         m_ArmorRegene = m_GlobalDataPlayer.regeneArmor;
     }
@@ -69,12 +91,18 @@ public class DataStoragePlayerStat : DataStorage
     public void AddStats(DataEquipement.BonusStat stat)
     {
         m_MaxHealth += stat.health;
+        m_HealthRegene += stat.healthRegene;
         m_MaxArmor += stat.armor;
         m_ArmorRegene += stat.armorRegene;
 
         if(m_CoroutineArmor == null)
         {
             m_CoroutineArmor = m_StateMachine.StartCoroutine(CoroutineWaitForRegeneArmor());
+        }
+
+        if(m_CoroutineHealth == null)
+        {
+            m_CoroutineHealth = m_StateMachine.StartCoroutine(CoroutineWaitForRegeneHealth());
         }
     }
 
@@ -112,16 +140,47 @@ public class DataStoragePlayerStat : DataStorage
         m_CoroutineArmor = null;
     }
 
+    private IEnumerator CoroutineWaitForRegeneHealth()
+    {
+        yield return new WaitForSeconds(m_WaitForRegeneHealth);
+        m_CoroutineHealth = m_StateMachine.StartCoroutine(CoroutineRegeneHealth());
+    }
+
+
+    private IEnumerator CoroutineRegeneHealth()
+    {
+        while (true)
+        {
+            yield return null;
+            m_CurrHealth += m_HealthRegene * Time.deltaTime;
+            if (m_CurrHealth >= m_MaxHealth)
+            {
+                m_CurrHealth = m_MaxHealth;
+                UpdateSlider();
+                break;
+            }
+            UpdateSlider();
+        }
+        m_CoroutineHealth = null;
+    }
+
     public void TakeDamage(float damage)
     {
         if(m_CoroutineArmor != null)
         {
             m_StateMachine.StopCoroutine(m_CoroutineArmor);
+            m_CoroutineArmor = null;
         }
 
         m_CurrArmor -= damage;
         if(m_CurrArmor < 0)
         {
+            if(m_CoroutineHealth != null)
+            {
+                m_StateMachine.StopCoroutine(m_CoroutineHealth);
+                m_CoroutineHealth = null;
+            }
+
             m_CurrHealth += m_CurrArmor;
             m_CurrArmor = 0;
         }
@@ -142,5 +201,10 @@ public class DataStoragePlayerStat : DataStorage
         UpdateSlider();
 
         m_CoroutineArmor = m_StateMachine.StartCoroutine(CoroutineWaitForRegeneArmor());
+
+        if(m_CoroutineHealth == null)
+        {
+            m_CoroutineHealth = m_StateMachine.StartCoroutine(CoroutineWaitForRegeneHealth());
+        }
     }
 }
