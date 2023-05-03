@@ -54,9 +54,14 @@ public class StatePlayerBuild : StateRessource
 
     public override void End()
     {
+        m_GlobalDataPlayer = null;
+
         m_Object.GetComponent<SpriteRenderer>().sprite = null;
         Pool.m_Instance.RemoveObject(m_Object, m_DataBlock.instanceType);
         m_DataBlock = null;
+
+        m_StatePlayerControllerMovement = null;
+        m_Animator = null;
     }
 
     public override void ActionKeyDown()
@@ -97,6 +102,10 @@ public class StatePlayerBuild : StateRessource
             return;
         }
 
+        if(m_StatePlayerControllerMovement == null)
+        {
+            m_StatePlayerControllerMovement = (StatePlayerControllerMovement)m_StateMachine.GetState(EnumStatesPlayer.controllerMovement);
+        }
 
         float radianAngle = m_DataBlock.coneRadius * (Mathf.PI / 180);
         Vector2 dirCone = Vector2.right * m_StatePlayerControllerMovement.GetPlayerDir();

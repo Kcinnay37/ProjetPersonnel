@@ -18,6 +18,8 @@ MonoBehaviour:
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 1, y: 1, z: 1}
   description: "Peut d\xE9truire les block"
+  collectSound: 0
+  dropSound: 0
   distance: 2
   damage: 50
   intervalAttack: 0.3

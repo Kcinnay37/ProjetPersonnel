@@ -26,4 +26,8 @@ public class DataZombie : ScriptableObject
     public Drops drop;
 
     public Vector2 offsetBlock;
+
+    public EnumAudios deadSound;
+    public EnumAudios attackSound;
+    public EnumAudios hitSound;
 }

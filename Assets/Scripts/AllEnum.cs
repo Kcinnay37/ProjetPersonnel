@@ -15,6 +15,8 @@ public enum EnumAudios
 {
     instance,
 
+    none,
+
     melee1,
     melee2,
     melee3,

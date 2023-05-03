@@ -143,6 +143,8 @@ public class StatePlayerMeleeWeapon : StateRessource
 
     private IEnumerator Attack(RaycastHit2D[] hits)
     {
+        AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, m_DataTool.audioUse);
+
         m_Animator.SetFloat("AttackSpeed", 1 / m_DataTool.intervalAttack);
 
         switch (m_DataTool.attackType)

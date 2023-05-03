@@ -14,6 +14,9 @@ public class DataCollectible : DataAddInWorld
     public int health;
     public Drops drop;
     public List<EnumTools> m_ToolsCanInteract;
+
+    public EnumAudios hitSound;
+    public EnumAudios destroySound;
 }
 
 #if UNITY_EDITOR

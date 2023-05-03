@@ -26,6 +26,10 @@ public class DataBlock : DataResource
     public EnumBlocks dataType;
     public float coneRadius;
 
+    public EnumAudios hitSound;
+    public EnumAudios destroySound;
+    public EnumAudios placeSound;
+
     public override object GetInstanceType() { return instanceType; }
     public override object GetDataType() { return dataType; }
 

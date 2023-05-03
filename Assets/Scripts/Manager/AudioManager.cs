@@ -54,6 +54,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundAt(Vector3 pos, EnumAudios clip)
     {
+        if (clip == EnumAudios.instance || clip == EnumAudios.none) return;
+
         GameObject objectAudioSource = Pool.m_Instance.GetObject(EnumAudios.instance);
         objectAudioSource.transform.position = pos;
 
@@ -66,6 +68,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundContinueAt(Vector3 pos, EnumAudios clip)
     {
+        if (clip == EnumAudios.instance || clip == EnumAudios.none) return;
+
         GameObject objectAudioSource = Pool.m_Instance.GetObject(EnumAudios.instance);
         objectAudioSource.transform.position = pos;
 

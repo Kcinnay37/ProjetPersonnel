@@ -50,4 +50,7 @@ public class DataPlayer : ScriptableObject
     public Material basePants;
     public Material baseShoes;
     public Material hatNone;
+
+    public EnumAudios hitSound;
+    public EnumAudios deadSound;
 }

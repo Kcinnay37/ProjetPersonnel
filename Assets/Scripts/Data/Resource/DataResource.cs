@@ -11,6 +11,9 @@ public class DataResource : ScriptableObject
     public Vector3 sizeInWorld;
     public string description;
 
+    public EnumAudios collectSound;
+    public EnumAudios dropSound;
+
     public virtual object GetInstanceType() { return null; }
     public virtual object GetDataType() { return null; }
 

@@ -4566,15 +4566,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ListAudio:
-  - enumAudio: 1
+  - enumAudio: 2
     audioData:
       clip: {fileID: 8300000, guid: ec72d226670992042ace6a916a6cbb95, type: 3}
       volume: 1
-  - enumAudio: 2
+  - enumAudio: 3
     audioData:
       clip: {fileID: 8300000, guid: 1ecce0c175b375c40950234e24fe26df, type: 3}
       volume: 1
-  - enumAudio: 3
+  - enumAudio: 4
     audioData:
       clip: {fileID: 8300000, guid: 67e476834c0cf12469b531f67f3a6a37, type: 3}
       volume: 1
