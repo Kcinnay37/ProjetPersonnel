@@ -15,7 +15,7 @@ MonoBehaviour:
   instanceType: 1
   offsetSpawn: {x: 0.5, y: 2.15}
   gridSpawnSideAndHeightSize: {x: 1, y: 3}
-  health: 100
+  health: 200
   drop:
     offsetDrop: {x: 0, y: 0}
     dropConsumables: []

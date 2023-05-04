@@ -18,11 +18,13 @@ MonoBehaviour:
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 2, y: 2, z: 1}
   description: "Donne des bonus lorsque equip\xE9"
+  collectSound: 0
+  dropSound: 0
   bonusStat:
-    health: 0
-    healthRegene: 0
-    armor: 0
-    armorRegene: 0
+    health: 150
+    healthRegene: 2
+    armor: 100
+    armorRegene: 5
   playerMaterial: {fileID: 2100000, guid: 4e7493b190ee1f74a9a2146d67b4febb, type: 2}
   typeEquipement: 0
   componentForMaterial: Cloth

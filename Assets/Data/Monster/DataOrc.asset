@@ -16,13 +16,13 @@ MonoBehaviour:
   jumpForce: 3500
   visionAngle: 90
   visionDistance: 10
-  distanceToAttack: 3
-  attackRange: 4
+  distanceToAttack: 4
+  attackRange: 5
   intervalAttack: 1
-  maxHealth: 200
+  maxHealth: 2000
   waitForDispawn: 2
   delayStopAttackPlayer: 2
-  damage: 0
+  damage: 400
   sizeInAstar: {x: 2, y: 3}
   jumpHeightInAstar: 1
   airMoveSpeedInAstar: 2

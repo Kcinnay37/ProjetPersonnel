@@ -18,11 +18,13 @@ MonoBehaviour:
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 2, y: 2, z: 1}
   description: "Donne des bonus lorsque equip\xE9"
+  collectSound: 0
+  dropSound: 0
   bonusStat:
     health: 0
     healthRegene: 0
-    armor: 0
-    armorRegene: 0
+    armor: 300
+    armorRegene: 30
   playerMaterial: {fileID: 2100000, guid: 1b9d169f9e7fd5e49a87d19d2dd210ee, type: 2}
   typeEquipement: 3
   componentForMaterial: Shoes

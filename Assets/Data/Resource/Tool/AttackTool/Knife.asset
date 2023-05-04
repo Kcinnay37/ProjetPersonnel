@@ -21,9 +21,9 @@ MonoBehaviour:
   collectSound: 0
   dropSound: 0
   distance: 2
-  damage: 50
+  damage: 130
   intervalAttack: 0.3
-  coneRadius: 60
+  coneRadius: 30
   instanceType: 0
   dataType: 19
   attackType: 1

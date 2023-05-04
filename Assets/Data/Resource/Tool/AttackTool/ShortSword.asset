@@ -20,10 +20,10 @@ MonoBehaviour:
   description: Peut attacker les mobs
   collectSound: 0
   dropSound: 0
-  distance: 2
-  damage: 50
-  intervalAttack: 0.3
-  coneRadius: 60
+  distance: 1.5
+  damage: 100
+  intervalAttack: 0.01
+  coneRadius: 80
   instanceType: 0
   dataType: 21
   attackType: 0

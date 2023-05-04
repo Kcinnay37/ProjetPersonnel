@@ -38,6 +38,11 @@ MonoBehaviour:
   - collectibles: 3
     minValue: 0
     maxValue: 0.3
+    rarity: 100
+    cantGoOverIt: 0
+  - collectibles: 0
+    minValue: 0
+    maxValue: 0.3
     rarity: 50
     cantGoOverIt: 0
   scale: 9.5

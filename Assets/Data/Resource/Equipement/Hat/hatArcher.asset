@@ -18,10 +18,12 @@ MonoBehaviour:
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 2, y: 2, z: 1}
   description: "Donne des bonus lorsque equip\xE9"
+  collectSound: 0
+  dropSound: 0
   bonusStat:
-    health: 0
-    healthRegene: 5
-    armor: 0
+    health: 30
+    healthRegene: 0
+    armor: 40
     armorRegene: 0
   playerMaterial: {fileID: 2100000, guid: 25810117ec11c984fa932c5afc15eae7, type: 2}
   typeEquipement: 1

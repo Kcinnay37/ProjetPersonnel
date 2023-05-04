@@ -20,9 +20,9 @@ MonoBehaviour:
   description: Peut briser la pierre
   collectSound: 0
   dropSound: 0
-  distance: 2
-  damage: 50
-  intervalAttack: 0.3
+  distance: 4
+  damage: 1000
+  intervalAttack: 0.1
   coneRadius: 90
   instanceType: 0
   dataType: 7

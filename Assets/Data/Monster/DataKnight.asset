@@ -19,10 +19,10 @@ MonoBehaviour:
   distanceToAttack: 3
   attackRange: 4
   intervalAttack: 1
-  maxHealth: 200
+  maxHealth: 1000
   waitForDispawn: 2
   delayStopAttackPlayer: 2
-  damage: 0
+  damage: 200
   sizeInAstar: {x: 2, y: 3}
   jumpHeightInAstar: 1
   airMoveSpeedInAstar: 2

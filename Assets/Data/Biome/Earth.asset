@@ -31,10 +31,15 @@ MonoBehaviour:
     maxValue: 0.44
     rarity: 1000
     cantGoOverIt: 1
+  - collectibles: 0
+    minValue: 0
+    maxValue: 0.44
+    rarity: 30
+    cantGoOverIt: 0
   - collectibles: 1
     minValue: 0
     maxValue: 0.44
-    rarity: 400
+    rarity: 500
     cantGoOverIt: 0
   scale: 20.6
   useRandomScale: 0
