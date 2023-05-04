@@ -99,10 +99,6 @@ public class DataShop : DataAddInWorld
 
     public ItemShop itemShop;
     public int nbItem;
-
-    public EnumAudios openShopSound;
-    public EnumAudios closeShopSound;
-    public EnumAudios buySound;
 }
 
 #if UNITY_EDITOR

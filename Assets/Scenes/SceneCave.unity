@@ -4568,27 +4568,123 @@ MonoBehaviour:
   m_ListAudio:
   - enumAudio: 2
     audioData:
-      clip: {fileID: 8300000, guid: ec72d226670992042ace6a916a6cbb95, type: 3}
-      volume: 1
+      clip: {fileID: 8300000, guid: 67e476834c0cf12469b531f67f3a6a37, type: 3}
+      volume: 0.3
   - enumAudio: 3
     audioData:
-      clip: {fileID: 8300000, guid: 1ecce0c175b375c40950234e24fe26df, type: 3}
-      volume: 1
+      clip: {fileID: 8300000, guid: ec72d226670992042ace6a916a6cbb95, type: 3}
+      volume: 0.3
   - enumAudio: 4
     audioData:
-      clip: {fileID: 8300000, guid: 67e476834c0cf12469b531f67f3a6a37, type: 3}
-      volume: 1
+      clip: {fileID: 8300000, guid: 1ecce0c175b375c40950234e24fe26df, type: 3}
+      volume: 0.3
+  - enumAudio: 5
+    audioData:
+      clip: {fileID: 8300000, guid: bfa2830da534ca2409f1478129a6d5e8, type: 3}
+      volume: 0.3
+  - enumAudio: 6
+    audioData:
+      clip: {fileID: 8300000, guid: c7582705461a6f84ca6e680ea389c126, type: 3}
+      volume: 0.3
+  - enumAudio: 7
+    audioData:
+      clip: {fileID: 8300000, guid: 878b9df5cc404a746a2bd07a3315e1ec, type: 3}
+      volume: 0.3
+  - enumAudio: 8
+    audioData:
+      clip: {fileID: 8300000, guid: 6277ce7a285514e4db9fa78cb03d19c9, type: 3}
+      volume: 0.3
+  - enumAudio: 9
+    audioData:
+      clip: {fileID: 8300000, guid: ef688ade9d3f66440b2e912237fe760d, type: 3}
+      volume: 0.3
+  - enumAudio: 10
+    audioData:
+      clip: {fileID: 8300000, guid: 42e3b2941852f8043b9e49f5179cbcb9, type: 3}
+      volume: 0.3
+  - enumAudio: 11
+    audioData:
+      clip: {fileID: 8300000, guid: c267bc79b117bf74ca6508b01bd724f6, type: 3}
+      volume: 0.3
+  - enumAudio: 12
+    audioData:
+      clip: {fileID: 8300000, guid: a11002e2f3c293a499af054c6cc6e4c1, type: 3}
+      volume: 0.3
+  - enumAudio: 13
+    audioData:
+      clip: {fileID: 8300000, guid: da59604fe3ebba342b5f55bafe25d04c, type: 3}
+      volume: 0.3
+  - enumAudio: 14
+    audioData:
+      clip: {fileID: 8300000, guid: c8f95169f3a5f0c48a8336549b50c172, type: 3}
+      volume: 0.3
+  - enumAudio: 15
+    audioData:
+      clip: {fileID: 8300000, guid: d830d2208de9ccd4b9c0c7573bf44d84, type: 3}
+      volume: 0.3
+  - enumAudio: 16
+    audioData:
+      clip: {fileID: 8300000, guid: 1df3d3337d769fc449b7d186f36c2db2, type: 3}
+      volume: 0.3
+  - enumAudio: 17
+    audioData:
+      clip: {fileID: 8300000, guid: e7fb70a15cd58724c9dc14846c92dd4f, type: 3}
+      volume: 0.3
+  - enumAudio: 18
+    audioData:
+      clip: {fileID: 8300000, guid: 15bf63dedb42d2c429d0231dcee2dd5e, type: 3}
+      volume: 0.3
+  - enumAudio: 19
+    audioData:
+      clip: {fileID: 8300000, guid: e2f83e229ea5f3f4cb649a2f4c8ade41, type: 3}
+      volume: 0.3
+  - enumAudio: 20
+    audioData:
+      clip: {fileID: 8300000, guid: 6c23b7113f072e545868e6f7c67e9898, type: 3}
+      volume: 0.3
+  - enumAudio: 21
+    audioData:
+      clip: {fileID: 8300000, guid: 50040e039efa8d646a379dfa52369160, type: 3}
+      volume: 0.3
+  - enumAudio: 22
+    audioData:
+      clip: {fileID: 8300000, guid: 110179abfd5240c4384990222375a2ea, type: 3}
+      volume: 0.3
+  - enumAudio: 23
+    audioData:
+      clip: {fileID: 8300000, guid: 7dd1864babc86d04e8b8adb482fc17d5, type: 3}
+      volume: 0.3
+  - enumAudio: 24
+    audioData:
+      clip: {fileID: 8300000, guid: 6246893a3eb6c954fad4f9b2a42ef1db, type: 3}
+      volume: 0.3
+  - enumAudio: 25
+    audioData:
+      clip: {fileID: 8300000, guid: c9578cdfa0cb08d49a4d0777b12723e4, type: 3}
+      volume: 0.3
+  - enumAudio: 26
+    audioData:
+      clip: {fileID: 8300000, guid: 8b2dbc5317665f84893f53228b00aea1, type: 3}
+      volume: 0.3
+  - enumAudio: 27
+    audioData:
+      clip: {fileID: 8300000, guid: 5e7090dae44d3734e86ed2b2c9ebd068, type: 3}
+      volume: 0.3
+  - enumAudio: 28
+    audioData:
+      clip: {fileID: 8300000, guid: b7bb5ae8ec2ff8f45bddc9be53c66160, type: 3}
+      volume: 0.3
   m_ListBackgroundMusic:
   - clip: {fileID: 8300000, guid: 18adee2d0b517524ba67a3a30ac32b24, type: 3}
-    volume: 0.5
+    volume: 0.3
   - clip: {fileID: 8300000, guid: 9ea9c2672b89528429053938cee936d5, type: 3}
-    volume: 0.5
+    volume: 0.3
   - clip: {fileID: 8300000, guid: 64aef2d3702483448a33483e8d8f2aa8, type: 3}
-    volume: 0.5
+    volume: 0.3
   - clip: {fileID: 8300000, guid: 2cd177be19cfb554aaf8538c4060a07f, type: 3}
-    volume: 0.5
+    volume: 0.3
   - clip: {fileID: 8300000, guid: 50507f965104a2c45956ec849414acf6, type: 3}
-    volume: 0.5
+    volume: 0.3
 --- !u!4 &1228288663
 Transform:
   m_ObjectHideFlags: 0

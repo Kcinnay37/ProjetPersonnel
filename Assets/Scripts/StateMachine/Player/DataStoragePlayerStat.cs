@@ -185,6 +185,8 @@ public class DataStoragePlayerStat : DataStorage
             m_CurrArmor = 0;
         }
 
+        
+
         if(m_CurrHealth < 0)
         {
             m_CurrHealth = 0;
@@ -196,8 +198,13 @@ public class DataStoragePlayerStat : DataStorage
 
             m_StateMachine.AddCurrState(EnumStatesPlayer.dead);
 
+            if(m_StateMachine.GetState(EnumStatesPlayer.dead) == null)
+            {
+                AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.damageDead);
+            }
             return;
         }
+        AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.damageHit);
         UpdateSlider();
 
         m_CoroutineArmor = m_StateMachine.StartCoroutine(CoroutineWaitForRegeneArmor());

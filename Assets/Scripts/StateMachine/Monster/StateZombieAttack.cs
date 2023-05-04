@@ -99,6 +99,8 @@ public class StateZombieAttack : State
 
         m_Animator.SetBool("Attack", true);
 
+        AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, m_DataZombie.attackSound);
+
         yield return new WaitForSeconds((1 * m_DataZombie.intervalAttack) / 2);
 
         Vector2 dir = ((Vector2)PlayerManager.m_Instance.GetCurrPlayerPos() - (Vector2)m_StateMachine.transform.position).normalized;

@@ -58,6 +58,7 @@ public class DataStorageZombieStat : DataStorage
         m_CurrHealth -= damage;
         if(m_CurrHealth <= 0)
         {
+            AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.damageDead);
             m_CurrHealth = 0;
             UpdateSlider();
 
@@ -70,6 +71,7 @@ public class DataStorageZombieStat : DataStorage
         }
         else
         {
+            AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.damageHit);
             UpdateSlider();
             m_StateMachine.PopCurrState(EnumStatesMonster.patrol);
             m_StateMachine.AddCurrState(EnumStatesMonster.attack);

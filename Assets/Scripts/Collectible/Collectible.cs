@@ -30,9 +30,15 @@ public class Collectible : MonoBehaviour
 
         if(m_CurrHealth == 0)
         {
+            AudioManager.m_Instance.PlaySoundAt(transform.position, m_Data.destroySound);
             ResourceManager.m_Instance.Drops(m_Data.drop, transform.position + new Vector3(m_Data.drop.offsetDrop.x, m_Data.drop.offsetDrop.y, 0));
             AddInWorldManager.m_Instance.DestroyCollectible(gameObject);
         }
+        else
+        {
+            AudioManager.m_Instance.PlaySoundAt(transform.position, m_Data.hitSound);
+        }
+
     }
 
     public List<EnumTools> GetToolsCanInteract()

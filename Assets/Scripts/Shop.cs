@@ -81,6 +81,7 @@ public class Shop : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
+            AudioManager.m_Instance.PlaySoundAt(transform.position, EnumAudios.shopOpen);
             UI.m_Instance.GetUIShop().InitUI(UIItems);
         }
     }
@@ -89,6 +90,7 @@ public class Shop : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player"))
         {
+            AudioManager.m_Instance.PlaySoundAt(transform.position, EnumAudios.shopClose);
             UI.m_Instance.GetUIShop().CloseUI();
         }
     }

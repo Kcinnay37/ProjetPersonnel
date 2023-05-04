@@ -26,3 +26,5 @@ MonoBehaviour:
       stack: 2
       rarity: 1000
   m_ToolsCanInteract: 06000000060000000700000008000000
+  hitSound: 7
+  destroySound: 8

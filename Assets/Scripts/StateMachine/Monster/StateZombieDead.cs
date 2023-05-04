@@ -18,6 +18,7 @@ public class StateZombieDead : State
         m_StateMachine.gameObject.tag = "EnemieDead";
 
         m_DataZombie = (DataZombie)m_StateMachine.GetData();
+        AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, m_DataZombie.deadSound);
 
         m_Animator = m_StateMachine.GetComponent<Animator>();
         m_Animator.SetBool("Dead", true);

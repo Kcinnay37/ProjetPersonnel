@@ -18,9 +18,14 @@ MonoBehaviour:
   offsetCheckInGround: {x: 0, y: 0}
   sizeInWorld: {x: 0.3, y: 0.3, z: 1}
   description: Block qui compose le monde
+  collectSound: 0
+  dropSound: 0
   health: 100
   mapName: Environement
   tile: {fileID: 11400000, guid: 0d26b909d11ef69449609549021af79d, type: 2}
   instanceType: 5
   dataType: 7
   coneRadius: 90
+  hitSound: 12
+  destroySound: 13
+  placeSound: 0

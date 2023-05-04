@@ -6,12 +6,18 @@ public class StatePlayerDead : State
 {
     Animator m_Animator;
 
+    DataPlayer m_DataPlayer;
+
     public StatePlayerDead(StateMachine stateMachine) : base(stateMachine)
     {
     }
 
     public override void OnInit()
     {
+        m_DataPlayer = (DataPlayer)m_StateMachine.GetData();
+
+        AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, m_DataPlayer.deadSound);
+
         m_StateMachine.PopCurrState(EnumStatesPlayer.controllerMount);
         m_StateMachine.PopCurrState(EnumStatesPlayer.controllerMovement);
         m_StateMachine.PopCurrState(EnumStatesPlayer.controllerInventory);

@@ -37,3 +37,5 @@ MonoBehaviour:
       stack: 1
       rarity: 1000
   offsetBlock: {x: 0.3, y: 1}
+  deadSound: 23
+  attackSound: 19

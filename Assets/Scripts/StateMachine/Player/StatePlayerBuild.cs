@@ -83,20 +83,6 @@ public class StatePlayerBuild : StateRessource
             return;
         }
 
-        //Vector3Int cornerUpLeft = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x - 0.4f, firstPos.y + 0.9f, 0.0f));
-        //Vector3Int cornerUpRight = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x + 0.4f, firstPos.y + 0.9f, 0.0f));
-        //Vector3Int cornerBotLeft = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x - 0.4f, firstPos.y - 0.9f, 0.0f));
-        //Vector3Int cornerBotRight = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x + 0.4f, firstPos.y - 0.9f, 0.0f));
-        //Vector3Int cornerRight = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x + 0.4f, firstPos.y, 0.0f));
-        //Vector3Int cornerLeft = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(firstPos.x - 0.4f, firstPos.y, 0.0f));
-
-        //Vector3Int cellMousePos = Map.m_Instance.GetGrid().ConvertWorldToCell(new Vector3(mouseWorldPosition.x, mouseWorldPosition.y, 0.0f));
-
-        //if(cellMousePos == cornerUpLeft || cellMousePos == cornerUpRight || cellMousePos == cornerBotLeft || cellMousePos == cornerBotRight || cellMousePos == cornerLeft || cellMousePos == cornerRight)
-        //{
-        //    return;
-        //}
-
         if(!Map.m_Instance.GetGrid().CheckCanAddBlockAt(mouseWorldPosition))
         {
             return;
@@ -145,6 +131,8 @@ public class StatePlayerBuild : StateRessource
 
         if (Map.m_Instance.GetGrid().AddBlockAt(mouseWorldPosition, m_BlockType))
         {
+            AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.placeBlock);
+
             m_Animator.SetTrigger("DropBlock");
 
             DataStoragePlayerEquip dataStoragePlayerEquip = (DataStoragePlayerEquip)m_StateMachine.GetDataStorage(EnumStatesPlayer.equip);

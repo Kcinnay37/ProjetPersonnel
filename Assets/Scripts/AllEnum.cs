@@ -16,10 +16,42 @@ public enum EnumAudios
     instance,
 
     none,
+    
+    attackTool,
+    collectibleTool,
+    mineTool,
 
-    melee1,
-    melee2,
-    melee3,
+    treeHit,
+    treeDestroy,
+    geodeHit,
+    geodeDestroy,
+
+    shopOpen,
+    shopClose,
+    shopBuy,
+
+    blockEarthHit,
+    blockEarthDestroy,
+    blockRockHit,
+    blockRockDestroy,
+
+    damageHit,
+    damageDead,
+
+    attackZombie,
+    attackSkelet,
+    attackKnight,
+    attackOrc,
+
+    deadZombie,
+    deadSkelet,
+    deadKnight,
+    deadOrc,
+    deadPlayer,
+
+    placeBlock,
+
+    pickup
 }
 
 public enum EnumBiomes

@@ -30,6 +30,8 @@ public class StatePlayerControllerInventory : State
 
     Vector2 localPoint;
 
+    bool m_PlayCollectSound;
+
     public StatePlayerControllerInventory(StateMachine stateMachine) : base(stateMachine)
     {
 
@@ -48,11 +50,15 @@ public class StatePlayerControllerInventory : State
         m_PrimaryKeyUse = false;
         m_SecondaryKeyUse = false;
 
+        m_PlayCollectSound = false;
+
         CollectResource(EnumTools.woodenSword);
         CollectResource(EnumTools.pickaxeWood);
         CollectResource(EnumTools.axeWood);
         CollectResource(EnumTools.hammerWood);
         CollectResource(EnumMount.broom);
+
+        m_PlayCollectSound = true;
     }
 
     public override void End()
@@ -569,12 +575,22 @@ public class StatePlayerControllerInventory : State
     {
         if (m_DataStoragePlayerEquip.IncrementRessource(resource))
         {
+            if(m_PlayCollectSound)
+            {
+                AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.pickup);
+                m_StateMachine.StartCoroutine(CoroutineWaitForPlayCollectSound(0.1f));
+            }
+            
             return true;
         }
 
         if (m_DataStoragePlayerBackpack.IncrementRessource(resource))
         {
-
+            if (m_PlayCollectSound)
+            {
+                AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.pickup);
+                m_StateMachine.StartCoroutine(CoroutineWaitForPlayCollectSound(0.1f));
+            }
             return true;
         }
 
@@ -586,13 +602,22 @@ public class StatePlayerControllerInventory : State
                 {
                     m_DataStoragePlayerEquip.UpdateEquipement();
                 }
+                if (m_PlayCollectSound)
+                {
+                    AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.pickup);
+                    m_StateMachine.StartCoroutine(CoroutineWaitForPlayCollectSound(0.1f));
+                }
                 return true;
             }
         }
         
         if (m_DataStoragePlayerBackpack.AddRessource(resource))
         {
-            
+            if (m_PlayCollectSound)
+            {
+                AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, EnumAudios.pickup);
+                m_StateMachine.StartCoroutine(CoroutineWaitForPlayCollectSound(0.1f));
+            }
             return true;
         }
 
@@ -635,5 +660,12 @@ public class StatePlayerControllerInventory : State
                 continue;
             }
         }
+    }
+
+    private IEnumerator CoroutineWaitForPlayCollectSound(float time)
+    {
+        m_PlayCollectSound = false;
+        yield return new WaitForSeconds(time);
+        m_PlayCollectSound = true;
     }
 }

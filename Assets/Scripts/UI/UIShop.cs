@@ -212,6 +212,7 @@ public class UIShop
                     {
                         statePlayerControllerInventory.RemoveResource(itemInRecipe.item.GetDataType(), itemInRecipe.nb);
                     }
+                    AudioManager.m_Instance.PlaySoundAt(PlayerManager.m_Instance.GetCurrPlayerPos(), EnumAudios.shopBuy);
                 }
             }
         }

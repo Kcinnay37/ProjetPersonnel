@@ -34,7 +34,7 @@ public class StateZombiePatrol : State
 
     public override void Update()
     {
-        if(m_StateZombieBrain.GetSeePlayer())
+        if(m_StateZombieBrain.GetSeePlayer() && !UI.m_Instance.GetUIShop().GetShopIsOpen())
         {
             m_StateMachine.PopCurrState(EnumStatesMonster.patrol);
             m_StateMachine.AddCurrState(EnumStatesMonster.attack);

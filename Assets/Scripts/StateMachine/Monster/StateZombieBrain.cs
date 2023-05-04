@@ -34,7 +34,18 @@ public class StateZombieBrain : State
 
     public override void Update()
     {
-        LookPlayerForward();
+        if(!UI.m_Instance.GetUIShop().GetShopIsOpen())
+        {
+            LookPlayerForward();
+        }
+        else
+        {
+            if(m_StateMachine.GetState(EnumStatesMonster.patrol) == null && m_StateMachine.GetState(EnumStatesMonster.attack) != null)
+            {
+                m_StateMachine.PopCurrState(EnumStatesMonster.attack);
+                m_StateMachine.AddCurrState(EnumStatesMonster.patrol);
+            }
+        }
     }
 
     private void LookPlayerForward()

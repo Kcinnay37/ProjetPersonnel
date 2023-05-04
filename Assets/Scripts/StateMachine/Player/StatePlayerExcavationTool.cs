@@ -18,6 +18,8 @@ public class StatePlayerExcavationTool : StateRessource
 
     StatePlayerControllerMovement m_StatePlayerControllerMovement;
 
+    private EnumAudios m_AudioDestroy;
+
     public StatePlayerExcavationTool(StateMachine stateMachine) : base(stateMachine)
     {
 
@@ -79,9 +81,14 @@ public class StatePlayerExcavationTool : StateRessource
     {
         if (m_DestoyBlock)
         {
-            Map.m_Instance.GetGrid().PopBlockAt(m_HitPoint);
+            if(Map.m_Instance.GetGrid().PopBlockAt(m_HitPoint))
+            {
+                AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, m_AudioDestroy);
+            }
+
 
             ResetValue();
+            return;
         }
 
         if(m_StatePlayerControllerMovement == null)
@@ -212,12 +219,29 @@ public class StatePlayerExcavationTool : StateRessource
         }
 
         while (currHealth > 0)
-        {  
-            yield return new WaitForSeconds(m_DataTool.intervalAttack);
+        {
+            AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, m_DataTool.audioUse);
+            yield return new WaitForSeconds(m_DataTool.intervalAttack / 2);
             currHealth -= m_DataTool.damage;
             UI.m_Instance.GetUIWorld().SetSlider(currHealth, initialHealth);
+            if (currHealth > 0)
+            {
+                AudioManager.m_Instance.PlaySoundAt(m_StateMachine.transform.position, block.hitSound);
+             
+            }
+            else
+            {
+                break;
+            }
+            
+            yield return new WaitForSeconds(m_DataTool.intervalAttack / 2);
+           
         }
-        
+
+        m_AudioDestroy = block.destroySound;
+
+
+
         m_DestoyBlock = true;
     }
 }

@@ -29,5 +29,4 @@ public class DataZombie : ScriptableObject
 
     public EnumAudios deadSound;
     public EnumAudios attackSound;
-    public EnumAudios hitSound;
 }
